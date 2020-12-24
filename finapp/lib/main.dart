@@ -16,10 +16,17 @@ class MyApp extends StatelessWidget {
 
 class _MyHomepageState extends State<Home> {
   bool _loading = false;
+  List<FinancialChange> _financialChanges = [];
 
   void _setLoading(bool val) {
     setState(() {
       _loading = val;
+    });
+  }
+
+  void _setData(List<FinancialChange> val) {
+    setState(() {
+      _financialChanges = val;
     });
   }
 
@@ -59,9 +66,10 @@ class _MyHomepageState extends State<Home> {
               _loading
                   ? CircularProgressIndicator()
                   : GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         _setLoading(true);
-                        function();
+                        List<FinancialChange> res = await function();
+                        _setData(res);
                         _setLoading(false);
                       },
                       child: Container(
@@ -73,6 +81,13 @@ class _MyHomepageState extends State<Home> {
                         child: Text('Get data'),
                       ),
                     ),
+              Container(
+                  margin: EdgeInsets.all(12),
+                  child: ListView(shrinkWrap: true, children: [
+                    for (var i in _financialChanges.getRange(
+                        0, _financialChanges.length != 0 ? 10 : 0))
+                      ListTile(title: Text(i.description + " " + i.createdAt))
+                  ]))
             ]),
       ),
       drawer: Drawer(

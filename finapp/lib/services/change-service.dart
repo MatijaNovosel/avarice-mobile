@@ -14,6 +14,11 @@ class FinancialChange {
   int appUserId;
   List<int> tagIds;
 
+  @override
+  String toString() {
+    return '{amount: ${this.amount}, createdAt: ${this.createdAt}, description: ${this.description}}';
+  }
+
   FinancialChange(
       {this.id,
       this.amount,
@@ -26,19 +31,19 @@ class FinancialChange {
 
   factory FinancialChange.fromJson(Map<String, dynamic> json) {
     return FinancialChange(
-        amount: json['amount'] as double,
+        amount: json['amount'] == null ? 0.0 : json['amount'].toDouble(),
         appUserId: json['appUserId'] as int,
         createdAt: json['createdAt'] as String,
         description: json['description'] as String,
         expense: json['expense'] as bool,
         id: json['id'] as int,
         paymentSourceId: json['paymentSourceId'] as int,
-        tagIds: json['tagIds'] as List<int>);
+        tagIds: json['tagIds'].cast<int>());
   }
 }
 
 List<FinancialChange> parseFinancialChanges(String responseBody) {
-  final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
+  final parsed = jsonDecode(responseBody).cast<String, dynamic>();
 
   return parsed["data"]["financialChanges"]
       .map<FinancialChange>((json) => FinancialChange.fromJson(json))
@@ -47,7 +52,7 @@ List<FinancialChange> parseFinancialChanges(String responseBody) {
 
 final String apiUrl = "http://192.168.1.111:3000/graphql";
 
-void function() async {
+Future<List<FinancialChange>> function() async {
   print("test");
   var client = http.Client();
   try {
@@ -70,8 +75,7 @@ void function() async {
         }'''
         }));
     List<FinancialChange> res = parseFinancialChanges(uriResponse.body);
-    print(res);
-    print(res);
+    return res;
   } finally {
     client.close();
   }
