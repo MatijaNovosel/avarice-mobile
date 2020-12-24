@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'services/change-service.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,7 +14,16 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Home extends StatelessWidget {
+class _MyHomepageState extends State<Home> {
+  bool _loading = false;
+
+  void _setLoading(bool val) {
+    setState(() {
+      _loading = val;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[900],
@@ -42,10 +52,28 @@ class Home extends StatelessWidget {
         ),
       ),
       body: Center(
-        child: Text(
-          'Home page',
-          style: TextStyle(color: Colors.white),
-        ),
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _loading
+                  ? CircularProgressIndicator()
+                  : GestureDetector(
+                      onTap: () {
+                        _setLoading(true);
+                        function();
+                        _setLoading(false);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(12.0),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).buttonColor,
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: Text('Get data'),
+                      ),
+                    ),
+            ]),
       ),
       drawer: Drawer(
         child: Ink(
@@ -83,7 +111,7 @@ class Home extends StatelessWidget {
                   ),
                 ),
                 ListTile(
-                  leading: Icon(Icons.home, color: Colors.grey[400]),
+                  leading: Icon(Icons.home, color: Colors.grey[600]),
                   title: Text('Pocetna stranica',
                       style: TextStyle(color: Colors.grey[400])),
                   onTap: () {
@@ -94,21 +122,20 @@ class Home extends StatelessWidget {
                   title: Text('Financijske akcije',
                       style: TextStyle(color: Colors.grey[400])),
                   backgroundColor: Colors.grey[900],
-                  leading: Icon(Icons.attach_money, color: Colors.grey[400]),
+                  leading: Icon(Icons.attach_money, color: Colors.grey[600]),
                   children: [
                     ListTile(
                       leading:
-                          Icon(Icons.access_alarm, color: Colors.grey[400]),
-                      title: Text('Financijske akcije',
+                          Icon(Icons.remove_circle, color: Colors.red[700]),
+                      title: Text('Novi trosak',
                           style: TextStyle(color: Colors.grey[400])),
                       onTap: () {
                         Navigator.pop(context);
                       },
                     ),
                     ListTile(
-                      leading:
-                          Icon(Icons.access_alarm, color: Colors.grey[400]),
-                      title: Text('Postavke',
+                      leading: Icon(Icons.add_circle, color: Colors.green[700]),
+                      title: Text('Novi dobitak',
                           style: TextStyle(color: Colors.grey[400])),
                       onTap: () {
                         Navigator.pop(context);
@@ -117,7 +144,7 @@ class Home extends StatelessWidget {
                   ],
                 ),
                 ListTile(
-                  leading: Icon(Icons.settings, color: Colors.grey[400]),
+                  leading: Icon(Icons.settings, color: Colors.grey[600]),
                   title: Text('Postavke',
                       style: TextStyle(color: Colors.grey[400])),
                   onTap: () {
@@ -129,4 +156,9 @@ class Home extends StatelessWidget {
       ),
     );
   }
+}
+
+class Home extends StatefulWidget {
+  @override
+  _MyHomepageState createState() => _MyHomepageState();
 }
