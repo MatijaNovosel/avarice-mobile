@@ -6,7 +6,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(fontFamily: 'ProximaNova'),
+      theme: ThemeData(fontFamily: 'ProximaNova', brightness: Brightness.dark),
+      themeMode: ThemeMode.dark,
       home: Home(),
     );
   }
@@ -42,7 +43,7 @@ class Home extends StatelessWidget {
       ),
       body: Center(
         child: Text(
-          'Hello World',
+          'Home page',
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -82,26 +83,47 @@ class Home extends StatelessWidget {
                   ),
                 ),
                 ListTile(
-                  leading: Icon(Icons.access_alarm),
-                  title: Text('Pocetna stranica'),
+                  leading: Icon(Icons.home, color: Colors.grey[400]),
+                  title: Text('Pocetna stranica',
+                      style: TextStyle(color: Colors.grey[400])),
                   onTap: () {
                     Navigator.pop(context);
                   },
+                ),
+                ExpansionTile(
+                  title: Text('Financijske akcije',
+                      style: TextStyle(color: Colors.grey[400])),
+                  backgroundColor: Colors.grey[900],
+                  leading: Icon(Icons.attach_money, color: Colors.grey[400]),
+                  children: [
+                    ListTile(
+                      leading:
+                          Icon(Icons.access_alarm, color: Colors.grey[400]),
+                      title: Text('Financijske akcije',
+                          style: TextStyle(color: Colors.grey[400])),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    ListTile(
+                      leading:
+                          Icon(Icons.access_alarm, color: Colors.grey[400]),
+                      title: Text('Postavke',
+                          style: TextStyle(color: Colors.grey[400])),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
                 ),
                 ListTile(
-                  leading: Icon(Icons.access_alarm),
-                  title: Text('Financijske akcije'),
+                  leading: Icon(Icons.settings, color: Colors.grey[400]),
+                  title: Text('Postavke',
+                      style: TextStyle(color: Colors.grey[400])),
                   onTap: () {
                     Navigator.pop(context);
                   },
-                ),
-                ListTile(
-                  leading: Icon(Icons.access_alarm),
-                  title: Text('Postavke'),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
+                )
               ],
             )),
       ),
