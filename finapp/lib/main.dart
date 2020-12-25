@@ -77,7 +77,7 @@ class _MyHomepageState extends State<Home> {
     _setLoading(true);
     List<FinancialChange> res = await function();
     setState(() {
-      _financialChanges = res.take(10);
+      _financialChanges.addAll(res.take(10));
     });
     _setLoading(false);
   }
@@ -87,34 +87,25 @@ class _MyHomepageState extends State<Home> {
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: CustomAppBar(),
-      body: Container(
-          margin: EdgeInsets.only(top: 12, left: 12, right: 12),
-          child: Row(children: [
-            Expanded(
-                child: _loading
+      body: SingleChildScrollView(
+          child: Container(
+              margin: EdgeInsets.all(12),
+              child: Row(children: [
+                _loading
                     ? CircularProgressIndicator()
-                    : Wrap(
-                        children: [
-                          ChangeCardWidget(
-                            financialChange: new FinancialChange(
-                                description: "Expense description",
-                                amount: 125.50,
-                                appUserId: 1,
-                                createdAt: "24.10.2020. 14:30",
-                                expense: true),
-                          ),
-                          ChangeCardWidget(
-                            financialChange: new FinancialChange(
-                                description: "Gain description",
-                                amount: 6200,
-                                appUserId: 1,
-                                createdAt: "23.10.2020. 12:30",
-                                expense: false),
-                          )
-                        ],
-                        runSpacing: 10,
-                      ))
-          ])),
+                    : Expanded(
+                        child: _financialChanges.length == 0
+                            ? Text("No changes found!")
+                            : Wrap(
+                                children: [
+                                  for (var financialChange in _financialChanges)
+                                    ChangeCardWidget(
+                                      financialChange: financialChange,
+                                    )
+                                ],
+                                runSpacing: 12,
+                              ))
+              ]))),
       drawer: CustomDrawer(),
       floatingActionButton: FloatingActionButton.extended(
           backgroundColor: Color.fromARGB(255, 255, 138, 0),

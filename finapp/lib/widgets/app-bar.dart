@@ -18,7 +18,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           Text('Finapp',
               style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 255, 138, 0))),
+                  foreground: Paint()
+                    ..shader = LinearGradient(
+                      colors: <Color>[
+                        Color.fromARGB(255, 255, 138, 0),
+                        Color.fromARGB(255, 229, 46, 113)
+                      ],
+                    ).createShader(Rect.fromLTWH(40.0, 0.0, 80.0, 200.0)))),
           Container(
               margin: EdgeInsets.only(left: 3.0),
               child: Container(
