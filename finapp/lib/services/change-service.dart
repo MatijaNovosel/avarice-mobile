@@ -22,16 +22,16 @@ Future<List<FinancialChange>> function() async {
         },
         body: json.encode({
           'query': '''query {
-          financialChanges(id: 1) {
-            id
-            amount
-            createdAt
-            description
-            expense
-            paymentSourceId
-            tagIds
-          }
-        }'''
+            financialChanges(id: 1) {
+              id
+              amount
+              createdAt
+              description
+              expense
+              paymentSourceId
+              tagIds
+            }
+          }'''
         }));
     List<FinancialChange> res = parseFinancialChanges(uriResponse.body);
     return res;

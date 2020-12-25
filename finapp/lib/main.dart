@@ -88,31 +88,52 @@ class _MyHomepageState extends State<Home> {
       backgroundColor: Colors.grey[900],
       appBar: CustomAppBar(),
       body: SingleChildScrollView(
-          child: Container(
-              margin: EdgeInsets.all(12),
-              child: Row(children: [
-                _loading
-                    ? CircularProgressIndicator()
-                    : Expanded(
-                        child: _financialChanges.length == 0
-                            ? Text("No changes found!")
-                            : Wrap(
-                                children: [
-                                  for (var financialChange in _financialChanges)
-                                    ChangeCardWidget(
-                                      financialChange: financialChange,
-                                    )
-                                ],
-                                runSpacing: 12,
-                              ))
-              ]))),
+        child: Padding(
+          padding: EdgeInsets.all(12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _loading
+                  ? Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.red,
+                        valueColor: AlwaysStoppedAnimation(Colors.red[900]),
+                      ),
+                    )
+                  : Expanded(
+                      child: _financialChanges.length == 0
+                          ? Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Icon(Icons.warning, color: Colors.red),
+                                ),
+                                Text("No changes found!"),
+                              ],
+                            )
+                          : Wrap(
+                              children: [
+                                for (var financialChange in _financialChanges)
+                                  ChangeCardWidget(
+                                    financialChange: financialChange,
+                                  ),
+                              ],
+                              runSpacing: 12,
+                            ),
+                    ),
+            ],
+          ),
+        ),
+      ),
       drawer: CustomDrawer(),
       floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: Color.fromARGB(255, 255, 138, 0),
-          foregroundColor: Colors.grey[900],
-          onPressed: _setData,
-          icon: Icon(Icons.download_rounded),
-          label: Text("Get data")),
+        backgroundColor: Color.fromARGB(255, 255, 138, 0),
+        foregroundColor: Colors.grey[900],
+        onPressed: _setData,
+        icon: Icon(Icons.download_rounded),
+        label: Text("Get data"),
+      ),
     );
   }
 }
