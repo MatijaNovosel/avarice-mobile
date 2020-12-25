@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'services/change-service.dart';
 import "models/financial-change.dart";
 import "widgets/change-card.dart";
+import "widgets/app-bar.dart";
+import "widgets/drawer.dart";
 
 void main() => runApp(MyApp());
 
@@ -14,23 +16,26 @@ class FinancialChanges extends StatefulWidget {
 }
 
 class _FinancialChangesState extends State<FinancialChanges> {
-  final _financialChanges = <FinancialChange>[];
+  final List<FinancialChange> _financialChanges = [];
 
   @override
   Widget build(BuildContext context) {
-    return ChangeCardWidget();
+    return _buildFinancialChanges();
   }
 
   Widget _buildRow(FinancialChange fc) {
-    return ChangeCardWidget(
-      financialChange: fc,
-    );
+    return ListTile(title: Text("Bruh"));
   }
 
   Widget _buildFinancialChanges() {
     return ListView.builder(
+        shrinkWrap: true,
         padding: EdgeInsets.all(16.0),
         itemBuilder: (context, i) {
+          if (_financialChanges.length == 0) {
+            return ListTile(title: Text("Bruh"));
+          }
+
           if (i.isOdd) return Divider();
 
           final index = i ~/ 2;
@@ -53,6 +58,11 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class Home extends StatefulWidget {
+  @override
+  _MyHomepageState createState() => _MyHomepageState();
+}
+
 class _MyHomepageState extends State<Home> {
   bool _loading = false;
   List<FinancialChange> _financialChanges = [];
@@ -73,146 +83,34 @@ class _MyHomepageState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[900],
-      appBar: AppBar(
-        titleSpacing: 0,
-        backgroundColor: Colors.grey[850],
-        title: Row(
+      appBar: CustomAppBar(),
+      body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          textBaseline: TextBaseline.ideographic,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Finapp',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 255, 138, 0))),
-            Container(
-                margin: EdgeInsets.only(left: 3.0),
-                child: Container(
-                    margin: EdgeInsets.only(top: 5.0),
-                    child: Text('by Matija Novosel',
-                        style:
-                            TextStyle(fontSize: 13, color: Colors.grey[400])))),
-            Spacer(),
-            Container(
-                margin: EdgeInsets.only(right: 15.0), child: Icon(Icons.logout))
-          ],
-        ),
-      ),
-      body: Center(
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _loading
-                  ? CircularProgressIndicator()
-                  : GestureDetector(
-                      onTap: () async {
-                        _setLoading(true);
-                        List<FinancialChange> res = await function();
-                        _setData(res);
-                        _setLoading(false);
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(12.0),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).buttonColor,
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        child: Text('Get data'),
+            _loading
+                ? CircularProgressIndicator()
+                : GestureDetector(
+                    onTap: () async {
+                      _setLoading(true);
+                      List<FinancialChange> res = await function();
+                      _setData(res);
+                      _setLoading(false);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(12.0),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).buttonColor,
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
+                      child: Text('Get data'),
                     ),
-              Container(
-                  margin: EdgeInsets.all(12),
-                  child: ListView(shrinkWrap: true, children: [
-                    for (var i in _financialChanges.getRange(
-                        0, _financialChanges.length != 0 ? 10 : 0))
-                      ListTile(title: Text(i.description + " " + i.createdAt))
-                  ]))
-            ]),
-      ),
-      drawer: Drawer(
-        child: Ink(
-            color: Colors.grey[850],
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: <Widget>[
-                DrawerHeader(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                          width: 80,
-                          height: 80,
-                          margin: const EdgeInsets.only(right: 14),
-                          decoration: new BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: new DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: AssetImage("assets/images/zhu.jpg")))),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Matija Novosel",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color.fromARGB(255, 255, 138, 0))),
-                          Text("mnovosel5@gmail.com",
-                              style: TextStyle(color: Colors.grey[400]))
-                        ],
-                      )
-                    ],
                   ),
-                ),
-                ListTile(
-                  leading: Icon(Icons.home, color: Colors.grey[600]),
-                  title: Text('Pocetna stranica',
-                      style: TextStyle(color: Colors.grey[400])),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                ExpansionTile(
-                  title: Text('Financijske akcije',
-                      style: TextStyle(color: Colors.grey[400])),
-                  backgroundColor: Colors.grey[900],
-                  leading: Icon(Icons.attach_money, color: Colors.grey[600]),
-                  children: [
-                    ListTile(
-                      leading:
-                          Icon(Icons.remove_circle, color: Colors.red[700]),
-                      title: Text('Novi trosak',
-                          style: TextStyle(color: Colors.grey[400])),
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.add_circle, color: Colors.green[700]),
-                      title: Text('Novi dobitak',
-                          style: TextStyle(color: Colors.grey[400])),
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                ),
-                ListTile(
-                  leading: Icon(Icons.settings, color: Colors.grey[600]),
-                  title: Text('Postavke',
-                      style: TextStyle(color: Colors.grey[400])),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                )
-              ],
-            )),
-      ),
+            Container(
+                margin: EdgeInsets.all(12),
+                child: Container(child: Text("Hello")))
+          ]),
+      drawer: CustomDrawer(),
     );
   }
-}
-
-class Home extends StatefulWidget {
-  @override
-  _MyHomepageState createState() => _MyHomepageState();
 }

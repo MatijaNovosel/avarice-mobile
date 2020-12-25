@@ -4,13 +4,10 @@ import 'package:flutter/material.dart';
 class _ChangeCardState extends State<ChangeCardWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        children: [
-          Text(widget.financialChange.description),
-        ],
-      ),
-    );
+    return ListTile(
+        title: Text(widget.financialChange.description == null
+            ? 'Test'
+            : widget.financialChange.description));
   }
 }
 
