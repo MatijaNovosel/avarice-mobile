@@ -1,8 +1,46 @@
 import 'package:flutter/material.dart';
 import 'services/change-service.dart';
 import "models/financial-change.dart";
+import "widgets/change-card.dart";
 
 void main() => runApp(MyApp());
+
+class FinancialChanges extends StatefulWidget {
+  final List<FinancialChange> financialChanges;
+  const FinancialChanges({this.financialChanges});
+
+  @override
+  _FinancialChangesState createState() => _FinancialChangesState();
+}
+
+class _FinancialChangesState extends State<FinancialChanges> {
+  final _financialChanges = <FinancialChange>[];
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeCardWidget();
+  }
+
+  Widget _buildRow(FinancialChange fc) {
+    return ChangeCardWidget(
+      financialChange: fc,
+    );
+  }
+
+  Widget _buildFinancialChanges() {
+    return ListView.builder(
+        padding: EdgeInsets.all(16.0),
+        itemBuilder: (context, i) {
+          if (i.isOdd) return Divider();
+
+          final index = i ~/ 2;
+          if (index >= _financialChanges.length) {
+            _financialChanges.addAll(widget.financialChanges.take(10));
+          }
+          return _buildRow(_financialChanges[index]);
+        });
+  }
+}
 
 class MyApp extends StatelessWidget {
   @override
