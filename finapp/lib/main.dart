@@ -93,25 +93,35 @@ class _MyHomepageState extends State<Home> {
             Expanded(
                 child: _loading
                     ? CircularProgressIndicator()
-                    : Column(children: [
-                        ChangeCardWidget(
-                          financialChange: new FinancialChange(
-                              description: "Description",
-                              amount: 125.50,
-                              appUserId: 1,
-                              createdAt: "24.10.2020. 14:30",
-                              expense: true),
-                        )
-                      ]))
+                    : Wrap(
+                        children: [
+                          ChangeCardWidget(
+                            financialChange: new FinancialChange(
+                                description: "Expense description",
+                                amount: 125.50,
+                                appUserId: 1,
+                                createdAt: "24.10.2020. 14:30",
+                                expense: true),
+                          ),
+                          ChangeCardWidget(
+                            financialChange: new FinancialChange(
+                                description: "Gain description",
+                                amount: 6200,
+                                appUserId: 1,
+                                createdAt: "23.10.2020. 12:30",
+                                expense: false),
+                          )
+                        ],
+                        runSpacing: 10,
+                      ))
           ])),
       drawer: CustomDrawer(),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Color.fromARGB(255, 255, 138, 0),
-        foregroundColor: Colors.grey[900],
-        onPressed: _setData,
-        tooltip: 'Get data',
-        child: Icon(Icons.refresh),
-      ),
+      floatingActionButton: FloatingActionButton.extended(
+          backgroundColor: Color.fromARGB(255, 255, 138, 0),
+          foregroundColor: Colors.grey[900],
+          onPressed: _setData,
+          icon: Icon(Icons.download_rounded),
+          label: Text("Get data")),
     );
   }
 }

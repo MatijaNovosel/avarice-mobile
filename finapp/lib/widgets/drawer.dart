@@ -78,6 +78,14 @@ class CustomDrawer extends StatelessWidget {
                 onTap: () {
                   Navigator.pop(context);
                 },
+              ),
+              ListTile(
+                leading: Icon(Icons.logout, color: Colors.grey[600]),
+                title: Text('Odjavite se',
+                    style: TextStyle(color: Colors.grey[400])),
+                onTap: () {
+                  Navigator.pop(context);
+                },
               )
             ],
           )),

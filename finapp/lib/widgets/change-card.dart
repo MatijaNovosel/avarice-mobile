@@ -8,7 +8,9 @@ class _ChangeCardState extends State<ChangeCardWidget> {
       height: 65,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Colors.red[800],
+        color: widget.financialChange.expense
+            ? Colors.red[800]
+            : Colors.green[800],
       ),
       child: Row(
         children: <Widget>[
@@ -18,7 +20,7 @@ class _ChangeCardState extends State<ChangeCardWidget> {
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(10),
                   bottomLeft: Radius.circular(10)),
-              color: Colors.red,
+              color: widget.financialChange.expense ? Colors.red : Colors.green,
             ),
           ),
           Container(
@@ -29,10 +31,12 @@ class _ChangeCardState extends State<ChangeCardWidget> {
                 children: [
                   Text(
                       "${widget.financialChange.description} • ${widget.financialChange.createdAt}",
-                      style: TextStyle(fontSize: 12)),
-                  Text("${widget.financialChange.amount} HRK",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold))
+                      style: TextStyle(fontSize: 12, color: Colors.grey[300])),
+                  Container(
+                      margin: EdgeInsets.only(top: 2),
+                      child: Text("${widget.financialChange.amount} HRK",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold)))
                 ],
               ))
         ],

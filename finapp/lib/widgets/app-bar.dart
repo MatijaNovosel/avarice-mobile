@@ -12,7 +12,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       titleSpacing: 0,
       backgroundColor: Colors.grey[850],
       title: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.baseline,
         textBaseline: TextBaseline.ideographic,
         children: [
           Text('Finapp',
@@ -24,11 +24,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               child: Container(
                   margin: EdgeInsets.only(top: 5.0),
                   child: Text('by Matija Novosel',
-                      style:
-                          TextStyle(fontSize: 13, color: Colors.grey[400])))),
-          Spacer(),
-          Container(
-              margin: EdgeInsets.only(right: 15.0), child: Icon(Icons.logout))
+                      style: TextStyle(fontSize: 13, color: Colors.grey[400]))))
         ],
       ),
     );
