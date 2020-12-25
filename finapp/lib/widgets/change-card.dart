@@ -18,27 +18,32 @@ class _ChangeCardState extends State<ChangeCardWidget> {
             width: 14,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  bottomLeft: Radius.circular(10)),
+                topLeft: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+              ),
               color: widget.financialChange.expense ? Colors.red : Colors.green,
             ),
           ),
           Container(
-              padding: EdgeInsets.only(left: 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                      "${widget.financialChange.description} • ${widget.financialChange.createdAt}",
-                      style: TextStyle(fontSize: 12, color: Colors.grey[300])),
-                  Container(
-                      margin: EdgeInsets.only(top: 2),
-                      child: Text("${widget.financialChange.amount} HRK",
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold)))
-                ],
-              ))
+            padding: EdgeInsets.only(left: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "${widget.financialChange.description} • ${widget.financialChange.createdAt}",
+                  style: TextStyle(fontSize: 12, color: Colors.grey[300]),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 2),
+                  child: Text(
+                    "${widget.financialChange.amount} HRK",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

@@ -77,7 +77,7 @@ class _MyHomepageState extends State<Home> {
     _setLoading(true);
     List<FinancialChange> res = await function();
     setState(() {
-      _financialChanges.addAll(res.take(10));
+      _financialChanges.addAll(res.take(20));
     });
     _setLoading(false);
   }
