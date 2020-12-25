@@ -4,10 +4,40 @@ import 'package:flutter/material.dart';
 class _ChangeCardState extends State<ChangeCardWidget> {
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-        title: Text(widget.financialChange.description == null
-            ? 'Test'
-            : widget.financialChange.description));
+    return Container(
+      height: 65,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.red[800],
+      ),
+      child: Row(
+        children: <Widget>[
+          Container(
+            width: 14,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  bottomLeft: Radius.circular(10)),
+              color: Colors.red,
+            ),
+          ),
+          Container(
+              padding: EdgeInsets.only(left: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                      "${widget.financialChange.description} • ${widget.financialChange.createdAt}",
+                      style: TextStyle(fontSize: 12)),
+                  Text("${widget.financialChange.amount} HRK",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold))
+                ],
+              ))
+        ],
+      ),
+    );
   }
 }
 

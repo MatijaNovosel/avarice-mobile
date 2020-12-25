@@ -5,7 +5,7 @@ import "widgets/change-card.dart";
 import "widgets/app-bar.dart";
 import "widgets/drawer.dart";
 
-void main() => runApp(MyApp());
+void main() => runApp(Main());
 
 class FinancialChanges extends StatefulWidget {
   final List<FinancialChange> financialChanges;
@@ -47,7 +47,7 @@ class _FinancialChangesState extends State<FinancialChanges> {
   }
 }
 
-class MyApp extends StatelessWidget {
+class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -73,10 +73,13 @@ class _MyHomepageState extends State<Home> {
     });
   }
 
-  void _setData(List<FinancialChange> val) {
+  void _setData() async {
+    _setLoading(true);
+    List<FinancialChange> res = await function();
     setState(() {
-      _financialChanges = val;
+      _financialChanges = res.take(10);
     });
+    _setLoading(false);
   }
 
   @override
@@ -84,33 +87,31 @@ class _MyHomepageState extends State<Home> {
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: CustomAppBar(),
-      body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _loading
-                ? CircularProgressIndicator()
-                : GestureDetector(
-                    onTap: () async {
-                      _setLoading(true);
-                      List<FinancialChange> res = await function();
-                      _setData(res);
-                      _setLoading(false);
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(12.0),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).buttonColor,
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: Text('Get data'),
-                    ),
-                  ),
-            Container(
-                margin: EdgeInsets.all(12),
-                child: Container(child: Text("Hello")))
-          ]),
+      body: Container(
+          margin: EdgeInsets.only(top: 12, left: 12, right: 12),
+          child: Row(children: [
+            Expanded(
+                child: _loading
+                    ? CircularProgressIndicator()
+                    : Column(children: [
+                        ChangeCardWidget(
+                          financialChange: new FinancialChange(
+                              description: "Description",
+                              amount: 125.50,
+                              appUserId: 1,
+                              createdAt: "24.10.2020. 14:30",
+                              expense: true),
+                        )
+                      ]))
+          ])),
       drawer: CustomDrawer(),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Color.fromARGB(255, 255, 138, 0),
+        foregroundColor: Colors.grey[900],
+        onPressed: _setData,
+        tooltip: 'Get data',
+        child: Icon(Icons.refresh),
+      ),
     );
   }
 }
