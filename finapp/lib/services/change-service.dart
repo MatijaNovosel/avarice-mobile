@@ -33,8 +33,7 @@ Future<List<FinancialChange>> getFinancialChanges() async {
             }
           }'''
         }));
-    List<FinancialChange> res = parseFinancialChanges(uriResponse.body);
-    return res;
+    return parseFinancialChanges(uriResponse.body);
   } finally {
     client.close();
   }
