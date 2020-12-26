@@ -7,46 +7,6 @@ import "widgets/drawer.dart";
 
 void main() => runApp(Main());
 
-class FinancialChanges extends StatefulWidget {
-  final List<FinancialChange> financialChanges;
-  const FinancialChanges({this.financialChanges});
-
-  @override
-  _FinancialChangesState createState() => _FinancialChangesState();
-}
-
-class _FinancialChangesState extends State<FinancialChanges> {
-  final List<FinancialChange> _financialChanges = [];
-
-  @override
-  Widget build(BuildContext context) {
-    return _buildFinancialChanges();
-  }
-
-  Widget _buildRow(FinancialChange fc) {
-    return ListTile(title: Text("Bruh"));
-  }
-
-  Widget _buildFinancialChanges() {
-    return ListView.builder(
-        shrinkWrap: true,
-        padding: EdgeInsets.all(16.0),
-        itemBuilder: (context, i) {
-          if (_financialChanges.length == 0) {
-            return ListTile(title: Text("Bruh"));
-          }
-
-          if (i.isOdd) return Divider();
-
-          final index = i ~/ 2;
-          if (index >= _financialChanges.length) {
-            _financialChanges.addAll(widget.financialChanges.take(10));
-          }
-          return _buildRow(_financialChanges[index]);
-        });
-  }
-}
-
 class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
