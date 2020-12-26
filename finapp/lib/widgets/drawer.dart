@@ -15,25 +15,33 @@ class CustomDrawer extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                        width: 80,
-                        height: 80,
-                        margin: const EdgeInsets.only(right: 14),
-                        decoration: new BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: new DecorationImage(
-                                fit: BoxFit.fill,
-                                image: AssetImage("assets/images/zhu.jpg")))),
+                      width: 80,
+                      height: 80,
+                      margin: const EdgeInsets.only(right: 14),
+                      decoration: new BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: new DecorationImage(
+                          fit: BoxFit.fill,
+                          image: AssetImage("assets/images/zhu.jpg"),
+                        ),
+                      ),
+                    ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Matija Novosel",
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 255, 138, 0))),
-                        Text("mnovosel5@gmail.com",
-                            style: TextStyle(color: Colors.grey[400]))
+                        Text(
+                          "Matija Novosel",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 255, 138, 0),
+                          ),
+                        ),
+                        Text(
+                          "mnovosel5@gmail.com",
+                          style: TextStyle(color: Colors.grey[400]),
+                        )
                       ],
                     )
                   ],
@@ -41,15 +49,19 @@ class CustomDrawer extends StatelessWidget {
               ),
               ListTile(
                 leading: Icon(Icons.home, color: Colors.grey[600]),
-                title: Text('Pocetna stranica',
-                    style: TextStyle(color: Colors.grey[400])),
+                title: Text(
+                  'Pocetna stranica',
+                  style: TextStyle(color: Colors.grey[400]),
+                ),
                 onTap: () {
                   Navigator.pop(context);
                 },
               ),
               ExpansionTile(
-                title: Text('Financijske akcije',
-                    style: TextStyle(color: Colors.grey[400])),
+                title: Text(
+                  'Financijske akcije',
+                  style: TextStyle(color: Colors.grey[400]),
+                ),
                 backgroundColor: Colors.grey[900],
                 leading: Icon(Icons.attach_money, color: Colors.grey[600]),
                 children: [
@@ -73,16 +85,20 @@ class CustomDrawer extends StatelessWidget {
               ),
               ListTile(
                 leading: Icon(Icons.settings, color: Colors.grey[600]),
-                title:
-                    Text('Postavke', style: TextStyle(color: Colors.grey[400])),
+                title: Text(
+                  'Postavke',
+                  style: TextStyle(color: Colors.grey[400]),
+                ),
                 onTap: () {
                   Navigator.pop(context);
                 },
               ),
               ListTile(
                 leading: Icon(Icons.logout, color: Colors.grey[600]),
-                title: Text('Odjavite se',
-                    style: TextStyle(color: Colors.grey[400])),
+                title: Text(
+                  'Odjavite se',
+                  style: TextStyle(color: Colors.grey[400]),
+                ),
                 onTap: () {
                   Navigator.pop(context);
                 },

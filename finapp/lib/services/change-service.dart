@@ -12,7 +12,7 @@ List<FinancialChange> parseFinancialChanges(String responseBody) {
       .toList();
 }
 
-Future<List<FinancialChange>> function() async {
+Future<List<FinancialChange>> getFinancialChanges() async {
   var client = http.Client();
   try {
     var uriResponse = await client.post(Uri.parse(apiUrl),

@@ -64,76 +64,52 @@ class Home extends StatefulWidget {
 }
 
 class _MyHomepageState extends State<Home> {
-  bool _loading = false;
-  List<FinancialChange> _financialChanges = [];
-
-  void _setLoading(bool val) {
-    setState(() {
-      _loading = val;
-    });
-  }
-
-  void _setData() async {
-    _setLoading(true);
-    List<FinancialChange> res = await function();
-    setState(() {
-      _financialChanges.addAll(res.take(20));
-    });
-    _setLoading(false);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: CustomAppBar(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(12),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _loading
-                  ? Padding(
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: SingleChildScrollView(
+          child: FutureBuilder<List<FinancialChange>>(
+            future: getFinancialChanges(),
+            builder: (BuildContext context,
+                AsyncSnapshot<List<FinancialChange>> snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return Center(
+                    child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CircularProgressIndicator(
                         backgroundColor: Colors.red,
                         valueColor: AlwaysStoppedAnimation(Colors.red[900]),
                       ),
-                    )
-                  : Expanded(
-                      child: _financialChanges.length == 0
-                          ? Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Icon(Icons.warning, color: Colors.red),
-                                ),
-                                Text("No changes found!"),
-                              ],
-                            )
-                          : Wrap(
-                              children: [
-                                for (var financialChange in _financialChanges)
-                                  ChangeCardWidget(
-                                    financialChange: financialChange,
-                                  ),
-                              ],
-                              runSpacing: 12,
-                            ),
                     ),
-            ],
+                  );
+                default:
+                  if (snapshot.hasError)
+                    return Text('Error: ${snapshot.error}');
+                  else
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (context, i) {
+                        if (i.isOdd)
+                          return SizedBox(
+                            height: 12,
+                          );
+                        final index = i ~/ 2;
+                        return ChangeCardWidget(
+                            financialChange: snapshot.data[index]);
+                      },
+                    );
+              }
+            },
           ),
         ),
       ),
       drawer: CustomDrawer(),
-      floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: Color.fromARGB(255, 255, 138, 0),
-        foregroundColor: Colors.grey[900],
-        onPressed: _setData,
-        icon: Icon(Icons.download_rounded),
-        label: Text("Get data"),
-      ),
     );
   }
 }
