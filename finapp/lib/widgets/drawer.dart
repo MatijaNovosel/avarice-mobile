@@ -50,7 +50,7 @@ class CustomDrawer extends StatelessWidget {
               ListTile(
                 leading: Icon(Icons.home, color: Colors.grey[600]),
                 title: Text(
-                  'Pocetna stranica',
+                  'Home',
                   style: TextStyle(color: Colors.grey[400]),
                 ),
                 onTap: () {
@@ -59,7 +59,7 @@ class CustomDrawer extends StatelessWidget {
               ),
               ExpansionTile(
                 title: Text(
-                  'Financijske akcije',
+                  'Financial actions',
                   style: TextStyle(color: Colors.grey[400]),
                 ),
                 backgroundColor: Colors.grey[900],
@@ -67,7 +67,7 @@ class CustomDrawer extends StatelessWidget {
                 children: [
                   ListTile(
                     leading: Icon(Icons.remove_circle, color: Colors.red[700]),
-                    title: Text('Novi trosak',
+                    title: Text('New expense',
                         style: TextStyle(color: Colors.grey[400])),
                     onTap: () {
                       Navigator.pop(context);
@@ -75,7 +75,7 @@ class CustomDrawer extends StatelessWidget {
                   ),
                   ListTile(
                     leading: Icon(Icons.add_circle, color: Colors.green[700]),
-                    title: Text('Novi dobitak',
+                    title: Text('New gain',
                         style: TextStyle(color: Colors.grey[400])),
                     onTap: () {
                       Navigator.pop(context);
@@ -86,7 +86,7 @@ class CustomDrawer extends StatelessWidget {
               ListTile(
                 leading: Icon(Icons.settings, color: Colors.grey[600]),
                 title: Text(
-                  'Postavke',
+                  'Settings',
                   style: TextStyle(color: Colors.grey[400]),
                 ),
                 onTap: () {
@@ -96,7 +96,7 @@ class CustomDrawer extends StatelessWidget {
               ListTile(
                 leading: Icon(Icons.logout, color: Colors.grey[600]),
                 title: Text(
-                  'Odjavite se',
+                  'Log out',
                   style: TextStyle(color: Colors.grey[400]),
                 ),
                 onTap: () {
