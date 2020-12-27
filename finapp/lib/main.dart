@@ -5,6 +5,8 @@ import "widgets/change-card.dart";
 import "widgets/app-bar.dart";
 import "widgets/drawer.dart";
 import 'package:flutter_mobile_vision/flutter_mobile_vision.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import "views/new-entry.dart";
 
 Future<Null> _read() async {
   List<OcrText> texts = [];
@@ -27,9 +29,15 @@ class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(fontFamily: 'ProximaNova', brightness: Brightness.dark),
+      theme: ThemeData(
+        fontFamily: 'ProximaNova',
+        brightness: Brightness.dark,
+      ),
       themeMode: ThemeMode.dark,
-      home: Home(),
+      routes: {
+        '/': (context) => Home(),
+        '/details': (context) => NewEntry(),
+      },
     );
   }
 }
@@ -43,7 +51,7 @@ class _MyHomepageState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    FlutterMobileVision.start();
+    // FlutterMobileVision.start();
   }
 
   @override
@@ -52,12 +60,23 @@ class _MyHomepageState extends State<Home> {
       backgroundColor: Colors.grey[900],
       appBar: CustomAppBar(),
       body: Padding(
-        padding: const EdgeInsets.only(left: 12, right: 12),
+        padding: const EdgeInsets.only(
+          left: 12,
+          right: 12,
+        ),
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 20.0, bottom: 20),
-              child: Text("Financial changes", style: TextStyle(fontSize: 16)),
+              padding: const EdgeInsets.only(
+                top: 20.0,
+                bottom: 20,
+              ),
+              child: Text(
+                "Financial changes",
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
             ),
             FutureBuilder<List<FinancialChange>>(
               future: getFinancialChanges(),
@@ -67,9 +86,9 @@ class _MyHomepageState extends State<Home> {
                   case ConnectionState.waiting:
                     {
                       return Center(
-                        child: CircularProgressIndicator(
-                          backgroundColor: Colors.red,
-                          valueColor: AlwaysStoppedAnimation(Colors.red[900]),
+                        child: SpinKitSquareCircle(
+                          color: Colors.red,
+                          size: 50.0,
                         ),
                       );
                     }
@@ -86,9 +105,12 @@ class _MyHomepageState extends State<Home> {
                               return Column(
                                 children: [
                                   ChangeCardWidget(
-                                      financialChange: snapshot.data[i],
-                                      visible: false),
-                                  SizedBox(height: 12),
+                                    financialChange: snapshot.data[i],
+                                    visible: false,
+                                  ),
+                                  SizedBox(
+                                    height: 12,
+                                  ),
                                 ],
                               );
                             },
@@ -103,11 +125,22 @@ class _MyHomepageState extends State<Home> {
         ),
       ),
       drawer: CustomDrawer(),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _read,
-        icon: Icon(Icons.camera_alt_rounded),
-        backgroundColor: Colors.orange,
-        label: Text("Scan"),
+      floatingActionButton: SizedBox(
+        height: 48,
+        width: 48,
+        child: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(
+              context,
+              '/details',
+            );
+          },
+          backgroundColor: Colors.green[600],
+          foregroundColor: Colors.white,
+          child: Icon(
+            Icons.create_rounded,
+          ),
+        ),
       ),
     );
   }
