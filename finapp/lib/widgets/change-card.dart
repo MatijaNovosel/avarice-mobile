@@ -37,7 +37,10 @@ class _ChangeCardState extends State<ChangeCardWidget> {
                 Padding(
                   padding: EdgeInsets.only(top: 2),
                   child: Text(
-                    "${widget.financialChange.amount} HRK",
+                    widget.visible
+                        ? "${widget.financialChange.amount} HRK"
+                        : "${widget.financialChange.amount} HRK"
+                            .replaceAll(new RegExp(r'[0-9]'), '*'),
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -52,7 +55,9 @@ class _ChangeCardState extends State<ChangeCardWidget> {
 
 class ChangeCardWidget extends StatefulWidget {
   final FinancialChange financialChange;
-  const ChangeCardWidget({Key key, this.financialChange}) : super(key: key);
+  final bool visible;
+  const ChangeCardWidget({Key key, this.financialChange, this.visible})
+      : super(key: key);
   @override
   _ChangeCardState createState() => _ChangeCardState();
 }
