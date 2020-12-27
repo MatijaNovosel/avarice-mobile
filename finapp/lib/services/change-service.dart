@@ -7,7 +7,7 @@ import "../constants/api-constants.dart";
 
 List<FinancialChange> parseFinancialChanges(String responseBody) {
   final parsed = jsonDecode(responseBody).cast<String, dynamic>();
-  return parsed["data"]["financialChanges"]
+  return parsed["data"]["financialChanges"]["items"]
       .map<FinancialChange>((json) => FinancialChange.fromJson(json))
       .toList();
 }
@@ -22,14 +22,17 @@ Future<List<FinancialChange>> getFinancialChanges() async {
         },
         body: json.encode({
           'query': '''query {
-            financialChanges(id: 1) {
-              id
-              amount
-              createdAt
-              description
-              expense
-              paymentSourceId
-              tagIds
+            financialChanges(id: 1, take: 13, skip: 0) {
+              count
+              items {
+                id
+                amount
+                createdAt
+                description
+                expense
+                paymentSourceId
+                tagIds
+              }
             }
           }'''
         }));
