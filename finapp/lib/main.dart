@@ -4,6 +4,22 @@ import "models/financial-change.dart";
 import "widgets/change-card.dart";
 import "widgets/app-bar.dart";
 import "widgets/drawer.dart";
+import 'package:flutter_mobile_vision/flutter_mobile_vision.dart';
+
+Future<Null> _read() async {
+  List<OcrText> texts = [];
+  try {
+    texts = await FlutterMobileVision.read(
+      camera: FlutterMobileVision.CAMERA_BACK,
+      waitTap: true,
+      showText: true,
+    );
+  } on Exception {
+    texts.add(
+      OcrText('Failed to recognize text'),
+    );
+  }
+}
 
 void main() => runApp(Main());
 
@@ -24,6 +40,12 @@ class Home extends StatefulWidget {
 }
 
 class _MyHomepageState extends State<Home> {
+  @override
+  void initState() {
+    super.initState();
+    FlutterMobileVision.start();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +104,7 @@ class _MyHomepageState extends State<Home> {
       ),
       drawer: CustomDrawer(),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: _read,
         icon: Icon(Icons.camera_alt_rounded),
         backgroundColor: Colors.orange,
         label: Text("Scan"),
