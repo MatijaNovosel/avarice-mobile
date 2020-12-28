@@ -10,6 +10,7 @@ class NewEntry extends StatefulWidget {
 class _NewEntryState extends State<NewEntry> {
   List<bool> _checkboxValues = List.filled(TagEnum.keys.length, false);
   List<int> _selectedTags = [];
+  bool _expense = false;
 
   @override
   Widget build(BuildContext context) {
@@ -41,38 +42,154 @@ class _NewEntryState extends State<NewEntry> {
         ),
         child: Column(
           children: [
-            TextFormField(
-              decoration: const InputDecoration(
-                icon: Icon(Icons.description),
-                hintText: 'Entry description',
-                labelText: 'Description *',
+            ListTile(
+              leading: Padding(
+                padding: const EdgeInsets.only(
+                  top: 8,
+                ),
+                child: Icon(
+                  Icons.description_rounded,
+                  color: Colors.grey[350],
+                ),
               ),
-            ),
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: TagEnum.keys.length,
-              itemBuilder: (context, i) {
-                return CheckboxListTile(
-                  value: _checkboxValues[i],
-                  onChanged: (bool val) {
-                    setState(() {
-                      _checkboxValues[i] = !_checkboxValues[i];
-                      if (val)
-                        _selectedTags.add(TagEnum.keys.elementAt(i));
-                      else
-                        _selectedTags.remove(TagEnum.keys.elementAt(i));
-                    });
-                  },
-                  title: Text(
-                    parseTag(TagEnum.keys.elementAt(i)),
+              title: TextField(
+                decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey[350],
+                    ),
                   ),
-                  secondary: Icon(
-                    parseTagIcon(TagEnum.keys.elementAt(i)),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey[350],
+                    ),
+                  ),
+                  border: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey[350],
+                    ),
+                  ),
+                  hintText: "Entry description",
+                  isDense: true,
+                  labelText: "Description",
+                  focusColor: Colors.grey[350],
+                  fillColor: Colors.grey[350],
+                  hoverColor: Colors.grey[350],
+                  alignLabelWithHint: true,
+                  labelStyle: TextStyle(
                     color: Colors.grey[350],
                   ),
-                  activeColor: Colors.blue,
-                );
-              },
+                ),
+              ),
+            ),
+            ListTile(
+              leading: Padding(
+                padding: const EdgeInsets.only(
+                  top: 8,
+                ),
+                child: Icon(
+                  Icons.attach_money_rounded,
+                  color: Colors.grey[350],
+                ),
+              ),
+              title: TextField(
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  suffix: Text("HRK"),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey[350],
+                    ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey[350],
+                    ),
+                  ),
+                  border: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey[350],
+                    ),
+                  ),
+                  hintText: "Entry amount",
+                  isDense: true,
+                  labelText: "Amount",
+                  focusColor: Colors.grey[350],
+                  fillColor: Colors.grey[350],
+                  hoverColor: Colors.grey[350],
+                  alignLabelWithHint: true,
+                  labelStyle: TextStyle(
+                    color: Colors.grey[350],
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                top: 6,
+                bottom: 6,
+              ),
+              child: SwitchListTile(
+                title: const Text('Expense'),
+                value: _expense,
+                activeColor: Colors.orange,
+                onChanged: (bool value) {
+                  setState(() {
+                    _expense = !_expense;
+                  });
+                },
+                secondary: const Icon(
+                  Icons.done_all_rounded,
+                ),
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  width: 1,
+                  color: Colors.grey[350],
+                ),
+              ),
+              constraints: BoxConstraints(
+                maxHeight: 300,
+              ),
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: TagEnum.keys.length,
+                itemBuilder: (context, i) {
+                  return CheckboxListTile(
+                    value: _checkboxValues[i],
+                    onChanged: (bool val) {
+                      setState(() {
+                        _checkboxValues[i] = !_checkboxValues[i];
+                        if (val)
+                          _selectedTags.add(
+                            TagEnum.keys.elementAt(
+                              i,
+                            ),
+                          );
+                        else
+                          _selectedTags.remove(
+                            TagEnum.keys.elementAt(i),
+                          );
+                      });
+                    },
+                    title: Text(
+                      parseTag(
+                        TagEnum.keys.elementAt(i),
+                      ),
+                    ),
+                    secondary: Icon(
+                      parseTagIcon(
+                        TagEnum.keys.elementAt(i),
+                      ),
+                      color: Colors.grey[350],
+                    ),
+                    activeColor: Colors.orange,
+                  );
+                },
+              ),
             ),
           ],
         ),
