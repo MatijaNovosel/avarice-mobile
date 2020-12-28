@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import "../widgets/app-bar.dart";
-import "../widgets/drawer.dart";
 
 class NewEntry extends StatefulWidget {
   @override
@@ -12,7 +10,25 @@ class _NewEntryState extends State<NewEntry> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[900],
-      appBar: CustomAppBar(),
+      appBar: AppBar(
+        titleSpacing: 0,
+        backgroundColor: Colors.grey[850],
+        title: Text(
+          'New entry',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            foreground: Paint()
+              ..shader = LinearGradient(
+                colors: <Color>[
+                  Color.fromARGB(255, 255, 138, 0),
+                  Color.fromARGB(255, 229, 46, 113)
+                ],
+              ).createShader(
+                Rect.fromLTWH(40.0, 0.0, 80.0, 200.0),
+              ),
+          ),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.only(
           left: 12,
@@ -20,20 +36,6 @@ class _NewEntryState extends State<NewEntry> {
         ),
         child: Column(
           children: [
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  top: 20.0,
-                  bottom: 20,
-                ),
-                child: Text(
-                  "New entry",
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            ),
             TextFormField(
               decoration: const InputDecoration(
                 icon: Icon(Icons.description),
@@ -53,7 +55,6 @@ class _NewEntryState extends State<NewEntry> {
           ],
         ),
       ),
-      drawer: CustomDrawer(),
     );
   }
 }

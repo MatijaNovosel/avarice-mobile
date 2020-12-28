@@ -130,9 +130,11 @@ class _MyHomepageState extends State<Home> {
         width: 48,
         child: FloatingActionButton(
           onPressed: () {
-            Navigator.pushNamed(
+            Navigator.push(
               context,
-              '/details',
+              MaterialPageRoute(
+                builder: (context) => NewEntry(),
+              ),
             );
           },
           backgroundColor: Colors.green[600],

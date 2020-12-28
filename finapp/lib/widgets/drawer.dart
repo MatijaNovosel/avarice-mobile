@@ -53,26 +53,6 @@ class CustomDrawer extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(
-                Icons.home,
-                color: Colors.grey[600],
-              ),
-              title: Text(
-                'Home',
-                style: TextStyle(
-                  color: Colors.grey[400],
-                ),
-              ),
-              onTap: () {
-                if (ModalRoute.of(context).settings.name != "/") {
-                  Navigator.pushNamed(
-                    context,
-                    '/',
-                  );
-                }
-              },
-            ),
-            ListTile(
-              leading: Icon(
                 Icons.settings,
                 color: Colors.grey[600],
               ),
