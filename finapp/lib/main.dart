@@ -48,6 +48,8 @@ class Home extends StatefulWidget {
 }
 
 class _MyHomepageState extends State<Home> {
+  final Future<List<FinancialChange>> _financialChanges = getFinancialChanges();
+
   @override
   void initState() {
     super.initState();
@@ -79,7 +81,7 @@ class _MyHomepageState extends State<Home> {
               ),
             ),
             FutureBuilder<List<FinancialChange>>(
-              future: getFinancialChanges(),
+              future: _financialChanges,
               builder: (BuildContext context,
                   AsyncSnapshot<List<FinancialChange>> snapshot) {
                 switch (snapshot.connectionState) {

@@ -1,3 +1,5 @@
+import 'package:finapp/constants/tag-enum.dart';
+import 'package:finapp/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 
 class NewEntry extends StatefulWidget {
@@ -6,6 +8,8 @@ class NewEntry extends StatefulWidget {
 }
 
 class _NewEntryState extends State<NewEntry> {
+  List<bool> _checkboxValues = List.filled(TagEnum.keys.length, false);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +25,7 @@ class _NewEntryState extends State<NewEntry> {
               ..shader = LinearGradient(
                 colors: <Color>[
                   Color.fromARGB(255, 255, 138, 0),
-                  Color.fromARGB(255, 229, 46, 113)
+                  Color.fromARGB(255, 229, 46, 113),
                 ],
               ).createShader(
                 Rect.fromLTWH(40.0, 0.0, 80.0, 200.0),
@@ -43,16 +47,43 @@ class _NewEntryState extends State<NewEntry> {
                 labelText: 'Description *',
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  //
-                },
-                child: Text('Save'),
-              ),
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: TagEnum.keys.length,
+              itemBuilder: (context, i) {
+                return CheckboxListTile(
+                  value: _checkboxValues[i],
+                  onChanged: (bool val) {
+                    setState(() {
+                      _checkboxValues[i] = !_checkboxValues[i];
+                    });
+                  },
+                  title: Text(
+                    parseTag(TagEnum.keys.elementAt(i)),
+                  ),
+                  secondary: Icon(
+                    parseTagIcon(TagEnum.keys.elementAt(i)),
+                    color: Colors.grey[350],
+                  ),
+                  activeColor: Colors.blue,
+                );
+              },
             ),
           ],
+        ),
+      ),
+      floatingActionButton: SizedBox(
+        height: 48,
+        width: 48,
+        child: FloatingActionButton(
+          onPressed: () {
+            //
+          },
+          backgroundColor: Colors.blue,
+          foregroundColor: Colors.white,
+          child: Icon(
+            Icons.save,
+          ),
         ),
       ),
     );
