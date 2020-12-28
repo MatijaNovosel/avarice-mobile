@@ -1,3 +1,5 @@
+import 'package:finapp/models/paymentSource.dart';
+import 'package:finapp/widgets/current-amount-card.dart';
 import 'package:flutter/material.dart';
 import 'services/change-service.dart';
 import "models/financial-change.dart";
@@ -65,13 +67,47 @@ class _MyHomepageState extends State<Home> {
         padding: const EdgeInsets.only(
           left: 12,
           right: 12,
+          top: 12,
         ),
         child: Column(
           children: [
+            CurrentAmountCardWidget(
+              icon: Icons.account_balance,
+              color: Colors.red,
+              paymentSource: new PaymentSource(
+                amount: 14000,
+                description: "Tekuci racun",
+                icon: "ac_unit",
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                top: 12,
+                bottom: 12,
+              ),
+              child: CurrentAmountCardWidget(
+                icon: Icons.wallet_membership,
+                color: Colors.blue,
+                paymentSource: new PaymentSource(
+                  amount: 12000,
+                  description: "Ziro racun",
+                  icon: "ac_unit",
+                ),
+              ),
+            ),
+            CurrentAmountCardWidget(
+              icon: Icons.account_balance_wallet,
+              color: Colors.orange[600],
+              paymentSource: new PaymentSource(
+                amount: 1300,
+                description: "Dzep",
+                icon: "ac_unit",
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.only(
-                top: 20.0,
-                bottom: 20,
+                top: 12.0,
+                bottom: 12,
               ),
               child: Text(
                 "Financial changes",
