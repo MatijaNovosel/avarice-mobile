@@ -72,6 +72,7 @@ class _MyHomepageState extends State<Home> {
         child: Column(
           children: [
             CurrentAmountCardWidget(
+              visible: false,
               icon: Icons.account_balance,
               color: Colors.red,
               paymentSource: new PaymentSource(
@@ -86,6 +87,7 @@ class _MyHomepageState extends State<Home> {
                 bottom: 12,
               ),
               child: CurrentAmountCardWidget(
+                visible: false,
                 icon: Icons.wallet_membership,
                 color: Colors.blue,
                 paymentSource: new PaymentSource(
@@ -96,6 +98,7 @@ class _MyHomepageState extends State<Home> {
               ),
             ),
             CurrentAmountCardWidget(
+              visible: true,
               icon: Icons.account_balance_wallet,
               color: Colors.orange[600],
               paymentSource: new PaymentSource(

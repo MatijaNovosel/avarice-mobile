@@ -3,6 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class _CurrentAmountCardState extends State<CurrentAmountCardWidget> {
+  bool _visible;
+
+  @override
+  void initState() {
+    _visible = widget.visible;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,7 +54,10 @@ class _CurrentAmountCardState extends State<CurrentAmountCardWidget> {
                   ),
                 ),
                 Text(
-                  "${NumberFormat("#,##0.00", "hr_HR").format(widget.paymentSource.amount)} HRK",
+                  _visible
+                      ? "${NumberFormat("#,##0.00", "hr_HR").format(widget.paymentSource.amount)} HRK"
+                      : "${NumberFormat("#,##0.00", "hr_HR").format(widget.paymentSource.amount)} HRK"
+                          .replaceAll(new RegExp(r'[0-9]'), '*'),
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -54,6 +65,22 @@ class _CurrentAmountCardState extends State<CurrentAmountCardWidget> {
                   ),
                 ),
               ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              right: 24.0,
+            ),
+            child: IconButton(
+              icon: _visible
+                  ? Icon(Icons.stop_circle)
+                  : Icon(Icons.panorama_fish_eye),
+              color: widget.color,
+              onPressed: () {
+                setState(() {
+                  _visible = !_visible;
+                });
+              },
             ),
           ),
         ],
