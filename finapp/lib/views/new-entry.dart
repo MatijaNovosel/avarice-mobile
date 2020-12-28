@@ -9,6 +9,7 @@ class NewEntry extends StatefulWidget {
 
 class _NewEntryState extends State<NewEntry> {
   List<bool> _checkboxValues = List.filled(TagEnum.keys.length, false);
+  List<int> _selectedTags = [];
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +57,10 @@ class _NewEntryState extends State<NewEntry> {
                   onChanged: (bool val) {
                     setState(() {
                       _checkboxValues[i] = !_checkboxValues[i];
+                      if (val)
+                        _selectedTags.add(TagEnum.keys.elementAt(i));
+                      else
+                        _selectedTags.remove(TagEnum.keys.elementAt(i));
                     });
                   },
                   title: Text(
