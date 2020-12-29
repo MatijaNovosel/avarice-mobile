@@ -111,6 +111,38 @@ class _MyHomepageState extends State<Home> {
                 ),
               ),
             ),
+            Container(
+              padding: EdgeInsets.only(
+                top: 12,
+              ),
+              child: Column(children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Container(
+                    height: 20,
+                    child: LinearProgressIndicator(
+                      backgroundColor: Colors.red[900],
+                      value: 0.5,
+                      valueColor: AlwaysStoppedAnimation(Colors.red),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 12),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Container(
+                      height: 20,
+                      child: LinearProgressIndicator(
+                        backgroundColor: Colors.green[900],
+                        value: 0.8,
+                        valueColor: AlwaysStoppedAnimation(Colors.green),
+                      ),
+                    ),
+                  ),
+                ),
+              ]),
+            ),
             Padding(
               padding: const EdgeInsets.only(
                 top: 12.0,
@@ -125,8 +157,10 @@ class _MyHomepageState extends State<Home> {
             ),
             FutureBuilder<List<FinancialChange>>(
               future: _financialChanges,
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<FinancialChange>> snapshot) {
+              builder: (
+                BuildContext context,
+                AsyncSnapshot<List<FinancialChange>> snapshot,
+              ) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.waiting:
                     {
@@ -144,7 +178,7 @@ class _MyHomepageState extends State<Home> {
                       } else {
                         return Expanded(
                           child: ListView.builder(
-                            shrinkWrap: true,
+                            shrinkWrap: false,
                             itemCount: snapshot.data.length,
                             itemBuilder: (context, i) {
                               return Column(
