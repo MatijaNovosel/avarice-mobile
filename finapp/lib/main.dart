@@ -51,6 +51,24 @@ class Home extends StatefulWidget {
 
 class _MyHomepageState extends State<Home> {
   final Future<List<FinancialChange>> _financialChanges = getFinancialChanges();
+  final List<PaymentSource> _paymentSources = [
+    PaymentSource(
+      amount: 14000,
+      description: "Gyro",
+      icon: "ac_unit",
+    ),
+    PaymentSource(
+      amount: 6500,
+      description: "Checking",
+      icon: "ac_unit",
+    ),
+    PaymentSource(
+      amount: 256.34,
+      description: "Pocket",
+      icon: "ac_unit",
+    )
+  ];
+  int _index = 0;
 
   @override
   void initState() {
@@ -71,40 +89,26 @@ class _MyHomepageState extends State<Home> {
         ),
         child: Column(
           children: [
-            CurrentAmountCardWidget(
-              visible: false,
-              icon: Icons.account_balance,
-              color: Colors.red,
-              paymentSource: new PaymentSource(
-                amount: 14000,
-                description: "Tekuci racun",
-                icon: "ac_unit",
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(
-                top: 12,
-                bottom: 12,
-              ),
-              child: CurrentAmountCardWidget(
-                visible: false,
-                icon: Icons.wallet_membership,
-                color: Colors.blue,
-                paymentSource: new PaymentSource(
-                  amount: 12000,
-                  description: "Ziro racun",
-                  icon: "ac_unit",
+            Center(
+              child: SizedBox(
+                height: 100, // card height
+                child: PageView.builder(
+                  itemCount: _paymentSources.length,
+                  onPageChanged: (int index) => setState(
+                    () => _index = index,
+                  ),
+                  itemBuilder: (_, i) {
+                    return Transform.scale(
+                      scale: i == _index ? 1 : 0.9,
+                      child: CurrentAmountCardWidget(
+                        visible: true,
+                        icon: Icons.account_balance_wallet,
+                        color: Colors.orange[600],
+                        paymentSource: _paymentSources[i],
+                      ),
+                    );
+                  },
                 ),
-              ),
-            ),
-            CurrentAmountCardWidget(
-              visible: true,
-              icon: Icons.account_balance_wallet,
-              color: Colors.orange[600],
-              paymentSource: new PaymentSource(
-                amount: 1300,
-                description: "Dzep",
-                icon: "ac_unit",
               ),
             ),
             Padding(
