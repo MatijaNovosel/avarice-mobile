@@ -1,5 +1,7 @@
 import 'package:finapp/constants/tag-enum.dart';
 import 'package:finapp/helpers/helpers.dart';
+import 'package:finapp/models/paymentSource.dart';
+import 'package:finapp/widgets/current-amount-card.dart';
 import 'package:flutter/material.dart';
 
 class NewEntry extends StatefulWidget {
@@ -11,6 +13,24 @@ class _NewEntryState extends State<NewEntry> {
   List<bool> _checkboxValues = List.filled(TagEnum.keys.length, false);
   List<int> _selectedTags = [];
   bool _expense = false;
+  final List<PaymentSource> _paymentSources = [
+    PaymentSource(
+      amount: 14000,
+      description: "Gyro",
+      icon: "ac_unit",
+    ),
+    PaymentSource(
+      amount: 6500,
+      description: "Checking",
+      icon: "ac_unit",
+    ),
+    PaymentSource(
+      amount: 256.34,
+      description: "Pocket",
+      icon: "ac_unit",
+    )
+  ];
+  int _index = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -144,6 +164,7 @@ class _NewEntryState extends State<NewEntry> {
               ),
             ),
             Container(
+              margin: EdgeInsets.only(bottom: 18),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(
@@ -187,6 +208,26 @@ class _NewEntryState extends State<NewEntry> {
                       color: Colors.grey[350],
                     ),
                     activeColor: Colors.orange,
+                  );
+                },
+              ),
+            ),
+            SizedBox(
+              height: 100,
+              child: PageView.builder(
+                itemCount: _paymentSources.length,
+                onPageChanged: (int index) => setState(
+                  () => _index = index,
+                ),
+                itemBuilder: (_, i) {
+                  return Transform.scale(
+                    scale: i == _index ? 1 : 0.9,
+                    child: CurrentAmountCardWidget(
+                      visible: true,
+                      icon: Icons.account_balance_wallet,
+                      color: Colors.orange[600],
+                      paymentSource: _paymentSources[i],
+                    ),
                   );
                 },
               ),
