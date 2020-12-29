@@ -1,6 +1,7 @@
 import 'package:finapp/models/paymentSource.dart';
 import 'package:finapp/widgets/current-amount-card.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'services/change-service.dart';
 import "models/financial-change.dart";
 import "widgets/change-card.dart";
@@ -88,60 +89,94 @@ class _MyHomepageState extends State<Home> {
           top: 12,
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: SizedBox(
-                height: 100, // card height
-                child: PageView.builder(
-                  itemCount: _paymentSources.length,
-                  onPageChanged: (int index) => setState(
-                    () => _index = index,
-                  ),
-                  itemBuilder: (_, i) {
-                    return Transform.scale(
-                      scale: i == _index ? 1 : 0.9,
-                      child: CurrentAmountCardWidget(
-                        visible: true,
-                        icon: Icons.account_balance_wallet,
-                        color: Colors.orange[600],
-                        paymentSource: _paymentSources[i],
-                      ),
-                    );
-                  },
+            SizedBox(
+              height: 100,
+              child: PageView.builder(
+                itemCount: _paymentSources.length,
+                onPageChanged: (int index) => setState(
+                  () => _index = index,
                 ),
+                itemBuilder: (_, i) {
+                  return Transform.scale(
+                    scale: i == _index ? 1 : 0.9,
+                    child: CurrentAmountCardWidget(
+                      visible: true,
+                      icon: Icons.account_balance_wallet,
+                      color: Colors.orange[600],
+                      paymentSource: _paymentSources[i],
+                    ),
+                  );
+                },
               ),
             ),
             Container(
               padding: EdgeInsets.only(
                 top: 12,
               ),
-              child: Column(children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Container(
-                    height: 20,
-                    child: LinearProgressIndicator(
-                      backgroundColor: Colors.red[900],
-                      value: 0.5,
-                      valueColor: AlwaysStoppedAnimation(Colors.red),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Container(
+                            height: 20,
+                            child: LinearProgressIndicator(
+                              backgroundColor: Colors.red[900],
+                              value: _paymentSources[_index].amount *
+                                  0.05 /
+                                  (_paymentSources[_index].amount * 0.05 +
+                                      _paymentSources[_index].amount * 0.12),
+                              valueColor: AlwaysStoppedAnimation(Colors.red),
+                            ),
+                          ),
+                        ),
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 3.0),
+                            child: Text(
+                              "${NumberFormat("#,##0.00", "hr_HR").format(_paymentSources[_index].amount * 0.05)} HRK",
+                              style: TextStyle(color: Colors.grey[300]),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 12),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Container(
-                      height: 20,
-                      child: LinearProgressIndicator(
-                        backgroundColor: Colors.green[900],
-                        value: 0.8,
-                        valueColor: AlwaysStoppedAnimation(Colors.green),
+                    Container(
+                      margin: EdgeInsets.only(top: 8),
+                      child: Stack(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Container(
+                              height: 20,
+                              child: LinearProgressIndicator(
+                                backgroundColor: Colors.green[900],
+                                value: _paymentSources[_index].amount *
+                                    0.12 /
+                                    (_paymentSources[_index].amount * 0.05 +
+                                        _paymentSources[_index].amount * 0.12),
+                                valueColor:
+                                    AlwaysStoppedAnimation(Colors.green),
+                              ),
+                            ),
+                          ),
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 3.0),
+                              child: Text(
+                                "${NumberFormat("#,##0.00", "hr_HR").format(_paymentSources[_index].amount * 0.12)} HRK",
+                                style: TextStyle(color: Colors.grey[300]),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                ),
-              ]),
+                  ]),
             ),
             Padding(
               padding: const EdgeInsets.only(
