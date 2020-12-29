@@ -56,7 +56,7 @@ class _CurrentAmountCardState extends State<CurrentAmountCardWidget> {
                 Text(
                   _visible
                       ? "${NumberFormat("#,##0.00", "hr_HR").format(widget.paymentSource.amount)} HRK"
-                      : "${NumberFormat("#,##0.00", "hr_HR").format(widget.paymentSource.amount)} HRK"
+                      : "${widget.paymentSource.amount} HRK"
                           .replaceAll(new RegExp(r'[0-9]'), '*'),
                   style: TextStyle(
                     fontSize: 18,
