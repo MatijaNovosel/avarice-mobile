@@ -1,8 +1,10 @@
 import 'package:finapp/constants/tag-enum.dart';
 import 'package:finapp/helpers/helpers.dart';
-import 'package:finapp/models/paymentSource.dart';
+import 'package:finapp/models/payment-source.dart';
+import 'package:finapp/services/financial-history-service.dart';
 import 'package:finapp/widgets/current-amount-card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class NewEntry extends StatefulWidget {
   @override
@@ -13,24 +15,15 @@ class _NewEntryState extends State<NewEntry> {
   List<bool> _checkboxValues = List.filled(TagEnum.keys.length, false);
   List<int> _selectedTags = [];
   bool _expense = false;
-  final List<PaymentSource> _paymentSources = [
-    PaymentSource(
-      amount: 14000,
-      description: "Gyro",
-      icon: "ac_unit",
-    ),
-    PaymentSource(
-      amount: 6500,
-      description: "Checking",
-      icon: "ac_unit",
-    ),
-    PaymentSource(
-      amount: 256.34,
-      description: "Pocket",
-      icon: "ac_unit",
-    )
-  ];
+  final Future<List<PaymentSource>> _paymentSources = getCurrentAmount();
   int _index = 0;
+  int _selectedPaymentSource = 0;
+
+  void createFinancialChange() {
+    print(_selectedTags);
+    print(_expense);
+    print(_selectedPaymentSource);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -212,25 +205,53 @@ class _NewEntryState extends State<NewEntry> {
                 },
               ),
             ),
-            SizedBox(
-              height: 100,
-              child: PageView.builder(
-                itemCount: _paymentSources.length,
-                onPageChanged: (int index) => setState(
-                  () => _index = index,
-                ),
-                itemBuilder: (_, i) {
-                  return Transform.scale(
-                    scale: i == _index ? 1 : 0.9,
-                    child: CurrentAmountCardWidget(
-                      visible: true,
-                      icon: Icons.account_balance_wallet,
-                      color: Colors.orange[600],
-                      paymentSource: _paymentSources[i],
-                    ),
-                  );
-                },
-              ),
+            FutureBuilder<List<PaymentSource>>(
+              future: _paymentSources,
+              builder: (
+                BuildContext context,
+                AsyncSnapshot<List<PaymentSource>> snapshot,
+              ) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    {
+                      return Center(
+                        child: SpinKitThreeBounce(
+                          color: Colors.red,
+                          size: 50.0,
+                        ),
+                      );
+                    }
+                  default:
+                    {
+                      if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        return SizedBox(
+                          height: 100,
+                          child: PageView.builder(
+                            itemCount: snapshot.data.length,
+                            onPageChanged: (int index) => setState(
+                              () {
+                                _index = index;
+                                _selectedPaymentSource = index;
+                              },
+                            ),
+                            itemBuilder: (_, i) {
+                              return Transform.scale(
+                                scale: i == _index ? 1 : 0.9,
+                                child: CurrentAmountCardWidget(
+                                  icon: Icons.account_balance_wallet,
+                                  color: Colors.orange[600],
+                                  paymentSource: snapshot.data[i],
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      }
+                    }
+                }
+              },
             ),
           ],
         ),
@@ -240,7 +261,7 @@ class _NewEntryState extends State<NewEntry> {
         width: 48,
         child: FloatingActionButton(
           onPressed: () {
-            //
+            createFinancialChange();
           },
           backgroundColor: Colors.blue,
           foregroundColor: Colors.white,

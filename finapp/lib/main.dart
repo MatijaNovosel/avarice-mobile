@@ -1,4 +1,5 @@
-import 'package:finapp/models/paymentSource.dart';
+import 'package:finapp/models/payment-source.dart';
+import 'package:finapp/services/financial-history-service.dart';
 import 'package:finapp/widgets/current-amount-card.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -52,23 +53,7 @@ class Home extends StatefulWidget {
 
 class _MyHomepageState extends State<Home> {
   final Future<List<FinancialChange>> _financialChanges = getFinancialChanges();
-  final List<PaymentSource> _paymentSources = [
-    PaymentSource(
-      amount: 14000,
-      description: "Gyro",
-      icon: "ac_unit",
-    ),
-    PaymentSource(
-      amount: 6500,
-      description: "Checking",
-      icon: "ac_unit",
-    ),
-    PaymentSource(
-      amount: 256.34,
-      description: "Pocket",
-      icon: "ac_unit",
-    )
-  ];
+  final Future<List<PaymentSource>> _paymentSources = getCurrentAmount();
   int _index = 0;
 
   @override
@@ -91,25 +76,50 @@ class _MyHomepageState extends State<Home> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: 100,
-              child: PageView.builder(
-                itemCount: _paymentSources.length,
-                onPageChanged: (int index) => setState(
-                  () => _index = index,
-                ),
-                itemBuilder: (_, i) {
-                  return Transform.scale(
-                    scale: i == _index ? 1 : 0.9,
-                    child: CurrentAmountCardWidget(
-                      visible: true,
-                      icon: Icons.account_balance_wallet,
-                      color: Colors.orange[600],
-                      paymentSource: _paymentSources[i],
-                    ),
-                  );
-                },
-              ),
+            FutureBuilder<List<PaymentSource>>(
+              future: _paymentSources,
+              builder: (
+                BuildContext context,
+                AsyncSnapshot<List<PaymentSource>> snapshot,
+              ) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    {
+                      return Center(
+                        child: SpinKitThreeBounce(
+                          color: Colors.red,
+                          size: 50.0,
+                        ),
+                      );
+                    }
+                  default:
+                    {
+                      if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        return SizedBox(
+                          height: 100,
+                          child: PageView.builder(
+                            itemCount: snapshot.data.length,
+                            onPageChanged: (int index) => setState(
+                              () => _index = index,
+                            ),
+                            itemBuilder: (_, i) {
+                              return Transform.scale(
+                                scale: i == _index ? 1 : 0.9,
+                                child: CurrentAmountCardWidget(
+                                  icon: Icons.account_balance_wallet,
+                                  color: Colors.orange[600],
+                                  paymentSource: snapshot.data[i],
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      }
+                    }
+                }
+              },
             ),
             Container(
               padding: EdgeInsets.only(
@@ -126,10 +136,7 @@ class _MyHomepageState extends State<Home> {
                             height: 20,
                             child: LinearProgressIndicator(
                               backgroundColor: Colors.red[900],
-                              value: _paymentSources[_index].amount *
-                                  0.05 /
-                                  (_paymentSources[_index].amount * 0.05 +
-                                      _paymentSources[_index].amount * 0.12),
+                              value: 0.5,
                               valueColor: AlwaysStoppedAnimation(Colors.red),
                             ),
                           ),
@@ -138,7 +145,7 @@ class _MyHomepageState extends State<Home> {
                           child: Padding(
                             padding: const EdgeInsets.only(top: 3.0),
                             child: Text(
-                              "${NumberFormat("#,##0.00", "hr_HR").format(_paymentSources[_index].amount * 0.05)} HRK",
+                              "${NumberFormat("#,##0.00", "hr_HR").format(14000 * 0.05)} HRK",
                               style: TextStyle(color: Colors.grey[300]),
                             ),
                           ),
@@ -155,10 +162,7 @@ class _MyHomepageState extends State<Home> {
                               height: 20,
                               child: LinearProgressIndicator(
                                 backgroundColor: Colors.green[900],
-                                value: _paymentSources[_index].amount *
-                                    0.12 /
-                                    (_paymentSources[_index].amount * 0.05 +
-                                        _paymentSources[_index].amount * 0.12),
+                                value: 0.5,
                                 valueColor:
                                     AlwaysStoppedAnimation(Colors.green),
                               ),
@@ -168,7 +172,7 @@ class _MyHomepageState extends State<Home> {
                             child: Padding(
                               padding: const EdgeInsets.only(top: 3.0),
                               child: Text(
-                                "${NumberFormat("#,##0.00", "hr_HR").format(_paymentSources[_index].amount * 0.12)} HRK",
+                                "${NumberFormat("#,##0.00", "hr_HR").format(6400 * 0.12)} HRK",
                                 style: TextStyle(color: Colors.grey[300]),
                               ),
                             ),
@@ -200,7 +204,7 @@ class _MyHomepageState extends State<Home> {
                   case ConnectionState.waiting:
                     {
                       return Center(
-                        child: SpinKitSquareCircle(
+                        child: SpinKitThreeBounce(
                           color: Colors.red,
                           size: 50.0,
                         ),

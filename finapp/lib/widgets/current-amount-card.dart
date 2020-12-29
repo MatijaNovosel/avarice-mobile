@@ -1,13 +1,12 @@
-import 'package:finapp/models/paymentSource.dart';
+import 'package:finapp/models/payment-source.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class _CurrentAmountCardState extends State<CurrentAmountCardWidget> {
-  bool _visible;
+  bool _visible = false;
 
   @override
   void initState() {
-    _visible = widget.visible;
     super.initState();
   }
 
@@ -91,13 +90,11 @@ class _CurrentAmountCardState extends State<CurrentAmountCardWidget> {
 
 class CurrentAmountCardWidget extends StatefulWidget {
   final PaymentSource paymentSource;
-  final bool visible;
   final Color color;
   final IconData icon;
   const CurrentAmountCardWidget({
     Key key,
     this.paymentSource,
-    this.visible,
     this.color,
     this.icon,
   }) : super(key: key);
