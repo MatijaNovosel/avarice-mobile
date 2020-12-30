@@ -100,7 +100,7 @@ class _NewEntryState extends State<NewEntry> {
                           return Column(
                             children: [
                               SizedBox(
-                                height: 100,
+                                height: 70,
                                 child: PageView.builder(
                                   itemCount: snapshot.data.length,
                                   onPageChanged: (int index) => setState(
