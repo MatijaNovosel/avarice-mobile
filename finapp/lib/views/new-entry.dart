@@ -23,6 +23,25 @@ class _NewEntryState extends State<NewEntry> {
     print(_selectedTags);
     print(_expense);
     print(_selectedPaymentSource);
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return WillPopScope(
+          onWillPop: () async => false,
+          child: AlertDialog(
+            backgroundColor: Colors.transparent,
+            content: SpinKitFoldingCube(
+              color: Colors.red,
+              size: 65,
+            ),
+          ),
+        );
+      },
+    );
+    Future.delayed(const Duration(seconds: 3), () {
+      Navigator.pop(context);
+    });
   }
 
   @override
