@@ -119,7 +119,10 @@ class _MyHomepageState extends State<Home> {
                             ),
                             Container(
                               height: 25,
-                              margin: EdgeInsets.only(top: 4),
+                              margin: EdgeInsets.only(
+                                top: 12,
+                                bottom: 8,
+                              ),
                               child: ListView.builder(
                                 itemCount: snapshot.data.length,
                                 shrinkWrap: true,

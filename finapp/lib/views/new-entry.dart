@@ -52,10 +52,87 @@ class _NewEntryState extends State<NewEntry> {
         padding: const EdgeInsets.only(
           left: 12,
           right: 12,
+          top: 12,
         ),
         child: SingleChildScrollView(
           child: Column(
             children: [
+              FutureBuilder<List<PaymentSource>>(
+                future: _paymentSources,
+                builder: (
+                  BuildContext context,
+                  AsyncSnapshot<List<PaymentSource>> snapshot,
+                ) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.waiting:
+                      {
+                        return Center(
+                          child: SpinKitThreeBounce(
+                            color: Colors.red,
+                            size: 50.0,
+                          ),
+                        );
+                      }
+                    default:
+                      {
+                        if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          return Column(
+                            children: [
+                              SizedBox(
+                                height: 100,
+                                child: PageView.builder(
+                                  itemCount: snapshot.data.length,
+                                  onPageChanged: (int index) => setState(
+                                    () => _index = index,
+                                  ),
+                                  itemBuilder: (_, i) {
+                                    return Transform.scale(
+                                      scale: i == _index ? 1 : 0.9,
+                                      child: CurrentAmountCardWidget(
+                                        icon: Icons.account_balance_wallet,
+                                        color: Colors.orange[600],
+                                        paymentSource: snapshot.data[i],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              Container(
+                                height: 25,
+                                margin: EdgeInsets.only(top: 18),
+                                child: ListView.builder(
+                                  itemCount: snapshot.data.length,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (_, i) {
+                                    return Transform.scale(
+                                      scale: i == _index ? 1 : 0.7,
+                                      child: Container(
+                                        width: 10,
+                                        height: 10,
+                                        margin: i != snapshot.data.length
+                                            ? EdgeInsets.only(right: 4)
+                                            : null,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: i == _index
+                                              ? Colors.orange
+                                              : Colors.grey[800],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          );
+                        }
+                      }
+                  }
+                },
+              ),
               ListTile(
                 leading: Padding(
                   padding: const EdgeInsets.only(
@@ -86,9 +163,6 @@ class _NewEntryState extends State<NewEntry> {
                     hintText: "Entry description",
                     isDense: true,
                     labelText: "Description",
-                    focusColor: Colors.grey[350],
-                    fillColor: Colors.grey[350],
-                    hoverColor: Colors.grey[350],
                     alignLabelWithHint: true,
                     labelStyle: TextStyle(
                       color: Colors.grey[350],
@@ -128,9 +202,6 @@ class _NewEntryState extends State<NewEntry> {
                     hintText: "Entry amount",
                     isDense: true,
                     labelText: "Amount",
-                    focusColor: Colors.grey[350],
-                    fillColor: Colors.grey[350],
-                    hoverColor: Colors.grey[350],
                     alignLabelWithHint: true,
                     labelStyle: TextStyle(
                       color: Colors.grey[350],
@@ -205,82 +276,6 @@ class _NewEntryState extends State<NewEntry> {
                     );
                   },
                 ),
-              ),
-              FutureBuilder<List<PaymentSource>>(
-                future: _paymentSources,
-                builder: (
-                  BuildContext context,
-                  AsyncSnapshot<List<PaymentSource>> snapshot,
-                ) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.waiting:
-                      {
-                        return Center(
-                          child: SpinKitThreeBounce(
-                            color: Colors.red,
-                            size: 50.0,
-                          ),
-                        );
-                      }
-                    default:
-                      {
-                        if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        } else {
-                          return Column(
-                            children: [
-                              SizedBox(
-                                height: 100,
-                                child: PageView.builder(
-                                  itemCount: snapshot.data.length,
-                                  onPageChanged: (int index) => setState(
-                                    () => _index = index,
-                                  ),
-                                  itemBuilder: (_, i) {
-                                    return Transform.scale(
-                                      scale: i == _index ? 1 : 0.9,
-                                      child: CurrentAmountCardWidget(
-                                        icon: Icons.account_balance_wallet,
-                                        color: Colors.orange[600],
-                                        paymentSource: snapshot.data[i],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                              Container(
-                                height: 25,
-                                margin: EdgeInsets.only(top: 4),
-                                child: ListView.builder(
-                                  itemCount: snapshot.data.length,
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (_, i) {
-                                    return Transform.scale(
-                                      scale: i == _index ? 1 : 0.7,
-                                      child: Container(
-                                        width: 10,
-                                        height: 10,
-                                        margin: i != 3
-                                            ? EdgeInsets.only(right: 4)
-                                            : null,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: i == _index
-                                              ? Colors.orange
-                                              : Colors.grey[800],
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          );
-                        }
-                      }
-                  }
-                },
               ),
             ],
           ),
