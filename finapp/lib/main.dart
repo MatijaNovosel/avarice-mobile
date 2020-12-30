@@ -224,11 +224,13 @@ class _MyHomepageState extends State<Home> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(50),
                     child: Material(
+                      color: Colors.transparent,
                       child: InkWell(
                         child: Padding(
                           padding: const EdgeInsets.all(5),
                           child: Icon(
                             Icons.download_rounded,
+                            color: Colors.grey[400],
                           ),
                         ),
                         onTap: () {},
@@ -243,11 +245,13 @@ class _MyHomepageState extends State<Home> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(50),
                       child: Material(
+                        color: Colors.transparent,
                         child: InkWell(
                           child: Padding(
                             padding: const EdgeInsets.all(5),
                             child: Icon(
                               Icons.filter_alt_rounded,
+                              color: Colors.grey[400],
                             ),
                           ),
                           onTap: () {},
@@ -258,11 +262,13 @@ class _MyHomepageState extends State<Home> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(50),
                     child: Material(
+                      color: Colors.transparent,
                       child: InkWell(
                         child: Padding(
                           padding: const EdgeInsets.all(5),
                           child: Icon(
                             Icons.search,
+                            color: Colors.grey[400],
                           ),
                         ),
                         onTap: () {},
