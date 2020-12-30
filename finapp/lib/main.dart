@@ -73,6 +73,7 @@ class _MyHomepageState extends State<Home> {
           top: 12,
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             FutureBuilder<List<PaymentSource>>(
               future: _paymentSources,
@@ -211,11 +212,64 @@ class _MyHomepageState extends State<Home> {
                 top: 12.0,
                 bottom: 12,
               ),
-              child: Text(
-                "Financial changes",
-                style: TextStyle(
-                  fontSize: 16,
-                ),
+              child: Row(
+                children: [
+                  Text(
+                    "Financial changes",
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                  Spacer(),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child: Material(
+                      child: InkWell(
+                        child: Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: Icon(
+                            Icons.download_rounded,
+                          ),
+                        ),
+                        onTap: () {},
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 6,
+                      right: 6,
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Material(
+                        child: InkWell(
+                          child: Padding(
+                            padding: const EdgeInsets.all(5),
+                            child: Icon(
+                              Icons.filter_alt_rounded,
+                            ),
+                          ),
+                          onTap: () {},
+                        ),
+                      ),
+                    ),
+                  ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child: Material(
+                      child: InkWell(
+                        child: Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: Icon(
+                            Icons.search,
+                          ),
+                        ),
+                        onTap: () {},
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             FutureBuilder<List<FinancialChange>>(
