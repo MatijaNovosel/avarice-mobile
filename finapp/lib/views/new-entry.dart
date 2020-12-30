@@ -227,27 +227,55 @@ class _NewEntryState extends State<NewEntry> {
                         if (snapshot.hasError) {
                           return Text('Error: ${snapshot.error}');
                         } else {
-                          return SizedBox(
-                            height: 100,
-                            child: PageView.builder(
-                              itemCount: snapshot.data.length,
-                              onPageChanged: (int index) => setState(
-                                () {
-                                  _index = index;
-                                  _selectedPaymentSource = index;
-                                },
-                              ),
-                              itemBuilder: (_, i) {
-                                return Transform.scale(
-                                  scale: i == _index ? 1 : 0.9,
-                                  child: CurrentAmountCardWidget(
-                                    icon: Icons.account_balance_wallet,
-                                    color: Colors.orange[600],
-                                    paymentSource: snapshot.data[i],
+                          return Column(
+                            children: [
+                              SizedBox(
+                                height: 100,
+                                child: PageView.builder(
+                                  itemCount: snapshot.data.length,
+                                  onPageChanged: (int index) => setState(
+                                    () => _index = index,
                                   ),
-                                );
-                              },
-                            ),
+                                  itemBuilder: (_, i) {
+                                    return Transform.scale(
+                                      scale: i == _index ? 1 : 0.9,
+                                      child: CurrentAmountCardWidget(
+                                        icon: Icons.account_balance_wallet,
+                                        color: Colors.orange[600],
+                                        paymentSource: snapshot.data[i],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              Container(
+                                height: 25,
+                                margin: EdgeInsets.only(top: 4),
+                                child: ListView.builder(
+                                  itemCount: snapshot.data.length,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (_, i) {
+                                    return Transform.scale(
+                                      scale: i == _index ? 1 : 0.7,
+                                      child: Container(
+                                        width: 10,
+                                        height: 10,
+                                        margin: i != 3
+                                            ? EdgeInsets.only(right: 4)
+                                            : null,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: i == _index
+                                              ? Colors.orange
+                                              : Colors.grey[800],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
                           );
                         }
                       }

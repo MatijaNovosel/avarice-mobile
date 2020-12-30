@@ -34,7 +34,6 @@ class Main extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        fontFamily: 'ProximaNova',
         brightness: Brightness.dark,
       ),
       themeMode: ThemeMode.dark,
@@ -74,7 +73,6 @@ class _MyHomepageState extends State<Home> {
           top: 12,
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             FutureBuilder<List<PaymentSource>>(
               future: _paymentSources,
@@ -97,24 +95,55 @@ class _MyHomepageState extends State<Home> {
                       if (snapshot.hasError) {
                         return Text('Error: ${snapshot.error}');
                       } else {
-                        return SizedBox(
-                          height: 100,
-                          child: PageView.builder(
-                            itemCount: snapshot.data.length,
-                            onPageChanged: (int index) => setState(
-                              () => _index = index,
-                            ),
-                            itemBuilder: (_, i) {
-                              return Transform.scale(
-                                scale: i == _index ? 1 : 0.9,
-                                child: CurrentAmountCardWidget(
-                                  icon: Icons.account_balance_wallet,
-                                  color: Colors.orange[600],
-                                  paymentSource: snapshot.data[i],
+                        return Column(
+                          children: [
+                            SizedBox(
+                              height: 100,
+                              child: PageView.builder(
+                                itemCount: snapshot.data.length,
+                                onPageChanged: (int index) => setState(
+                                  () => _index = index,
                                 ),
-                              );
-                            },
-                          ),
+                                itemBuilder: (_, i) {
+                                  return Transform.scale(
+                                    scale: i == _index ? 1 : 0.9,
+                                    child: CurrentAmountCardWidget(
+                                      icon: Icons.account_balance_wallet,
+                                      color: Colors.orange[600],
+                                      paymentSource: snapshot.data[i],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            Container(
+                              height: 25,
+                              margin: EdgeInsets.only(top: 4),
+                              child: ListView.builder(
+                                itemCount: snapshot.data.length,
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (_, i) {
+                                  return Transform.scale(
+                                    scale: i == _index ? 1 : 0.7,
+                                    child: Container(
+                                      width: 10,
+                                      height: 10,
+                                      margin: i != 3
+                                          ? EdgeInsets.only(right: 4)
+                                          : null,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: i == _index
+                                            ? Colors.orange
+                                            : Colors.grey[800],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
                         );
                       }
                     }
@@ -122,65 +151,60 @@ class _MyHomepageState extends State<Home> {
               },
             ),
             Container(
-              padding: EdgeInsets.only(
-                top: 12,
-              ),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              padding: EdgeInsets.only(top: 4),
+              child: Column(children: [
+                Stack(
                   children: [
-                    Stack(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Container(
-                            height: 20,
-                            child: LinearProgressIndicator(
-                              backgroundColor: Colors.red[900],
-                              value: 0.5,
-                              valueColor: AlwaysStoppedAnimation(Colors.red),
-                            ),
-                          ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Container(
+                        height: 20,
+                        child: LinearProgressIndicator(
+                          backgroundColor: Colors.red[900],
+                          value: 0.5,
+                          valueColor: AlwaysStoppedAnimation(Colors.red),
                         ),
-                        Center(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 3.0),
-                            child: Text(
-                              "${NumberFormat("#,##0.00", "hr_HR").format(14000 * 0.05)} HRK",
-                              style: TextStyle(color: Colors.grey[300]),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 8),
-                      child: Stack(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Container(
-                              height: 20,
-                              child: LinearProgressIndicator(
-                                backgroundColor: Colors.green[900],
-                                value: 0.5,
-                                valueColor:
-                                    AlwaysStoppedAnimation(Colors.green),
-                              ),
-                            ),
-                          ),
-                          Center(
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 3.0),
-                              child: Text(
-                                "${NumberFormat("#,##0.00", "hr_HR").format(6400 * 0.12)} HRK",
-                                style: TextStyle(color: Colors.grey[300]),
-                              ),
-                            ),
-                          ),
-                        ],
                       ),
                     ),
-                  ]),
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 3.0),
+                        child: Text(
+                          "${NumberFormat("#,##0.00", "hr_HR").format(14000 * 0.05)} HRK",
+                          style: TextStyle(color: Colors.grey[300]),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 8),
+                  child: Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Container(
+                          height: 20,
+                          child: LinearProgressIndicator(
+                            backgroundColor: Colors.green[900],
+                            value: 0.5,
+                            valueColor: AlwaysStoppedAnimation(Colors.green),
+                          ),
+                        ),
+                      ),
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 3.0),
+                          child: Text(
+                            "${NumberFormat("#,##0.00", "hr_HR").format(6400 * 0.12)} HRK",
+                            style: TextStyle(color: Colors.grey[300]),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ]),
             ),
             Padding(
               padding: const EdgeInsets.only(
