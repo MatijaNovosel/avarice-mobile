@@ -18,11 +18,29 @@ class _NewEntryState extends State<NewEntry> {
   final Future<List<PaymentSource>> _paymentSources = getCurrentAmount();
   int _index = 0;
   int _selectedPaymentSource = 0;
+  bool _invalid = false;
+  final descriptionController = TextEditingController();
+  final amountController = TextEditingController();
+
+  @override
+  void dispose() {
+    descriptionController.dispose();
+    amountController.dispose();
+    super.dispose();
+  }
 
   void createFinancialChange() {
-    print(_selectedTags);
-    print(_expense);
-    print(_selectedPaymentSource);
+    if (descriptionController.text.isEmpty || amountController.text.isEmpty) {
+      setState(() {
+        _invalid = true;
+      });
+    }
+
+    var payload = {
+      "description": descriptionController.text,
+      "amount": amountController.text,
+    };
+
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -163,7 +181,9 @@ class _NewEntryState extends State<NewEntry> {
                   ),
                 ),
                 title: TextField(
+                  controller: descriptionController,
                   decoration: InputDecoration(
+                    errorText: _invalid ? "This field is required!" : null,
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: Colors.grey[350],
@@ -200,6 +220,7 @@ class _NewEntryState extends State<NewEntry> {
                   ),
                 ),
                 title: TextField(
+                  controller: amountController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     suffix: Text("HRK"),
