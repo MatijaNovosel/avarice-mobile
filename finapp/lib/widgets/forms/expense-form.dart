@@ -1,3 +1,5 @@
+import 'package:finapp/constants/tag-enum.dart';
+import 'package:finapp/helpers/helpers.dart';
 import 'package:finapp/widgets/current-amount-list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -13,6 +15,8 @@ class _ExpenseFormState extends State<ExpenseForm> {
   final _amountController = TextEditingController();
   bool _expense = true;
   int _paymentSourceId = 0;
+  List<int> _selectedTags = [];
+  List<bool> _checkboxValues = List.filled(TagEnum.keys.length, false);
 
   void submitForm() {
     if (_formKey.currentState.validate()) {
@@ -165,6 +169,51 @@ class _ExpenseFormState extends State<ExpenseForm> {
                 secondary: const Icon(
                   Icons.done_all_rounded,
                 ),
+              ),
+            ),
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(bottom: 18),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        width: 1,
+                        color: Colors.grey[350],
+                      ),
+                    ),
+                    constraints: BoxConstraints(
+                      maxHeight: 300,
+                    ),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: TagEnum.keys.length,
+                      itemBuilder: (context, i) {
+                        return CheckboxListTile(
+                          value: _checkboxValues[i],
+                          onChanged: (bool val) {
+                            setState(() {
+                              _checkboxValues[i] = !_checkboxValues[i];
+                              if (val)
+                                _selectedTags.add(TagEnum.keys.elementAt(i));
+                              else
+                                _selectedTags.remove(TagEnum.keys.elementAt(i));
+                            });
+                          },
+                          title: Text(
+                            parseTag(TagEnum.keys.elementAt(i)),
+                          ),
+                          secondary: Icon(
+                            parseTagIcon(TagEnum.keys.elementAt(i)),
+                            color: Colors.grey[350],
+                          ),
+                          activeColor: Colors.orange,
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
             Padding(
