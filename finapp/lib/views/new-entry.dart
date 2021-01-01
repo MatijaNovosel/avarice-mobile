@@ -1,3 +1,4 @@
+import 'package:finapp/controllers/form-submit-controller.dart';
 import 'package:finapp/widgets/forms/expense-form.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,8 @@ class NewEntry extends StatefulWidget {
 }
 
 class _NewEntryState extends State<NewEntry> {
+  final FormSubmitController formSubmitController = FormSubmitController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +39,21 @@ class _NewEntryState extends State<NewEntry> {
           right: 12,
           top: 12,
         ),
-        child: ExpenseForm(),
+        child: ExpenseForm(controller: formSubmitController),
+      ),
+      floatingActionButton: SizedBox(
+        height: 48,
+        width: 48,
+        child: FloatingActionButton(
+          onPressed: () {
+            formSubmitController.submit();
+          },
+          backgroundColor: Colors.blue,
+          foregroundColor: Colors.white,
+          child: Icon(
+            Icons.save,
+          ),
+        ),
       ),
     );
   }

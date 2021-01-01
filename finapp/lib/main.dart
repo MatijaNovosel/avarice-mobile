@@ -71,9 +71,7 @@ class _MyHomepageState extends State<Home> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CurrentAmountListWidget(onPaymentSourceChanged: (id) {
-              //
-            }),
+            CurrentAmountListWidget(onPaymentSourceChanged: (id) {}),
             Container(
               padding: EdgeInsets.only(top: 4),
               child: Column(children: [

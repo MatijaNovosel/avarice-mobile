@@ -1,11 +1,15 @@
+import 'package:finapp/controllers/form-submit-controller.dart';
 import 'package:finapp/widgets/current-amount-list.dart';
 import 'package:finapp/widgets/tag-checkbox-list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class ExpenseForm extends StatefulWidget {
+  final FormSubmitController controller;
+  ExpenseForm({this.controller});
+
   @override
-  _ExpenseFormState createState() => _ExpenseFormState();
+  _ExpenseFormState createState() => _ExpenseFormState(controller);
 }
 
 class _ExpenseFormState extends State<ExpenseForm> {
@@ -15,6 +19,10 @@ class _ExpenseFormState extends State<ExpenseForm> {
   bool _expense = true;
   int _paymentSourceId = 0;
   List<int> _selectedTags = [];
+
+  _ExpenseFormState(FormSubmitController _controller) {
+    _controller.submit = submit;
+  }
 
   void submitForm() {
     if (_formKey.currentState.validate()) {
@@ -55,6 +63,10 @@ class _ExpenseFormState extends State<ExpenseForm> {
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
+  }
+
+  void submit() {
+    submitForm();
   }
 
   @override
@@ -174,14 +186,6 @@ class _ExpenseFormState extends State<ExpenseForm> {
               onTagCheckboxListChanged: (List<int> tagIds) {
                 _selectedTags = tagIds;
               },
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: ElevatedButton(
-                style: TextButton.styleFrom(backgroundColor: Colors.orange),
-                onPressed: submitForm,
-                child: Text('Save'),
-              ),
             ),
           ],
         ),
