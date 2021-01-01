@@ -3,6 +3,7 @@ import 'package:finapp/helpers/helpers.dart';
 import 'package:finapp/models/payment-source.dart';
 import 'package:finapp/services/financial-history-service.dart';
 import 'package:finapp/widgets/current-amount-card.dart';
+import 'package:finapp/widgets/forms/expense-form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -19,28 +20,8 @@ class _NewEntryState extends State<NewEntry> {
   int _index = 0;
   int _selectedPaymentSource = 0;
   bool _invalid = false;
-  final descriptionController = TextEditingController();
-  final amountController = TextEditingController();
-
-  @override
-  void dispose() {
-    descriptionController.dispose();
-    amountController.dispose();
-    super.dispose();
-  }
 
   void createFinancialChange() {
-    if (descriptionController.text.isEmpty || amountController.text.isEmpty) {
-      setState(() {
-        _invalid = true;
-      });
-    }
-
-    var payload = {
-      "description": descriptionController.text,
-      "amount": amountController.text,
-    };
-
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -91,7 +72,8 @@ class _NewEntryState extends State<NewEntry> {
           right: 12,
           top: 12,
         ),
-        child: SingleChildScrollView(
+        child: ExpenseForm(),
+        /*SingleChildScrollView(
           child: Column(
             children: [
               FutureBuilder<List<PaymentSource>>(
@@ -170,85 +152,6 @@ class _NewEntryState extends State<NewEntry> {
                   }
                 },
               ),
-              ListTile(
-                leading: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 8,
-                  ),
-                  child: Icon(
-                    Icons.description_rounded,
-                    color: Colors.grey[350],
-                  ),
-                ),
-                title: TextField(
-                  controller: descriptionController,
-                  decoration: InputDecoration(
-                    errorText: _invalid ? "This field is required!" : null,
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.grey[350],
-                      ),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.grey[350],
-                      ),
-                    ),
-                    border: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.grey[350],
-                      ),
-                    ),
-                    hintText: "Entry description",
-                    isDense: true,
-                    labelText: "Description",
-                    alignLabelWithHint: true,
-                    labelStyle: TextStyle(
-                      color: Colors.grey[350],
-                    ),
-                  ),
-                ),
-              ),
-              ListTile(
-                leading: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 8,
-                  ),
-                  child: Icon(
-                    Icons.attach_money_rounded,
-                    color: Colors.grey[350],
-                  ),
-                ),
-                title: TextField(
-                  controller: amountController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    suffix: Text("HRK"),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.grey[350],
-                      ),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.grey[350],
-                      ),
-                    ),
-                    border: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.grey[350],
-                      ),
-                    ),
-                    hintText: "Entry amount",
-                    isDense: true,
-                    labelText: "Amount",
-                    alignLabelWithHint: true,
-                    labelStyle: TextStyle(
-                      color: Colors.grey[350],
-                    ),
-                  ),
-                ),
-              ),
               Container(
                 margin: EdgeInsets.only(
                   top: 6,
@@ -319,7 +222,7 @@ class _NewEntryState extends State<NewEntry> {
               ),
             ],
           ),
-        ),
+        ),*/
       ),
       floatingActionButton: SizedBox(
         height: 48,
