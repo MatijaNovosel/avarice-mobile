@@ -1,11 +1,5 @@
-import 'package:finapp/constants/tag-enum.dart';
-import 'package:finapp/helpers/helpers.dart';
-import 'package:finapp/models/payment-source.dart';
-import 'package:finapp/services/financial-history-service.dart';
-import 'package:finapp/widgets/current-amount-card.dart';
 import 'package:finapp/widgets/forms/expense-form.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class NewEntry extends StatefulWidget {
   @override
@@ -13,36 +7,6 @@ class NewEntry extends StatefulWidget {
 }
 
 class _NewEntryState extends State<NewEntry> {
-  List<bool> _checkboxValues = List.filled(TagEnum.keys.length, false);
-  List<int> _selectedTags = [];
-  bool _expense = false;
-  final Future<List<PaymentSource>> _paymentSources = getCurrentAmount();
-  int _index = 0;
-  int _selectedPaymentSource = 0;
-  bool _invalid = false;
-
-  void createFinancialChange() {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return WillPopScope(
-          onWillPop: () async => false,
-          child: AlertDialog(
-            backgroundColor: Colors.transparent,
-            content: SpinKitFoldingCube(
-              color: Colors.red,
-              size: 65,
-            ),
-          ),
-        );
-      },
-    );
-    Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pop(context);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,101 +40,6 @@ class _NewEntryState extends State<NewEntry> {
         /*SingleChildScrollView(
           child: Column(
             children: [
-              FutureBuilder<List<PaymentSource>>(
-                future: _paymentSources,
-                builder: (
-                  BuildContext context,
-                  AsyncSnapshot<List<PaymentSource>> snapshot,
-                ) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.waiting:
-                      {
-                        return Center(
-                          child: SpinKitThreeBounce(
-                            color: Colors.red,
-                            size: 50.0,
-                          ),
-                        );
-                      }
-                    default:
-                      {
-                        if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        } else {
-                          return Column(
-                            children: [
-                              SizedBox(
-                                height: 70,
-                                child: PageView.builder(
-                                  itemCount: snapshot.data.length,
-                                  onPageChanged: (int index) => setState(
-                                    () => _index = index,
-                                  ),
-                                  itemBuilder: (_, i) {
-                                    return Transform.scale(
-                                      scale: i == _index ? 1 : 0.9,
-                                      child: CurrentAmountCardWidget(
-                                        icon: Icons.account_balance_wallet,
-                                        color: Colors.orange[600],
-                                        paymentSource: snapshot.data[i],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                              Container(
-                                height: 25,
-                                margin: EdgeInsets.only(top: 18),
-                                child: ListView.builder(
-                                  itemCount: snapshot.data.length,
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (_, i) {
-                                    return Transform.scale(
-                                      scale: i == _index ? 1 : 0.7,
-                                      child: Container(
-                                        width: 10,
-                                        height: 10,
-                                        margin: i != snapshot.data.length
-                                            ? EdgeInsets.only(right: 4)
-                                            : null,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: i == _index
-                                              ? Colors.orange
-                                              : Colors.grey[800],
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          );
-                        }
-                      }
-                  }
-                },
-              ),
-              Container(
-                margin: EdgeInsets.only(
-                  top: 6,
-                  bottom: 6,
-                ),
-                child: SwitchListTile(
-                  title: const Text('Expense'),
-                  value: _expense,
-                  activeColor: Colors.orange,
-                  onChanged: (bool value) {
-                    setState(() {
-                      _expense = !_expense;
-                    });
-                  },
-                  secondary: const Icon(
-                    Icons.done_all_rounded,
-                  ),
-                ),
-              ),
               Container(
                 margin: EdgeInsets.only(bottom: 18),
                 decoration: BoxDecoration(
@@ -223,20 +92,6 @@ class _NewEntryState extends State<NewEntry> {
             ],
           ),
         ),*/
-      ),
-      floatingActionButton: SizedBox(
-        height: 48,
-        width: 48,
-        child: FloatingActionButton(
-          onPressed: () {
-            createFinancialChange();
-          },
-          backgroundColor: Colors.blue,
-          foregroundColor: Colors.white,
-          child: Icon(
-            Icons.save,
-          ),
-        ),
       ),
     );
   }

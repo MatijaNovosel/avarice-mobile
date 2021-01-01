@@ -1,16 +1,17 @@
+import 'package:finapp/widgets/current-amount-list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class ExpenseForm extends StatefulWidget {
   @override
-  ExpenseFormState createState() {
-    return ExpenseFormState();
-  }
+  _ExpenseFormState createState() => _ExpenseFormState();
 }
 
-class ExpenseFormState extends State<ExpenseForm> {
+class _ExpenseFormState extends State<ExpenseForm> {
   final _formKey = GlobalKey<FormState>();
   final _descriptionController = TextEditingController();
   final _amountController = TextEditingController();
+  bool _expense = true;
 
   @override
   void dispose() {
@@ -26,6 +27,7 @@ class ExpenseFormState extends State<ExpenseForm> {
       child: SingleChildScrollView(
         child: Column(
           children: [
+            CurrentAmountListWidget(),
             ListTile(
               leading: Padding(
                 padding: const EdgeInsets.only(
@@ -58,9 +60,7 @@ class ExpenseFormState extends State<ExpenseForm> {
                   isDense: true,
                   labelText: "Description",
                   alignLabelWithHint: true,
-                  labelStyle: TextStyle(
-                    color: Colors.grey[350],
-                  ),
+                  labelStyle: TextStyle(color: Colors.grey[350]),
                 ),
               ),
             ),
@@ -104,18 +104,58 @@ class ExpenseFormState extends State<ExpenseForm> {
                 ),
               ),
             ),
+            Container(
+              margin: EdgeInsets.only(top: 6),
+              child: SwitchListTile(
+                title: const Text('Expense'),
+                value: _expense,
+                activeColor: Colors.orange,
+                onChanged: (bool value) {
+                  setState(() {
+                    _expense = !_expense;
+                  });
+                },
+                secondary: const Icon(
+                  Icons.done_all_rounded,
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: ElevatedButton(
                 onPressed: () {
-                  print(_descriptionController.text);
                   if (_formKey.currentState.validate()) {
-                    print("Valid!");
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return WillPopScope(
+                          onWillPop: () async => false,
+                          child: AlertDialog(
+                            backgroundColor: Colors.transparent,
+                            content: SpinKitFoldingCube(
+                              color: Colors.red,
+                              size: 65,
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                    Future.delayed(const Duration(seconds: 3), () {
+                      Navigator.pop(context);
+                    });
                   } else {
-                    print("Invalid!");
+                    var snackBar = SnackBar(
+                      content: Text(
+                        'Invalid data supplied!',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      backgroundColor: Colors.red[800],
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 },
-                child: Text('Submit'),
+                child: Text('Save'),
               ),
             ),
           ],

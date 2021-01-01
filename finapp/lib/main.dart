@@ -1,6 +1,4 @@
-import 'package:finapp/models/payment-source.dart';
-import 'package:finapp/services/financial-history-service.dart';
-import 'package:finapp/widgets/current-amount-card.dart';
+import 'package:finapp/widgets/current-amount-list.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'services/change-service.dart';
@@ -52,8 +50,6 @@ class Home extends StatefulWidget {
 
 class _MyHomepageState extends State<Home> {
   final Future<List<FinancialChange>> _financialChanges = getFinancialChanges();
-  final Future<List<PaymentSource>> _paymentSources = getCurrentAmount();
-  int _index = 0;
 
   @override
   void initState() {
@@ -75,85 +71,7 @@ class _MyHomepageState extends State<Home> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            FutureBuilder<List<PaymentSource>>(
-              future: _paymentSources,
-              builder: (
-                BuildContext context,
-                AsyncSnapshot<List<PaymentSource>> snapshot,
-              ) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.waiting:
-                    {
-                      return Center(
-                        child: SpinKitThreeBounce(
-                          color: Colors.red,
-                          size: 50.0,
-                        ),
-                      );
-                    }
-                  default:
-                    {
-                      if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      } else {
-                        return Column(
-                          children: [
-                            SizedBox(
-                              height: 70,
-                              child: PageView.builder(
-                                itemCount: snapshot.data.length,
-                                onPageChanged: (int index) => setState(
-                                  () => _index = index,
-                                ),
-                                itemBuilder: (_, i) {
-                                  return Transform.scale(
-                                    scale: i == _index ? 1 : 0.9,
-                                    child: CurrentAmountCardWidget(
-                                      icon: Icons.account_balance_wallet,
-                                      color: Colors.orange[600],
-                                      paymentSource: snapshot.data[i],
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                            Container(
-                              height: 25,
-                              margin: EdgeInsets.only(
-                                top: 12,
-                                bottom: 8,
-                              ),
-                              child: ListView.builder(
-                                itemCount: snapshot.data.length,
-                                shrinkWrap: true,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (_, i) {
-                                  return Transform.scale(
-                                    scale: i == _index ? 1 : 0.7,
-                                    child: Container(
-                                      width: 10,
-                                      height: 10,
-                                      margin: i != 3
-                                          ? EdgeInsets.only(right: 4)
-                                          : null,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: i == _index
-                                            ? Colors.orange
-                                            : Colors.grey[800],
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ],
-                        );
-                      }
-                    }
-                }
-              },
-            ),
+            CurrentAmountListWidget(),
             Container(
               padding: EdgeInsets.only(top: 4),
               child: Column(children: [
