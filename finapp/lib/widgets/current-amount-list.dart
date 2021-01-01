@@ -4,7 +4,12 @@ import 'package:finapp/widgets/current-amount-card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+typedef PaymentSourceIdCallback = void Function(int paymentSourceId);
+
 class CurrentAmountListWidget extends StatefulWidget {
+  const CurrentAmountListWidget({this.onPaymentSourceChanged});
+  final PaymentSourceIdCallback onPaymentSourceChanged;
+
   @override
   _CurrentAmountListState createState() => _CurrentAmountListState();
 }
@@ -49,6 +54,7 @@ class _CurrentAmountListState extends State<CurrentAmountListWidget> {
                       child: PageView.builder(
                         itemCount: snapshot.data.length,
                         onPageChanged: (i) {
+                          widget.onPaymentSourceChanged(i);
                           setState(() {
                             _index = i;
                           });

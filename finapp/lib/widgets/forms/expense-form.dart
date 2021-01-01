@@ -68,7 +68,13 @@ class _ExpenseFormState extends State<ExpenseForm> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            CurrentAmountListWidget(),
+            CurrentAmountListWidget(
+              onPaymentSourceChanged: (id) {
+                setState(() {
+                  _paymentSourceId = id;
+                });
+              },
+            ),
             ListTile(
               leading: Padding(
                 padding: const EdgeInsets.only(
