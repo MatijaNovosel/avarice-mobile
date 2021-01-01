@@ -12,6 +12,47 @@ class _ExpenseFormState extends State<ExpenseForm> {
   final _descriptionController = TextEditingController();
   final _amountController = TextEditingController();
   bool _expense = true;
+  int _paymentSourceId = 0;
+
+  void submitForm() {
+    if (_formKey.currentState.validate()) {
+      var payload = {
+        "amount": _amountController.text,
+        "description": _descriptionController.text,
+        "expense": _expense,
+        "paymentSourceId": _paymentSourceId,
+      };
+
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return WillPopScope(
+            onWillPop: () async => false,
+            child: AlertDialog(
+              backgroundColor: Colors.transparent,
+              content: SpinKitFoldingCube(
+                color: Colors.red,
+                size: 65,
+              ),
+            ),
+          );
+        },
+      );
+      Future.delayed(const Duration(seconds: 3), () {
+        Navigator.pop(context);
+      });
+    } else {
+      var snackBar = SnackBar(
+        content: Text(
+          'Invalid data supplied!',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.red[800],
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  }
 
   @override
   void dispose() {
@@ -123,38 +164,8 @@ class _ExpenseFormState extends State<ExpenseForm> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState.validate()) {
-                    showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (BuildContext context) {
-                        return WillPopScope(
-                          onWillPop: () async => false,
-                          child: AlertDialog(
-                            backgroundColor: Colors.transparent,
-                            content: SpinKitFoldingCube(
-                              color: Colors.red,
-                              size: 65,
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                    Future.delayed(const Duration(seconds: 3), () {
-                      Navigator.pop(context);
-                    });
-                  } else {
-                    var snackBar = SnackBar(
-                      content: Text(
-                        'Invalid data supplied!',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      backgroundColor: Colors.red[800],
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  }
-                },
+                style: TextButton.styleFrom(backgroundColor: Colors.orange),
+                onPressed: submitForm,
                 child: Text('Save'),
               ),
             ),
