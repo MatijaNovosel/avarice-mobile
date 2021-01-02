@@ -17,15 +17,17 @@ class _ExpenseFormState extends State<ExpenseForm> {
   final _descriptionController = TextEditingController();
   final _amountController = TextEditingController();
   bool _expense = true;
+  bool _tagsValid = false;
   int _paymentSourceId = 0;
   List<int> _selectedTags = [];
+  final FormSubmitController formSubmitController = FormSubmitController();
 
   _ExpenseFormState(FormSubmitController _controller) {
     _controller.submit = submit;
   }
 
   void submitForm() {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState.validate() && _tagsValid) {
       var payload = {
         "amount": _amountController.text,
         "description": _descriptionController.text,
@@ -33,6 +35,8 @@ class _ExpenseFormState extends State<ExpenseForm> {
         "paymentSourceId": _paymentSourceId,
         "tagIds": _selectedTags,
       };
+
+      print(payload);
 
       showDialog(
         context: context,
@@ -66,6 +70,13 @@ class _ExpenseFormState extends State<ExpenseForm> {
   }
 
   void submit() {
+    /*
+
+      TODO: Controller for the tag checklist, they have the same name.
+      Change later.
+    
+    */
+    formSubmitController.submit();
     submitForm();
   }
 
@@ -186,6 +197,12 @@ class _ExpenseFormState extends State<ExpenseForm> {
               onTagCheckboxListChanged: (List<int> tagIds) {
                 _selectedTags = tagIds;
               },
+              isValid: (bool isValid) {
+                setState(() {
+                  _tagsValid = isValid;
+                });
+              },
+              controller: formSubmitController,
             ),
           ],
         ),
