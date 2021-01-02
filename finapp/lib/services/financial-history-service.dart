@@ -26,6 +26,7 @@ Future<List<PaymentSource>> getCurrentAmount() async {
           'query': '''query {
             financialHistoryCurrentAmount(id: 1) {
               paymentSources {
+                id
                 amount
                 description
               }
