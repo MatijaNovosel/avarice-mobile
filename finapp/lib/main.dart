@@ -18,6 +18,7 @@ Future<Null> _read() async {
       waitTap: true,
       showText: true,
     );
+    print(texts[0].value);
   } on Exception {
     texts.add(
       OcrText('Failed to recognize text'),
@@ -54,7 +55,7 @@ class _MyHomepageState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    // FlutterMobileVision.start();
+    FlutterMobileVision.start();
   }
 
   @override
@@ -250,21 +251,35 @@ class _MyHomepageState extends State<Home> {
       drawer: CustomDrawer(),
       floatingActionButton: SizedBox(
         height: 48,
-        width: 48,
-        child: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => NewEntry(),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FloatingActionButton(
+              onPressed: () {
+                _read();
+              },
+              backgroundColor: Colors.orange[600],
+              foregroundColor: Colors.black,
+              child: Icon(
+                Icons.camera_alt,
               ),
-            );
-          },
-          backgroundColor: Colors.green[600],
-          foregroundColor: Colors.white,
-          child: Icon(
-            Icons.create_rounded,
-          ),
+            ),
+            FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NewEntry(),
+                  ),
+                );
+              },
+              backgroundColor: Colors.green[600],
+              foregroundColor: Colors.white,
+              child: Icon(
+                Icons.create_rounded,
+              ),
+            ),
+          ],
         ),
       ),
     );
