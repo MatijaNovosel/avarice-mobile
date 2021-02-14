@@ -1,3 +1,4 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:finapp/widgets/current-amount-list.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -63,6 +64,20 @@ class _MyHomepageState extends State<Home> {
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: CustomAppBar(),
+      bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: Colors.grey[850],
+        color: Colors.grey[800],
+        height: 55,
+        items: <Widget>[
+          Icon(Icons.home, size: 25),
+          Icon(Icons.create_rounded, size: 25),
+          Icon(Icons.history, size: 25),
+          Icon(Icons.credit_card_outlined, size: 25),
+        ],
+        onTap: (index) {
+          // Handle button tap
+        },
+      ),
       body: Padding(
         padding: const EdgeInsets.only(
           left: 12,
@@ -249,39 +264,6 @@ class _MyHomepageState extends State<Home> {
         ),
       ),
       drawer: CustomDrawer(),
-      floatingActionButton: SizedBox(
-        height: 48,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            FloatingActionButton(
-              onPressed: () {
-                _read();
-              },
-              backgroundColor: Colors.orange[600],
-              foregroundColor: Colors.black,
-              child: Icon(
-                Icons.camera_alt,
-              ),
-            ),
-            FloatingActionButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NewEntry(),
-                  ),
-                );
-              },
-              backgroundColor: Colors.green[600],
-              foregroundColor: Colors.white,
-              child: Icon(
-                Icons.create_rounded,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
