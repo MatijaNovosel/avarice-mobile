@@ -1,4 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:finapp/views/accounts.dart';
+import 'package:finapp/views/history.dart';
 import 'package:finapp/views/home.dart';
 import 'package:finapp/widgets/app-bar.dart';
 import 'package:finapp/widgets/drawer.dart';
@@ -48,6 +50,8 @@ class MainScreenState extends State<MainScreen> {
     final List<Widget> _children = [
       Home(),
       NewEntry(),
+      History(),
+      Accounts(),
     ];
 
     return new WillPopScope(
@@ -58,7 +62,7 @@ class MainScreenState extends State<MainScreen> {
         drawer: CustomDrawer(),
         bottomNavigationBar: CurvedNavigationBar(
           key: _bottomNavigationKey,
-          index: 0,
+          index: currentIndex,
           height: 55,
           items: <Widget>[
             Icon(Icons.home, size: 25),
@@ -82,6 +86,14 @@ class MainScreenState extends State<MainScreen> {
           },
         ),
         body: PageView(
+          onPageChanged: (index) {
+            setState(() {
+              currentIndex = index;
+              final CurvedNavigationBarState navBarState =
+                  _bottomNavigationKey.currentState;
+              navBarState.setPage(currentIndex);
+            });
+          },
           controller: _pageController,
           children: _children,
         ),

@@ -16,7 +16,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final Future<List<FinancialChange>> _financialChanges = getFinancialChanges();
+  // final Future<List<FinancialChange>> _financialChanges = getFinancialChanges();
 
   @override
   Widget build(BuildContext context) {
