@@ -1,8 +1,3 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:finapp/widgets/app-bar.dart';
-import 'package:finapp/widgets/bottom-navigation.dart';
-import 'package:finapp/widgets/current-amount-list.dart';
-import 'package:finapp/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:finapp/services/change-service.dart';
@@ -16,7 +11,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  // final Future<List<FinancialChange>> _financialChanges = getFinancialChanges();
+  final Future<List<FinancialChange>> _financialChanges = getFinancialChanges();
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +152,7 @@ class _HomeState extends State<Home> {
               ],
             ),
           ),
-          /* FutureBuilder<List<FinancialChange>>(
+          FutureBuilder<List<FinancialChange>>(
             future: _financialChanges,
             builder: (
               BuildContext context,
@@ -199,7 +194,7 @@ class _HomeState extends State<Home> {
                   }
               }
             },
-          ), */
+          ),
         ],
       ),
     );
