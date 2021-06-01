@@ -1,4 +1,4 @@
-library change_service;
+library auth_service;
 
 import 'package:dio/dio.dart';
 import 'package:finapp/models/auth.dart';
@@ -9,7 +9,10 @@ Future<AuthResponse> login(String email, String password) async {
   try {
     var response = await dio.post(
       "$apiUrl/auth/login",
-      data: {"email": email, "password": password},
+      data: {
+        "email": email,
+        "password": password,
+      },
     );
     return new AuthResponse(
       token: response.data["token"],

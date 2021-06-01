@@ -1,18 +1,13 @@
 import 'dart:convert';
-import 'package:finapp/models/payment-source.dart';
+import 'package:finapp/models/account.dart';
 import 'package:http/http.dart' as http;
 import "../constants/apiConstants.dart";
 
-List<PaymentSource> parseCurrentAmount(String responseBody) {
-  final parsed = jsonDecode(responseBody).cast<String, dynamic>();
-  return parsed["data"]["financialHistoryCurrentAmount"]["paymentSources"]
-      .map<PaymentSource>(
-        (json) => PaymentSource.fromJson(json),
-      )
-      .toList();
+List<Account> parseCurrentAmount(String responseBody) {
+  return [];
 }
 
-Future<List<PaymentSource>> getCurrentAmount() async {
+Future<List<Account>> getCurrentAmount() async {
   var client = http.Client();
   try {
     var uriResponse = await client.post(

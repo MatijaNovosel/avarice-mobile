@@ -1,4 +1,4 @@
-import 'package:finapp/models/payment-source.dart';
+import 'package:finapp/models/account.dart';
 import 'package:finapp/services/historyService.dart';
 import 'package:finapp/widgets/currentAmountCard.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,7 @@ class CurrentAmountListWidget extends StatefulWidget {
 
 class _CurrentAmountListState extends State<CurrentAmountListWidget> {
   int _index = 0;
-  Future<List<PaymentSource>> _future;
+  Future<List<Account>> _future;
 
   @override
   void initState() {
@@ -26,11 +26,11 @@ class _CurrentAmountListState extends State<CurrentAmountListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<PaymentSource>>(
+    return FutureBuilder<List<Account>>(
       future: _future,
       builder: (
         BuildContext context,
-        AsyncSnapshot<List<PaymentSource>> snapshot,
+        AsyncSnapshot<List<Account>> snapshot,
       ) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:

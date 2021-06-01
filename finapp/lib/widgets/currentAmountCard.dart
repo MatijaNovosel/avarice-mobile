@@ -1,4 +1,4 @@
-import 'package:finapp/models/payment-source.dart';
+import 'package:finapp/models/account.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -88,7 +88,7 @@ class _CurrentAmountCardState extends State<CurrentAmountCardWidget> {
 }
 
 class CurrentAmountCardWidget extends StatefulWidget {
-  final PaymentSource paymentSource;
+  final Account paymentSource;
   final Color color;
   final IconData icon;
   const CurrentAmountCardWidget({

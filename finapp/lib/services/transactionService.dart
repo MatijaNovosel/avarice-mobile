@@ -1,4 +1,4 @@
-library change_service;
+library transaction_service;
 
 import 'dart:convert';
 import '../models/transaction.dart';

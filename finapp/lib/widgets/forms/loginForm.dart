@@ -45,7 +45,6 @@ class _LoginFormState extends State<LoginForm> {
         var response =
             await login(_emailController.text, _passwordController.text);
         if (response.result == true) {
-          print(response.token);
           var snackBar = SnackBar(
             content: Text(
               "Successfully signed in!",
