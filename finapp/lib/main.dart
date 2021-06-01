@@ -29,8 +29,10 @@ class MainScreen extends StatefulWidget {
 
 class MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
+  final snackBar = SnackBar(content: Text('Yay! A SnackBar!'));
 
   void _onItemTapped(int index) {
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
     setState(() {
       _currentIndex = index;
     });

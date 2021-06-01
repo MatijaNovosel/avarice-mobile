@@ -1,6 +1,8 @@
 import 'package:finapp/controllers/formSubmitController.dart';
+import 'package:finapp/services/authService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginForm extends StatefulWidget {
   final FormSubmitController controller;
@@ -14,6 +16,7 @@ class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool _hidePassword = true;
 
   _LoginFormState(FormSubmitController _controller) {
     _controller.submit = submit;
@@ -21,13 +24,6 @@ class _LoginFormState extends State<LoginForm> {
 
   void submitForm() {
     if (_formKey.currentState.validate()) {
-      var payload = {
-        "password": _passwordController.text,
-        "email": _emailController.text
-      };
-
-      print(payload);
-
       showDialog(
         context: context,
         barrierDismissible: false,
@@ -44,8 +40,36 @@ class _LoginFormState extends State<LoginForm> {
           );
         },
       );
-      Future.delayed(const Duration(seconds: 3), () {
+      Future.delayed(const Duration(seconds: 1), () async {
         Navigator.pop(context);
+        var response =
+            await login(_emailController.text, _passwordController.text);
+        if (response.result == true) {
+          print(response.token);
+          var snackBar = SnackBar(
+            content: Text(
+              "Successfully signed in!",
+              style: new TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            backgroundColor: Colors.green,
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setString("bearerToken", response.token);
+        } else {
+          var snackBar = SnackBar(
+            content: Text(
+              response.errors.join(", "),
+              style: new TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            backgroundColor: Colors.red[900],
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
       });
     } else {
       var snackBar = SnackBar(
@@ -123,6 +147,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
             title: TextFormField(
+              obscureText: _hidePassword,
               controller: _passwordController,
               validator: (value) {
                 if (value.isEmpty) {
