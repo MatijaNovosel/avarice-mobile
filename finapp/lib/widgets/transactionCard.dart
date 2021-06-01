@@ -1,9 +1,8 @@
 import 'package:finapp/models/financial-change.dart';
 import 'package:flutter/material.dart';
 import "tag.dart";
-import "../helpers/helpers.dart";
 
-class _ChangeCardState extends State<ChangeCardWidget> {
+class _ChangeCardState extends State<TransactionCardWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -60,7 +59,7 @@ class _ChangeCardState extends State<ChangeCardWidget> {
                         Padding(
                           padding: const EdgeInsets.only(right: 10.0),
                           child: TagWidget(
-                            text: parseTag(id),
+                            text: "Text",
                             color: widget.financialChange.expense
                                 ? Colors.red
                                 : Colors.green,
@@ -78,10 +77,10 @@ class _ChangeCardState extends State<ChangeCardWidget> {
   }
 }
 
-class ChangeCardWidget extends StatefulWidget {
+class TransactionCardWidget extends StatefulWidget {
   final FinancialChange financialChange;
   final bool visible;
-  const ChangeCardWidget({Key key, this.financialChange, this.visible})
+  const TransactionCardWidget({Key key, this.financialChange, this.visible})
       : super(key: key);
   @override
   _ChangeCardState createState() => _ChangeCardState();

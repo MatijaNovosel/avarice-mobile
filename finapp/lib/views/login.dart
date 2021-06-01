@@ -1,11 +1,14 @@
+import 'package:finapp/controllers/form-submit-controller.dart';
 import 'package:flutter/material.dart';
 
-class Accounts extends StatefulWidget {
+class Login extends StatefulWidget {
   @override
-  _AccountsState createState() => _AccountsState();
+  _LoginState createState() => _LoginState();
 }
 
-class _AccountsState extends State<Accounts> {
+class _LoginState extends State<Login> {
+  final FormSubmitController formSubmitController = FormSubmitController();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -15,7 +18,7 @@ class _AccountsState extends State<Accounts> {
         top: 12,
       ),
       child: Center(
-        child: Text("Accounts"),
+        child: Text("Login"),
       ), // ExpenseForm(controller: formSubmitController),
     );
   }

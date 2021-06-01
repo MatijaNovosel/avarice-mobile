@@ -3,7 +3,7 @@ library change_service;
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import "../models/financial-change.dart";
-import "../constants/api-constants.dart";
+import "../constants/apiConstants.dart";
 
 List<FinancialChange> parseFinancialChanges(String responseBody) {
   final parsed = jsonDecode(responseBody).cast<String, dynamic>();

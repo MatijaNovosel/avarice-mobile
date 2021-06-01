@@ -1,6 +1,4 @@
-import 'package:finapp/constants/tag-enum.dart';
 import 'package:finapp/controllers/form-submit-controller.dart';
-import 'package:finapp/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 
 typedef TagCheckboxListSelectedCallback = void Function(List<int> selectedTags);
@@ -23,7 +21,7 @@ class TagCheckboxListWidget extends StatefulWidget {
 
 class _TagCheckboxListWidget extends State<TagCheckboxListWidget> {
   List<int> _selectedTags = [];
-  List<bool> _checkboxValues = List.filled(TagEnum.keys.length, false);
+  List<bool> _checkboxValues = List.filled(8, false);
   bool _invalid = true;
   bool _touched = false;
 
@@ -58,7 +56,7 @@ class _TagCheckboxListWidget extends State<TagCheckboxListWidget> {
             ),
             child: ListView.builder(
               shrinkWrap: true,
-              itemCount: TagEnum.keys.length,
+              itemCount: 8,
               itemBuilder: (context, i) {
                 return CheckboxListTile(
                   value: _checkboxValues[i],
@@ -66,9 +64,9 @@ class _TagCheckboxListWidget extends State<TagCheckboxListWidget> {
                     setState(() {
                       _checkboxValues[i] = !_checkboxValues[i];
                       if (val) {
-                        _selectedTags.add(TagEnum.keys.elementAt(i));
+                        _selectedTags.add(1);
                       } else {
-                        _selectedTags.remove(TagEnum.keys.elementAt(i));
+                        _selectedTags.remove(1);
                       }
                       widget.onTagCheckboxListChanged(_selectedTags);
                       if (_touched) {
@@ -81,10 +79,10 @@ class _TagCheckboxListWidget extends State<TagCheckboxListWidget> {
                     });
                   },
                   title: Text(
-                    parseTag(TagEnum.keys.elementAt(i)),
+                    "Tag",
                   ),
                   secondary: Icon(
-                    parseTagIcon(TagEnum.keys.elementAt(i)),
+                    Icons.favorite,
                     color: Colors.grey[350],
                   ),
                   activeColor: Colors.orange,

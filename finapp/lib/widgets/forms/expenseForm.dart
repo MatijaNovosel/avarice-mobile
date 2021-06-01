@@ -1,6 +1,6 @@
 import 'package:finapp/controllers/form-submit-controller.dart';
-import 'package:finapp/widgets/current-amount-list.dart';
-import 'package:finapp/widgets/tag-checkbox-list.dart';
+import 'package:finapp/widgets/currentAmountList.dart';
+import 'package:finapp/widgets/tagCheckboxList.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 

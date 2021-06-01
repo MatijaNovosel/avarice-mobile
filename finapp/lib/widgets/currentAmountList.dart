@@ -1,6 +1,6 @@
 import 'package:finapp/models/payment-source.dart';
-import 'package:finapp/services/financial-history-service.dart';
-import 'package:finapp/widgets/current-amount-card.dart';
+import 'package:finapp/services/historyService.dart';
+import 'package:finapp/widgets/currentAmountCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 

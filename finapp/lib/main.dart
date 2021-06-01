@@ -2,10 +2,10 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:finapp/views/accounts.dart';
 import 'package:finapp/views/history.dart';
 import 'package:finapp/views/home.dart';
-import 'package:finapp/widgets/app-bar.dart';
+import 'package:finapp/widgets/appBar.dart';
 import 'package:finapp/widgets/drawer.dart';
 import 'package:flutter/material.dart';
-import "views/new-entry.dart";
+import "views/newEntry.dart";
 
 void main() => runApp(Main());
 

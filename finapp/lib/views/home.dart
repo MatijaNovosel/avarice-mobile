@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:finapp/services/change-service.dart';
+import 'package:finapp/services/transactionService.dart';
 import "package:finapp/models/financial-change.dart";
-import "package:finapp/widgets/change-card.dart";
+import "package:finapp/widgets/transactionCard.dart";
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Home extends StatefulWidget {
@@ -180,7 +180,7 @@ class _HomeState extends State<Home> {
                           itemBuilder: (context, i) {
                             return Column(
                               children: [
-                                ChangeCardWidget(
+                                TransactionCardWidget(
                                   financialChange: snapshot.data[i],
                                   visible: false,
                                 ),
