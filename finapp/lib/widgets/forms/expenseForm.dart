@@ -76,7 +76,6 @@ class _ExpenseFormState extends State<ExpenseForm> {
       Change later.
     
     */
-    formSubmitController.submit();
     submitForm();
   }
 
@@ -95,7 +94,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
         child: Column(
           children: [
             CurrentAmountListWidget(
-              onPaymentSourceChanged: (id) {
+              onAccountChange: (id) {
                 setState(() {
                   _paymentSourceId = id;
                 });
@@ -193,17 +192,21 @@ class _ExpenseFormState extends State<ExpenseForm> {
                 ),
               ),
             ),
-            TagCheckboxListWidget(
-              onTagCheckboxListChanged: (List<int> tagIds) {
-                _selectedTags = tagIds;
-              },
-              isValid: (bool isValid) {
-                setState(() {
-                  _tagsValid = isValid;
-                });
-              },
-              controller: formSubmitController,
+            new DropdownButton<String>(
+              hint: Text("Tags"),
+              isExpanded: true,
+              items: <String>['A', 'B', 'C', 'D'].map((String value) {
+                return new DropdownMenuItem<String>(
+                  value: value,
+                  child: new Text(value),
+                );
+              }).toList(),
+              onChanged: (_) {},
             ),
+            ElevatedButton(
+              onPressed: () {},
+              child: Text("Submit"),
+            )
           ],
         ),
       ),

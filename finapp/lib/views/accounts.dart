@@ -1,6 +1,8 @@
 import 'package:finapp/models/account.dart';
 import 'package:finapp/services/accountService.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:intl/intl.dart';
 
 class Accounts extends StatefulWidget {
   @override
@@ -8,7 +10,7 @@ class Accounts extends StatefulWidget {
 }
 
 class _AccountsState extends State<Accounts> {
-  List<Account> _accounts;
+  final Future<List<Account>> _accounts = getLatestAccountValues();
 
   @override
   Widget build(BuildContext context) {
@@ -20,39 +22,71 @@ class _AccountsState extends State<Accounts> {
       ),
       child: Column(
         children: [
-          Text("Accounts"),
-          ElevatedButton(
-            onPressed: () async {
-              var accounts = await getLatestAccountValues();
-              setState(() {
-                _accounts = accounts;
-              });
-            },
-            child: Text("Fetch accounts"),
-          ),
-          Column(
-            children: [
-              if (_accounts != null && _accounts.length != 0)
-                for (var account in _accounts)
-                  Card(
-                    child: ListTile(
-                      leading: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            Icons.account_balance_wallet_rounded,
-                            size: 30,
-                            color: Colors.white,
-                          ),
-                        ],
+          FutureBuilder<List<Account>>(
+            future: _accounts,
+            builder: (
+              BuildContext context,
+              AsyncSnapshot<List<Account>> snapshot,
+            ) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  {
+                    return Center(
+                      child: SpinKitFadingCircle(
+                        color: Colors.red,
+                        size: 50.0,
                       ),
-                      title: Text(account.amount.toStringAsFixed(2) + " HRK"),
-                      subtitle: Text(account.description),
-                      trailing: Icon(Icons.more_vert),
-                    ),
-                  ),
-            ],
-          )
+                    );
+                  }
+                default:
+                  {
+                    if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else {
+                      return Expanded(
+                        child: ListView.builder(
+                          shrinkWrap: false,
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, i) {
+                            return Column(
+                              children: [
+                                Card(
+                                  child: ListTile(
+                                    subtitle: Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 12.0,
+                                      ),
+                                      child: Text(
+                                        "${NumberFormat("#,##0.00", "hr_HR").format(snapshot.data[i].amount)} HRK",
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    title: Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 12.0,
+                                      ),
+                                      child: Text(
+                                        snapshot.data[i].description,
+                                      ),
+                                    ),
+                                    trailing: Icon(Icons.more_vert),
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                              ],
+                            );
+                          },
+                        ),
+                      );
+                    }
+                  }
+              }
+            },
+          ),
         ],
       ),
     );

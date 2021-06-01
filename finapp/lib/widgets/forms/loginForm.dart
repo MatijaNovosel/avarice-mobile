@@ -2,7 +2,7 @@ import 'package:finapp/controllers/formSubmitController.dart';
 import 'package:finapp/services/authService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_session/flutter_session.dart';
 
 class LoginForm extends StatefulWidget {
   final FormSubmitController controller;
@@ -55,8 +55,7 @@ class _LoginFormState extends State<LoginForm> {
             backgroundColor: Colors.green,
           );
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setString("bearerToken", response.token);
+          await FlutterSession().set("bearerToken", response.token);
         } else {
           var snackBar = SnackBar(
             content: Text(

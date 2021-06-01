@@ -1,5 +1,5 @@
 import 'package:finapp/models/account.dart';
-import 'package:finapp/services/historyService.dart';
+import 'package:finapp/services/accountService.dart';
 import 'package:finapp/widgets/currentAmountCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -7,8 +7,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 typedef PaymentSourceIdCallback = void Function(int paymentSourceId);
 
 class CurrentAmountListWidget extends StatefulWidget {
-  const CurrentAmountListWidget({this.onPaymentSourceChanged});
-  final PaymentSourceIdCallback onPaymentSourceChanged;
+  const CurrentAmountListWidget({this.onAccountChange});
+  final PaymentSourceIdCallback onAccountChange;
 
   @override
   _CurrentAmountListState createState() => _CurrentAmountListState();
@@ -16,13 +16,7 @@ class CurrentAmountListWidget extends StatefulWidget {
 
 class _CurrentAmountListState extends State<CurrentAmountListWidget> {
   int _index = 0;
-  Future<List<Account>> _future;
-
-  @override
-  void initState() {
-    _future = getCurrentAmount();
-    super.initState();
-  }
+  Future<List<Account>> _future = getLatestAccountValues();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +30,7 @@ class _CurrentAmountListState extends State<CurrentAmountListWidget> {
           case ConnectionState.waiting:
             {
               return Center(
-                child: SpinKitThreeBounce(
+                child: SpinKitFadingCircle(
                   color: Colors.red,
                   size: 50.0,
                 ),
@@ -50,11 +44,11 @@ class _CurrentAmountListState extends State<CurrentAmountListWidget> {
                 return Column(
                   children: [
                     SizedBox(
-                      height: 70,
+                      height: 80,
                       child: PageView.builder(
                         itemCount: snapshot.data.length,
                         onPageChanged: (i) {
-                          widget.onPaymentSourceChanged(i);
+                          widget.onAccountChange(i);
                           setState(() {
                             _index = i;
                           });
@@ -64,8 +58,8 @@ class _CurrentAmountListState extends State<CurrentAmountListWidget> {
                             scale: i == _index ? 1 : 0.9,
                             child: CurrentAmountCardWidget(
                               icon: Icons.account_balance_wallet,
-                              color: Colors.orange[600],
-                              paymentSource: snapshot.data[i],
+                              color: Colors.white,
+                              account: snapshot.data[i],
                             ),
                           );
                         },
@@ -93,7 +87,7 @@ class _CurrentAmountListState extends State<CurrentAmountListWidget> {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: i == _index
-                                    ? Colors.orange
+                                    ? Colors.white
                                     : Colors.grey[800],
                               ),
                             ),

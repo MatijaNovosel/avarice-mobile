@@ -1,6 +1,6 @@
 import 'package:finapp/views/accounts.dart';
 import 'package:finapp/views/history.dart';
-import 'package:finapp/views/home.dart';
+import 'package:finapp/views/dashboard.dart';
 import 'package:finapp/views/login.dart';
 import 'package:finapp/widgets/appBar.dart';
 import 'package:finapp/widgets/drawer.dart';
@@ -50,7 +50,7 @@ class MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     final List<Widget> _children = [
       Login(),
-      Home(),
+      Dashboard(),
       NewEntry(),
       History(),
       Accounts(),
