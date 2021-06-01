@@ -1,4 +1,4 @@
-import 'package:finapp/models/financial-change.dart';
+import 'package:finapp/models/transaction.dart';
 import 'package:flutter/material.dart';
 import "tag.dart";
 
@@ -9,9 +9,7 @@ class _ChangeCardState extends State<TransactionCardWidget> {
       height: 85,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: widget.financialChange.expense
-            ? Colors.red[800]
-            : Colors.green[800],
+        color: widget.transaction.expense ? Colors.red[800] : Colors.green[800],
       ),
       child: Row(
         children: <Widget>[
@@ -22,7 +20,7 @@ class _ChangeCardState extends State<TransactionCardWidget> {
                 topLeft: Radius.circular(10),
                 bottomLeft: Radius.circular(10),
               ),
-              color: widget.financialChange.expense ? Colors.red : Colors.green,
+              color: widget.transaction.expense ? Colors.red : Colors.green,
             ),
           ),
           Expanded(
@@ -33,7 +31,7 @@ class _ChangeCardState extends State<TransactionCardWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "${widget.financialChange.description} • ${widget.financialChange.createdAt}",
+                    "${widget.transaction.description} • ${widget.transaction.createdAt}",
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.grey[300],
@@ -43,8 +41,8 @@ class _ChangeCardState extends State<TransactionCardWidget> {
                     padding: EdgeInsets.only(top: 2, bottom: 8),
                     child: Text(
                       widget.visible
-                          ? "${widget.financialChange.amount} HRK"
-                          : "${widget.financialChange.amount} HRK"
+                          ? "${widget.transaction.amount} HRK"
+                          : "${widget.transaction.amount} HRK"
                               .replaceAll(new RegExp(r'[0-9]'), '*'),
                       style: TextStyle(
                         fontSize: 18,
@@ -55,12 +53,12 @@ class _ChangeCardState extends State<TransactionCardWidget> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      for (var id in widget.financialChange.tagIds)
+                      for (var id in widget.transaction.tagIds)
                         Padding(
                           padding: const EdgeInsets.only(right: 10.0),
                           child: TagWidget(
                             text: "Text",
-                            color: widget.financialChange.expense
+                            color: widget.transaction.expense
                                 ? Colors.red
                                 : Colors.green,
                           ),
@@ -78,9 +76,9 @@ class _ChangeCardState extends State<TransactionCardWidget> {
 }
 
 class TransactionCardWidget extends StatefulWidget {
-  final FinancialChange financialChange;
+  final Transaction transaction;
   final bool visible;
-  const TransactionCardWidget({Key key, this.financialChange, this.visible})
+  const TransactionCardWidget({Key key, this.transaction, this.visible})
       : super(key: key);
   @override
   _ChangeCardState createState() => _ChangeCardState();

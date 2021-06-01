@@ -1,7 +1,7 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:finapp/views/accounts.dart';
 import 'package:finapp/views/history.dart';
 import 'package:finapp/views/home.dart';
+import 'package:finapp/views/login.dart';
 import 'package:finapp/widgets/appBar.dart';
 import 'package:finapp/widgets/drawer.dart';
 import 'package:flutter/material.dart';
@@ -28,26 +28,28 @@ class MainScreen extends StatefulWidget {
 }
 
 class MainScreenState extends State<MainScreen> {
-  final GlobalKey _bottomNavigationKey = GlobalKey();
-  PageController _pageController;
+  int _currentIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
 
   @override
   void initState() {
-    _pageController = PageController();
     super.initState();
   }
 
   @override
   void dispose() {
-    _pageController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    int currentIndex = 0;
-
     final List<Widget> _children = [
+      Login(),
       Home(),
       NewEntry(),
       History(),
@@ -60,43 +62,35 @@ class MainScreenState extends State<MainScreen> {
         backgroundColor: Colors.grey[900],
         appBar: CustomAppBar(),
         drawer: CustomDrawer(),
-        bottomNavigationBar: CurvedNavigationBar(
-          key: _bottomNavigationKey,
-          index: currentIndex,
-          height: 55,
-          items: <Widget>[
-            Icon(Icons.home, size: 25),
-            Icon(Icons.create_rounded, size: 25),
-            Icon(Icons.history, size: 25),
-            Icon(Icons.credit_card_outlined, size: 25),
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          currentIndex: _currentIndex,
+          selectedItemColor: Colors.orange,
+          items: [
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.login),
+              label: "Login",
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.dashboard),
+              label: 'Dashboard',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.fiber_new),
+              label: 'New entry',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.history),
+              label: 'History',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.account_tree),
+              label: 'Accounts',
+            )
           ],
-          color: Colors.grey[800],
-          backgroundColor: Colors.grey[850],
-          animationCurve: Curves.easeInOut,
-          animationDuration: Duration(milliseconds: 600),
-          onTap: (index) {
-            setState(() {
-              currentIndex = index;
-            });
-            _pageController.animateToPage(
-              currentIndex,
-              duration: const Duration(milliseconds: 400),
-              curve: Curves.easeInOut,
-            );
-          },
+          onTap: _onItemTapped,
         ),
-        body: PageView(
-          onPageChanged: (index) {
-            setState(() {
-              currentIndex = index;
-              final CurvedNavigationBarState navBarState =
-                  _bottomNavigationKey.currentState;
-              navBarState.setPage(currentIndex);
-            });
-          },
-          controller: _pageController,
-          children: _children,
-        ),
+        body: _children.elementAt(_currentIndex),
       ),
     );
   }

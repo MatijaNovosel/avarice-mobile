@@ -1,4 +1,4 @@
-import 'package:finapp/controllers/form-submit-controller.dart';
+import 'package:finapp/controllers/formSubmitController.dart';
 import 'package:flutter/material.dart';
 
 typedef TagCheckboxListSelectedCallback = void Function(List<int> selectedTags);

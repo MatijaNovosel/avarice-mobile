@@ -1,4 +1,4 @@
-class FinancialChange {
+class Transaction {
   int id;
   double amount;
   String createdAt;
@@ -13,7 +13,7 @@ class FinancialChange {
     return '{amount: ${this.amount}, createdAt: ${this.createdAt}, description: ${this.description}}';
   }
 
-  FinancialChange(
+  Transaction(
       {this.id,
       this.amount,
       this.createdAt,
@@ -23,8 +23,8 @@ class FinancialChange {
       this.appUserId,
       this.tagIds});
 
-  factory FinancialChange.fromJson(Map<String, dynamic> json) {
-    return FinancialChange(
+  factory Transaction.fromJson(Map<String, dynamic> json) {
+    return Transaction(
         amount: json['amount'] == null ? 0.0 : json['amount'].toDouble(),
         appUserId: json['appUserId'] as int,
         createdAt: json['createdAt'] as String,

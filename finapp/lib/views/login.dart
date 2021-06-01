@@ -1,4 +1,5 @@
-import 'package:finapp/controllers/form-submit-controller.dart';
+import 'package:finapp/controllers/formSubmitController.dart';
+import 'package:finapp/widgets/forms/loginForm.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
@@ -7,7 +8,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final FormSubmitController formSubmitController = FormSubmitController();
+  final FormSubmitController formSubmitController = new FormSubmitController();
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +18,24 @@ class _LoginState extends State<Login> {
         right: 12,
         top: 12,
       ),
-      child: Center(
-        child: Text("Login"),
-      ), // ExpenseForm(controller: formSubmitController),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          LoginForm(
+            controller: formSubmitController,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 15.0),
+            child: ElevatedButton(
+              onPressed: () {
+                formSubmitController.submit();
+              },
+              child: Text("Submit"),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

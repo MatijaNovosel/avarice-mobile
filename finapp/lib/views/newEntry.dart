@@ -1,4 +1,4 @@
-import 'package:finapp/controllers/form-submit-controller.dart';
+import 'package:finapp/controllers/formSubmitController.dart';
 import 'package:flutter/material.dart';
 
 class NewEntry extends StatefulWidget {
@@ -17,7 +17,7 @@ class _NewEntryState extends State<NewEntry> {
         right: 12,
         top: 12,
       ),
-      child: Container(), // ExpenseForm(controller: formSubmitController),
+      child: Container(),
     );
   }
 }

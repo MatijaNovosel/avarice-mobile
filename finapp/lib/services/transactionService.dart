@@ -1,18 +1,17 @@
 library change_service;
 
 import 'dart:convert';
-import 'package:http/http.dart' as http;
-import "../models/financial-change.dart";
-import "../constants/apiConstants.dart";
+import '../models/transaction.dart';
 
-List<FinancialChange> parseFinancialChanges(String responseBody) {
+List<Transaction> parseTransactions(String responseBody) {
   final parsed = jsonDecode(responseBody).cast<String, dynamic>();
-  return parsed["data"]["financialChanges"]["items"]
-      .map<FinancialChange>((json) => FinancialChange.fromJson(json))
+  return parsed["data"]["transactions"]["items"]
+      .map<Transaction>((json) => Transaction.fromJson(json))
       .toList();
 }
 
-Future<List<FinancialChange>> getFinancialChanges() async {
+Future<List<Transaction>> getTransactions() async {
+  /*
   var client = http.Client();
   try {
     var uriResponse = await client.post(Uri.parse(apiUrl),
@@ -22,7 +21,7 @@ Future<List<FinancialChange>> getFinancialChanges() async {
         },
         body: json.encode({
           'query': '''query {
-            financialChanges(id: 1, take: 13, skip: 0) {
+            transactions(id: 1, take: 13, skip: 0) {
               count
               items {
                 id
@@ -36,8 +35,10 @@ Future<List<FinancialChange>> getFinancialChanges() async {
             }
           }'''
         }));
-    return parseFinancialChanges(uriResponse.body);
+    return parseTransactions(uriResponse.body);
   } finally {
     client.close();
   }
+  */
+  return [];
 }

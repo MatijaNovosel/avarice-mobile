@@ -8,15 +8,13 @@ class CustomDrawer extends StatelessWidget {
       child: Ink(
         color: Colors.grey[850],
         child: ListView(
-          padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    width: 80,
-                    height: 80,
+                    width: 40,
+                    height: 40,
                     margin: const EdgeInsets.only(
                       right: 14,
                     ),
@@ -59,7 +57,7 @@ class CustomDrawer extends StatelessWidget {
               title: Text(
                 'Settings',
                 style: TextStyle(
-                  color: Colors.grey[400],
+                  color: Colors.white,
                 ),
               ),
               onTap: () {
@@ -74,7 +72,7 @@ class CustomDrawer extends StatelessWidget {
               title: Text(
                 'Log out',
                 style: TextStyle(
-                  color: Colors.grey[400],
+                  color: Colors.white,
                 ),
               ),
               onTap: () {

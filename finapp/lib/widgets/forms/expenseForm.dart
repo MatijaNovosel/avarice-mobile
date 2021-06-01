@@ -1,4 +1,4 @@
-import 'package:finapp/controllers/form-submit-controller.dart';
+import 'package:finapp/controllers/formSubmitController.dart';
 import 'package:finapp/widgets/currentAmountList.dart';
 import 'package:finapp/widgets/tagCheckboxList.dart';
 import 'package:flutter/material.dart';

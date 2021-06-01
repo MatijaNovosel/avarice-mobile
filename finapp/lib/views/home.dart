@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:finapp/services/transactionService.dart';
-import "package:finapp/models/financial-change.dart";
+import 'package:finapp/models/transaction.dart';
 import "package:finapp/widgets/transactionCard.dart";
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -11,7 +11,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final Future<List<FinancialChange>> _financialChanges = getFinancialChanges();
+  final Future<List<Transaction>> _transactions = getTransactions();
 
   @override
   Widget build(BuildContext context) {
@@ -152,11 +152,11 @@ class _HomeState extends State<Home> {
               ],
             ),
           ),
-          FutureBuilder<List<FinancialChange>>(
-            future: _financialChanges,
+          FutureBuilder<List<Transaction>>(
+            future: _transactions,
             builder: (
               BuildContext context,
-              AsyncSnapshot<List<FinancialChange>> snapshot,
+              AsyncSnapshot<List<Transaction>> snapshot,
             ) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
@@ -181,7 +181,7 @@ class _HomeState extends State<Home> {
                             return Column(
                               children: [
                                 TransactionCardWidget(
-                                  financialChange: snapshot.data[i],
+                                  transaction: snapshot.data[i],
                                   visible: false,
                                 ),
                                 SizedBox(height: 12),
