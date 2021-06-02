@@ -18,8 +18,14 @@ class _NewEntryState extends State<NewEntry> {
         right: 12,
         top: 12,
       ),
-      child: ExpenseForm(
-        controller: formSubmitController,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          ExpenseForm(
+            controller: formSubmitController,
+          ),
+        ],
       ),
     );
   }

@@ -174,6 +174,28 @@ class _ExpenseFormState extends State<ExpenseForm> {
                 ),
               ),
             ),
+            ListTile(
+              leading: Padding(
+                padding: const EdgeInsets.only(
+                  top: 8,
+                ),
+                child: Icon(
+                  Icons.label,
+                  color: Colors.grey[350],
+                ),
+              ),
+              title: DropdownButton<String>(
+                hint: Text("Tags"),
+                isExpanded: true,
+                items: <String>['A', 'B', 'C', 'D'].map((String value) {
+                  return new DropdownMenuItem<String>(
+                    value: value,
+                    child: new Text(value),
+                  );
+                }).toList(),
+                onChanged: (_) {},
+              ),
+            ),
             Container(
               margin: EdgeInsets.only(top: 6),
               child: SwitchListTile(
@@ -189,17 +211,6 @@ class _ExpenseFormState extends State<ExpenseForm> {
                   Icons.done_all_rounded,
                 ),
               ),
-            ),
-            new DropdownButton<String>(
-              hint: Text("Tags"),
-              isExpanded: true,
-              items: <String>['A', 'B', 'C', 'D'].map((String value) {
-                return new DropdownMenuItem<String>(
-                  value: value,
-                  child: new Text(value),
-                );
-              }).toList(),
-              onChanged: (_) {},
             ),
             ElevatedButton(
               onPressed: () {},
