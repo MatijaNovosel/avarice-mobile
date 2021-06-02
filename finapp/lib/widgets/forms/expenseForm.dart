@@ -1,5 +1,7 @@
 import 'package:finapp/controllers/formSubmitController.dart';
+import 'package:finapp/services/tagService.dart';
 import 'package:finapp/widgets/currentAmountList.dart';
+import 'package:finapp/widgets/multiSelectDialog.dart';
 import 'package:finapp/widgets/tagCheckboxList.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -65,6 +67,30 @@ class _ExpenseFormState extends State<ExpenseForm> {
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
+  }
+
+  void _showMultiSelect(BuildContext context) async {
+    var tags = await getTags();
+    var selectItems = tags
+        .map(
+          (e) => new MultiSelectDialogItem(
+            e.id,
+            e.description,
+          ),
+        )
+        .toList();
+
+    final selectedValues = await showDialog<Set<int>>(
+      context: context,
+      builder: (BuildContext context) {
+        return MultiSelectDialog(
+          items: selectItems,
+          title: "Select tags",
+        );
+      },
+    );
+
+    print(selectedValues);
   }
 
   void submit() {
@@ -174,28 +200,6 @@ class _ExpenseFormState extends State<ExpenseForm> {
                 ),
               ),
             ),
-            ListTile(
-              leading: Padding(
-                padding: const EdgeInsets.only(
-                  top: 8,
-                ),
-                child: Icon(
-                  Icons.label,
-                  color: Colors.grey[350],
-                ),
-              ),
-              title: DropdownButton<String>(
-                hint: Text("Tags"),
-                isExpanded: true,
-                items: <String>['A', 'B', 'C', 'D'].map((String value) {
-                  return new DropdownMenuItem<String>(
-                    value: value,
-                    child: new Text(value),
-                  );
-                }).toList(),
-                onChanged: (_) {},
-              ),
-            ),
             Container(
               margin: EdgeInsets.only(top: 6),
               child: SwitchListTile(
@@ -213,7 +217,9 @@ class _ExpenseFormState extends State<ExpenseForm> {
               ),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                _showMultiSelect(context);
+              },
               child: Text("Submit"),
             )
           ],

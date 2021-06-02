@@ -25,7 +25,7 @@ Future<List<Transaction>> getTransactions() async {
       },
     );
 
-    for (var transaction in response.data) {
+    for (var transaction in response.data["results"]) {
       data.add(
         new Transaction(
           amount: transaction["amount"]
