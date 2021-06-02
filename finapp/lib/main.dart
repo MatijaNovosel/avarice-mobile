@@ -62,33 +62,43 @@ class MainScreenState extends State<MainScreen> {
         backgroundColor: Colors.grey[900],
         appBar: CustomAppBar(),
         drawer: CustomDrawer(),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          currentIndex: _currentIndex,
-          selectedItemColor: Colors.orange,
-          items: [
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.login),
-              label: "Login",
-            ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.dashboard),
-              label: 'Dashboard',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.fiber_new),
-              label: 'New entry',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.history),
-              label: 'History',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_tree),
-              label: 'Accounts',
-            )
-          ],
-          onTap: _onItemTapped,
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                color: Colors.black,
+                blurRadius: 0.5,
+              ),
+            ],
+          ),
+          child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            currentIndex: _currentIndex,
+            selectedItemColor: Colors.orange,
+            items: [
+              BottomNavigationBarItem(
+                icon: new Icon(Icons.login),
+                label: "Login",
+              ),
+              BottomNavigationBarItem(
+                icon: new Icon(Icons.dashboard),
+                label: 'Dashboard',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.fiber_new),
+                label: 'New entry',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.history),
+                label: 'History',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.account_tree),
+                label: 'Accounts',
+              )
+            ],
+            onTap: _onItemTapped,
+          ),
         ),
         body: _children.elementAt(_currentIndex),
       ),

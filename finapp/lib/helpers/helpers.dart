@@ -8,7 +8,6 @@ Future<Null> _read() async {
       waitTap: true,
       showText: true,
     );
-    print(texts[0].value);
   } on Exception {
     texts.add(
       OcrText('Failed to recognize text'),

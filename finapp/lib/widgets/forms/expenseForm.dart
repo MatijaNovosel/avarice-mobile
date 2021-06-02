@@ -36,8 +36,6 @@ class _ExpenseFormState extends State<ExpenseForm> {
         "tagIds": _selectedTags,
       };
 
-      print(payload);
-
       showDialog(
         context: context,
         barrierDismissible: false,

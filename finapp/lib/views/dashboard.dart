@@ -118,7 +118,7 @@ class _DashboardState extends State<Dashboard> {
                                                       snapshot.data.deposits),
                                               valueColor:
                                                   AlwaysStoppedAnimation(
-                                                Colors.red,
+                                                Colors.red[700],
                                               ),
                                             ),
                                           ),
@@ -234,7 +234,7 @@ class _DashboardState extends State<Dashboard> {
                               children: [
                                 TransactionCardWidget(
                                   transaction: snapshot.data[i],
-                                  visible: false,
+                                  visible: true,
                                 ),
                                 SizedBox(height: 12),
                               ],

@@ -1,5 +1,6 @@
 import 'package:finapp/models/transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import "tag.dart";
 
 class _ChangeCardState extends State<TransactionCardWidget> {
@@ -9,20 +10,10 @@ class _ChangeCardState extends State<TransactionCardWidget> {
       height: 85,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: widget.transaction.expense ? Colors.red[800] : Colors.green[800],
+        color: Colors.grey[850],
       ),
       child: Row(
         children: <Widget>[
-          Container(
-            width: 14,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10),
-                bottomLeft: Radius.circular(10),
-              ),
-              color: widget.transaction.expense ? Colors.red : Colors.green,
-            ),
-          ),
           Expanded(
             child: Padding(
               padding: EdgeInsets.only(left: 16),
@@ -41,11 +32,11 @@ class _ChangeCardState extends State<TransactionCardWidget> {
                     padding: EdgeInsets.only(top: 2, bottom: 8),
                     child: Text(
                       widget.visible
-                          ? "${widget.transaction.amount} HRK"
-                          : "${widget.transaction.amount} HRK"
+                          ? "${NumberFormat("#,##0.00", "hr_HR").format(widget.transaction.amount)} HRK"
+                          : "${widget.transaction.amount.toStringAsFixed(2)} HRK"
                               .replaceAll(new RegExp(r'[0-9]'), '*'),
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 22,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -53,12 +44,12 @@ class _ChangeCardState extends State<TransactionCardWidget> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      for (var id in widget.transaction.tagIds)
+                      for (var tag in widget.transaction.tags)
                         Padding(
                           padding: const EdgeInsets.only(right: 10.0),
                           child: TagWidget(
-                            text: "Text",
-                            color: widget.transaction.expense
+                            text: tag.description,
+                            color: widget.transaction.expense == true
                                 ? Colors.red
                                 : Colors.green,
                           ),

@@ -1,44 +1,54 @@
 library transaction_service;
 
-import 'dart:convert';
+import 'package:dio/dio.dart';
+import 'package:finapp/constants/apiConstants.dart';
+import 'package:finapp/models/tag.dart';
+import 'package:flutter_session/flutter_session.dart';
+
 import '../models/transaction.dart';
 
-List<Transaction> parseTransactions(String responseBody) {
-  final parsed = jsonDecode(responseBody).cast<String, dynamic>();
-  return parsed["data"]["transactions"]["items"]
-      .map<Transaction>((json) => Transaction.fromJson(json))
-      .toList();
-}
-
 Future<List<Transaction>> getTransactions() async {
-  /*
-  var client = http.Client();
+  var dio = new Dio();
+  var token = await FlutterSession().get("bearerToken");
+
+  dio.options.headers["Authorization"] = "Bearer $token";
+
   try {
-    var uriResponse = await client.post(Uri.parse(apiUrl),
-        headers: {
-          "Content-type": "application/json",
-          "Accept": "application/json"
-        },
-        body: json.encode({
-          'query': '''query {
-            transactions(id: 1, take: 13, skip: 0) {
-              count
-              items {
-                id
-                amount
-                createdAt
-                description
-                expense
-                paymentSourceId
-                tagIds
-              }
-            }
-          }'''
-        }));
-    return parseTransactions(uriResponse.body);
+    List<Transaction> data = [];
+
+    var response = await dio.get(
+      "$apiUrl/transaction",
+      queryParameters: {
+        "userId": userId,
+        "skip": 0,
+        "take": 25,
+      },
+    );
+
+    for (var transaction in response.data) {
+      data.add(
+        new Transaction(
+          amount: transaction["amount"]
+              .toDouble(), // Dynamic types may be binded to an int instead of a double ...
+          description: transaction["description"],
+          id: transaction["id"],
+          accountDescription: transaction["account"]["description"],
+          createdAt: transaction["createdAt"],
+          expense: transaction["expense"],
+          tags: transaction["tags"]
+              .map<Tag>(
+                (x) => new Tag(
+                  description: x["description"],
+                  id: x["id"],
+                ),
+              )
+              .toList(),
+        ),
+      );
+    }
+
+    return data;
   } finally {
-    client.close();
+    dio.close();
   }
-  */
-  return [];
 }
