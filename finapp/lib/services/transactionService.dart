@@ -57,6 +57,11 @@ Future<List<Transaction>> getTransactions() async {
 
 Future addTransaction(NewTransaction payload) async {
   var dio = new Dio();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var token = prefs.get("bearerToken");
+
+  dio.options.headers["Authorization"] = "Bearer $token";
+
   try {
     await dio.post(
       "$apiUrl/transaction",

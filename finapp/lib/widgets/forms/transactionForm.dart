@@ -67,9 +67,28 @@ class _ExpenseFormState extends State<ExpenseForm> {
         },
       );
 
-      await addTransaction(payload);
-
-      Navigator.pop(context);
+      try {
+        await addTransaction(payload);
+        var snackBar = SnackBar(
+          content: Text(
+            'Transaction added!',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.green,
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      } catch (e) {
+        var snackBar = SnackBar(
+          content: Text(
+            'Error adding transaction!',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.red[800],
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      } finally {
+        Navigator.pop(context);
+      }
     } else {
       var snackBar = SnackBar(
         content: Text(
@@ -104,9 +123,11 @@ class _ExpenseFormState extends State<ExpenseForm> {
       },
     );
 
-    setState(() {
-      _selectedTags = selectedValues.toList();
-    });
+    if (selectedValues != null) {
+      setState(() {
+        _selectedTags = selectedValues.toList();
+      });
+    }
   }
 
   void submit() {
