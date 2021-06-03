@@ -31,7 +31,7 @@ class _CurrentAmountListState extends State<CurrentAmountListWidget> {
             {
               return Center(
                 child: SpinKitFadingCircle(
-                  color: Colors.red,
+                  color: Colors.white,
                   size: 50.0,
                 ),
               );

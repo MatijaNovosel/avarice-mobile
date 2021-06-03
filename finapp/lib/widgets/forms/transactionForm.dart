@@ -2,7 +2,6 @@ import 'package:finapp/controllers/formSubmitController.dart';
 import 'package:finapp/services/tagService.dart';
 import 'package:finapp/widgets/currentAmountList.dart';
 import 'package:finapp/widgets/multiSelectDialog.dart';
-import 'package:finapp/widgets/tagCheckboxList.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -19,8 +18,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
   final _descriptionController = TextEditingController();
   final _amountController = TextEditingController();
   bool _expense = true;
-  bool _tagsValid = false;
-  int _paymentSourceId = 0;
+  int _accountId = 0;
   List<int> _selectedTags = [];
   final FormSubmitController formSubmitController = FormSubmitController();
 
@@ -29,12 +27,24 @@ class _ExpenseFormState extends State<ExpenseForm> {
   }
 
   void submitForm() {
-    if (_formKey.currentState.validate() && _tagsValid) {
+    if (_formKey.currentState.validate()) {
+      if (_selectedTags.length == 0) {
+        var snackBar = SnackBar(
+          content: Text(
+            'No tags were selected!',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.red[800],
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        return;
+      }
+
       var payload = {
         "amount": _amountController.text,
         "description": _descriptionController.text,
         "expense": _expense,
-        "paymentSourceId": _paymentSourceId,
+        "paymentSourceId": _accountId,
         "tagIds": _selectedTags,
       };
 
@@ -47,7 +57,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
             child: AlertDialog(
               backgroundColor: Colors.transparent,
               content: SpinKitFoldingCube(
-                color: Colors.red,
+                color: Colors.white,
                 size: 65,
               ),
             ),
@@ -86,20 +96,17 @@ class _ExpenseFormState extends State<ExpenseForm> {
         return MultiSelectDialog(
           items: selectItems,
           title: "Select tags",
+          initialSelectedValues: _selectedTags.toSet(),
         );
       },
     );
 
-    print(selectedValues);
+    setState(() {
+      _selectedTags = selectedValues.toList();
+    });
   }
 
   void submit() {
-    /*
-
-      TODO: Controller for the tag checklist, they have the same name.
-      Change later.
-    
-    */
     submitForm();
   }
 
@@ -116,11 +123,12 @@ class _ExpenseFormState extends State<ExpenseForm> {
       key: _formKey,
       child: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             CurrentAmountListWidget(
               onAccountChange: (id) {
                 setState(() {
-                  _paymentSourceId = id;
+                  _accountId = id;
                 });
               },
             ),
@@ -216,11 +224,34 @@ class _ExpenseFormState extends State<ExpenseForm> {
                 ),
               ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                _showMultiSelect(context);
-              },
-              child: Text("Submit"),
+            Container(
+              width: double.infinity,
+              child: OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  primary: Colors.red,
+                ),
+                onPressed: () {
+                  _showMultiSelect(context);
+                },
+                child: Text('Select tags'),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.green,
+                ),
+                onPressed: () {
+                  submit();
+                },
+                child: Text(
+                  "Save",
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+              ),
             )
           ],
         ),

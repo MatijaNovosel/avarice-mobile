@@ -47,7 +47,7 @@ class _DashboardState extends State<Dashboard> {
                       {
                         return Center(
                           child: SpinKitFadingCircle(
-                            color: Colors.red,
+                            color: Colors.white,
                             size: 50.0,
                           ),
                         );
@@ -92,7 +92,7 @@ class _DashboardState extends State<Dashboard> {
                             {
                               return Center(
                                 child: SpinKitFadingCircle(
-                                  color: Colors.red,
+                                  color: Colors.white,
                                   size: 50.0,
                                 ),
                               );
@@ -198,7 +198,8 @@ class _DashboardState extends State<Dashboard> {
                 Text(
                   "Recent transactions",
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w200,
                   ),
                 ),
               ],
@@ -215,7 +216,7 @@ class _DashboardState extends State<Dashboard> {
                   {
                     return Center(
                       child: SpinKitFadingCircle(
-                        color: Colors.red,
+                        color: Colors.white,
                         size: 50.0,
                       ),
                     );

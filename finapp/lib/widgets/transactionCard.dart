@@ -22,7 +22,7 @@ class _ChangeCardState extends State<TransactionCardWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "${widget.transaction.description} • ${widget.transaction.createdAt}",
+                    "${widget.transaction.description} • ${DateFormat("dd.MM.yyyy. HH:mm:ss").format(DateTime.parse(widget.transaction.createdAt))}",
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.grey[300],

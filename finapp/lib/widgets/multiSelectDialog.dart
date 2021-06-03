@@ -82,6 +82,9 @@ class _MultiSelectDialogState<V> extends State<MultiSelectDialog<V>> {
     return CheckboxListTile(
       value: checked,
       title: Text(item.label),
+      checkColor: Colors.red,
+      selectedTileColor: Colors.redAccent,
+      activeColor: Colors.redAccent,
       controlAffinity: ListTileControlAffinity.leading,
       onChanged: (checked) => _onItemCheckedChange(item.value, checked),
     );

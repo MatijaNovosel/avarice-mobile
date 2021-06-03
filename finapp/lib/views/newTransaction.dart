@@ -1,5 +1,5 @@
 import 'package:finapp/controllers/formSubmitController.dart';
-import 'package:finapp/widgets/forms/expenseForm.dart';
+import 'package:finapp/widgets/forms/transactionForm.dart';
 import 'package:flutter/material.dart';
 
 class NewEntry extends StatefulWidget {
@@ -19,8 +19,6 @@ class _NewEntryState extends State<NewEntry> {
         top: 12,
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ExpenseForm(
             controller: formSubmitController,

@@ -34,7 +34,7 @@ class _LoginFormState extends State<LoginForm> {
             child: AlertDialog(
               backgroundColor: Colors.transparent,
               content: SpinKitFoldingCube(
-                color: Colors.red,
+                color: Colors.white,
                 size: 65,
               ),
             ),

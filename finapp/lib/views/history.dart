@@ -29,9 +29,12 @@ class _HistoryState extends State<History> {
                   case ConnectionState.waiting:
                     {
                       return Center(
-                        child: SpinKitFadingCircle(
-                          color: Colors.red,
-                          size: 50.0,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 25.0),
+                          child: SpinKitFadingCircle(
+                            color: Colors.white,
+                            size: 50.0,
+                          ),
                         ),
                       );
                     }
@@ -76,7 +79,7 @@ class _HistoryState extends State<History> {
                                   ),
                                   DataCell(
                                     Text(
-                                      "${NumberFormat("#,##0.00", "hr_HR").format(transaction.amount)} HRK",
+                                      "${NumberFormat("#,##0.00").format(transaction.amount)}",
                                     ),
                                   ),
                                   DataCell(

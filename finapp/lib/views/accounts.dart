@@ -31,9 +31,10 @@ class _AccountsState extends State<Accounts> {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
                   {
-                    return Center(
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 25.0),
                       child: SpinKitFadingCircle(
-                        color: Colors.red,
+                        color: Colors.white,
                         size: 50.0,
                       ),
                     );

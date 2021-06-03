@@ -6,7 +6,7 @@ import 'package:finapp/widgets/appBar.dart';
 import 'package:finapp/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import "views/newEntry.dart";
+import 'views/newTransaction.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
 Future<void> main() async {
@@ -92,7 +92,7 @@ class MainScreenState extends State<MainScreen> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.fiber_new),
-              label: 'New entry',
+              label: 'New transaction',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.history),
