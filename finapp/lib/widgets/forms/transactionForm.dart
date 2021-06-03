@@ -1,5 +1,7 @@
 import 'package:finapp/controllers/formSubmitController.dart';
+import 'package:finapp/models/transaction.dart';
 import 'package:finapp/services/tagService.dart';
+import 'package:finapp/services/transactionService.dart';
 import 'package:finapp/widgets/currentAmountList.dart';
 import 'package:finapp/widgets/multiSelectDialog.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +20,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
   final _descriptionController = TextEditingController();
   final _amountController = TextEditingController();
   bool _expense = true;
-  int _accountId = 0;
+  int _accountId = 1;
   List<int> _selectedTags = [];
   final FormSubmitController formSubmitController = FormSubmitController();
 
@@ -26,7 +28,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
     _controller.submit = submit;
   }
 
-  void submitForm() {
+  void submitForm() async {
     if (_formKey.currentState.validate()) {
       if (_selectedTags.length == 0) {
         var snackBar = SnackBar(
@@ -40,13 +42,13 @@ class _ExpenseFormState extends State<ExpenseForm> {
         return;
       }
 
-      var payload = {
-        "amount": _amountController.text,
-        "description": _descriptionController.text,
-        "expense": _expense,
-        "paymentSourceId": _accountId,
-        "tagIds": _selectedTags,
-      };
+      NewTransaction payload = new NewTransaction(
+        amount: double.parse(_amountController.text),
+        description: _descriptionController.text,
+        expense: _expense,
+        accountId: _accountId,
+        tags: _selectedTags,
+      );
 
       showDialog(
         context: context,
@@ -64,9 +66,10 @@ class _ExpenseFormState extends State<ExpenseForm> {
           );
         },
       );
-      Future.delayed(const Duration(seconds: 3), () {
-        Navigator.pop(context);
-      });
+
+      await addTransaction(payload);
+
+      Navigator.pop(context);
     } else {
       var snackBar = SnackBar(
         content: Text(

@@ -1,7 +1,31 @@
+import 'package:finapp/views/login.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class CustomDrawer extends StatelessWidget {
+class CustomDrawer extends StatefulWidget {
+  @override
+  _CustomDrawerState createState() => _CustomDrawerState();
+}
+
+class _CustomDrawerState extends State<CustomDrawer> {
+  String _username;
+  String _email;
+
+  @override
+  void initState() {
+    _init();
+    super.initState();
+  }
+
+  Future _init() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _username = prefs.get("username");
+      _email = prefs.get("email");
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -31,15 +55,15 @@ class CustomDrawer extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Matija Novosel",
+                        _username == null ? "" : _username,
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 27,
                           fontWeight: FontWeight.bold,
                           color: Color.fromARGB(255, 255, 138, 0),
                         ),
                       ),
                       Text(
-                        "mnovosel5@gmail.com",
+                        _email == null ? "" : _email,
                         style: TextStyle(
                           color: Colors.grey[400],
                         ),
@@ -75,8 +99,28 @@ class CustomDrawer extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
-              onTap: () {
-                Navigator.pop(context);
+              onTap: () async {
+                final SharedPreferences prefs =
+                    await SharedPreferences.getInstance();
+                prefs.remove("bearerToken");
+
+                var snackBar = SnackBar(
+                  content: Text(
+                    "Signed out!",
+                    style: new TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  backgroundColor: Colors.green,
+                );
+
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => Login()),
+                  (Route<dynamic> route) => false,
+                );
               },
             )
           ],

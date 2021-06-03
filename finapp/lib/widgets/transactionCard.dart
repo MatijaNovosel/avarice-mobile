@@ -21,12 +21,24 @@ class _ChangeCardState extends State<TransactionCardWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "${widget.transaction.description} • ${DateFormat("dd.MM.yyyy. HH:mm:ss").format(DateTime.parse(widget.transaction.createdAt))}",
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey[300],
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        "${widget.transaction.description} • ",
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey[300],
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        "${DateFormat("dd.MM.yyyy. HH:mm:ss").format(DateTime.parse(widget.transaction.createdAt))}",
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey[300],
+                        ),
+                      ),
+                    ],
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 2, bottom: 8),

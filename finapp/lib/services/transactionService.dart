@@ -3,6 +3,7 @@ library transaction_service;
 import 'package:dio/dio.dart';
 import 'package:finapp/constants/apiConstants.dart';
 import 'package:finapp/models/tag.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/transaction.dart';
@@ -49,6 +50,30 @@ Future<List<Transaction>> getTransactions() async {
     }
 
     return data;
+  } finally {
+    dio.close();
+  }
+}
+
+Future addTransaction(NewTransaction payload) async {
+  var dio = new Dio();
+  try {
+    await dio.post(
+      "$apiUrl/transaction",
+      data: {
+        "amount": payload.amount,
+        "description": payload.description,
+        "accountId": payload.accountId,
+        "createdAt": DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").format(
+          DateTime.now(),
+        ),
+        "expense": payload.expense,
+        "tagIds": payload.tags,
+        "userId": userId
+      },
+    );
+  } catch (e) {
+    print(e);
   } finally {
     dio.close();
   }

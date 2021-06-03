@@ -3,6 +3,7 @@ import 'package:finapp/main.dart';
 import 'package:finapp/services/authService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginForm extends StatefulWidget {
@@ -43,8 +44,10 @@ class _LoginFormState extends State<LoginForm> {
       );
       Future.delayed(const Duration(seconds: 1), () async {
         Navigator.pop(context);
-        var response =
-            await login(_emailController.text, _passwordController.text);
+        var response = await login(
+          _emailController.text,
+          _passwordController.text,
+        );
         if (response.result == true) {
           var snackBar = SnackBar(
             content: Text(
@@ -56,8 +59,15 @@ class _LoginFormState extends State<LoginForm> {
             backgroundColor: Colors.green,
           );
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setString("bearerToken", response.token);
+
+          Map<String, dynamic> decodedToken = Jwt.parseJwt(response.token);
+
+          prefs.setString("username", decodedToken["unique_name"]);
+          prefs.setString("email", _emailController.text);
+
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => MainScreen()),

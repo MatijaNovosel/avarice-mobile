@@ -9,11 +9,6 @@ class Transaction {
   String accountDescription;
   List<Tag> tags;
 
-  @override
-  String toString() {
-    return '{amount: ${this.amount}, createdAt: ${this.createdAt}, description: ${this.description}}';
-  }
-
   Transaction({
     this.id,
     this.amount,
@@ -21,6 +16,24 @@ class Transaction {
     this.description,
     this.expense,
     this.accountDescription,
+    this.tags,
+  });
+}
+
+class NewTransaction {
+  double amount;
+  String createdAt;
+  String description;
+  bool expense;
+  int accountId;
+  List<int> tags;
+
+  NewTransaction({
+    this.amount,
+    this.createdAt,
+    this.description,
+    this.expense,
+    this.accountId,
     this.tags,
   });
 }
