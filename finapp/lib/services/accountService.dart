@@ -2,12 +2,13 @@ library account_service;
 
 import 'package:dio/dio.dart';
 import 'package:finapp/models/account.dart';
-import 'package:flutter_session/flutter_session.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import "../constants/apiConstants.dart";
 
 Future<List<Account>> getLatestAccountValues() async {
   var dio = new Dio();
-  var token = await FlutterSession().get("bearerToken");
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var token = prefs.get("bearerToken");
 
   dio.options.headers["Authorization"] = "Bearer $token";
 

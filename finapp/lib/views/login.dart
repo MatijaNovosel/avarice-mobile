@@ -12,16 +12,19 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: 12,
-        right: 12,
-        top: 12,
-      ),
-      child: Column(
+    return Scaffold(
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Text(
+            "FinApp",
+            style: TextStyle(
+              fontSize: 54,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text("by Matija Novosel"),
           LoginForm(
             controller: formSubmitController,
           ),

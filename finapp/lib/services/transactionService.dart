@@ -3,13 +3,14 @@ library transaction_service;
 import 'package:dio/dio.dart';
 import 'package:finapp/constants/apiConstants.dart';
 import 'package:finapp/models/tag.dart';
-import 'package:flutter_session/flutter_session.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/transaction.dart';
 
 Future<List<Transaction>> getTransactions() async {
   var dio = new Dio();
-  var token = await FlutterSession().get("bearerToken");
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var token = prefs.get("bearerToken");
 
   dio.options.headers["Authorization"] = "Bearer $token";
 
