@@ -32,7 +32,7 @@ class _HistoryState extends State<History> {
                         child: Padding(
                           padding: const EdgeInsets.only(top: 25.0),
                           child: SpinKitFadingCircle(
-                            color: Colors.white,
+                            color: Colors.grey[500],
                             size: 50.0,
                           ),
                         ),

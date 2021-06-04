@@ -31,7 +31,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
   Widget build(BuildContext context) {
     return Drawer(
       child: Ink(
-        color: Colors.grey[850],
+        color: Colors.white,
         child: ListView(
           children: <Widget>[
             DrawerHeader(
@@ -82,7 +82,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
               title: Text(
                 'Settings',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.grey[500],
                 ),
               ),
               onTap: () {
@@ -97,7 +97,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
               title: Text(
                 'Log out',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.grey[500],
                 ),
               ),
               onTap: () async {

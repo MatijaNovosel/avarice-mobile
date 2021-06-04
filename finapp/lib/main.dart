@@ -5,6 +5,7 @@ import 'package:finapp/views/login.dart';
 import 'package:finapp/widgets/appBar.dart';
 import 'package:finapp/widgets/drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,12 +29,18 @@ Future<void> main() async {
     tokenValid = false;
   }
 
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(statusBarColor: Colors.black),
+  );
+
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    theme: ThemeData(
-      brightness: Brightness.dark,
+    theme: new ThemeData(
+      primarySwatch: Colors.blue,
+      iconTheme: IconThemeData(
+        color: Colors.black,
+      ),
     ),
-    themeMode: ThemeMode.dark,
     home: tokenValid ? MainScreen() : Login(),
   ));
 }
@@ -56,16 +63,15 @@ class MainScreenState extends State<MainScreen> {
     ];
 
     return Scaffold(
-      backgroundColor: Colors.grey[900],
       appBar: CustomAppBar(),
       drawer: CustomDrawer(),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.grey[850],
+          color: Colors.white,
           boxShadow: [
             BoxShadow(
               blurRadius: 20,
-              color: Colors.black.withOpacity(.2),
+              color: Colors.black.withOpacity(.1),
             )
           ],
         ),
@@ -79,7 +85,7 @@ class MainScreenState extends State<MainScreen> {
               rippleColor: Colors.grey[300],
               hoverColor: Colors.grey[100],
               gap: 8,
-              activeColor: Colors.white,
+              activeColor: Colors.blue,
               iconSize: 20,
               padding: EdgeInsets.symmetric(
                 horizontal: 20,
@@ -88,7 +94,7 @@ class MainScreenState extends State<MainScreen> {
               duration: Duration(
                 milliseconds: 400,
               ),
-              tabBackgroundColor: Colors.grey[900],
+              tabBackgroundColor: Colors.grey[200],
               color: Colors.grey[600],
               tabs: [
                 GButton(

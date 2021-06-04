@@ -9,13 +9,25 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: Colors.white,
       titleSpacing: 0,
-      backgroundColor: Colors.grey[800],
+      leading: IconButton(
+        icon: Icon(
+          Icons.menu,
+          color: Colors.grey[500],
+        ), // set your color here
+        onPressed: () {},
+      ),
       title: Row(
         crossAxisAlignment: CrossAxisAlignment.baseline,
         textBaseline: TextBaseline.ideographic,
         children: [
-          Text('Finapp'),
+          Text(
+            'Finapp',
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
         ],
       ),
     );

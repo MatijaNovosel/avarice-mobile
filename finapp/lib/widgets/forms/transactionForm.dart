@@ -53,7 +53,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
             child: AlertDialog(
               backgroundColor: Colors.transparent,
               content: SpinKitFoldingCube(
-                color: Colors.white,
+                color: Colors.grey[500],
                 size: 65,
               ),
             ),
@@ -210,7 +210,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
               child: SwitchListTile(
                 title: const Text('Expense'),
                 value: _expense,
-                activeColor: Colors.orange,
+                activeColor: Colors.blue,
                 onChanged: (bool value) {
                   setState(() {
                     _expense = !_expense;
@@ -225,7 +225,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
               width: double.infinity,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  primary: Colors.red,
+                  primary: Colors.blue,
                 ),
                 onPressed: () {
                   _showMultiSelect(context);
@@ -246,6 +246,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
                   "Save",
                   style: TextStyle(
                     fontSize: 16,
+                    color: Colors.white,
                   ),
                 ),
               ),

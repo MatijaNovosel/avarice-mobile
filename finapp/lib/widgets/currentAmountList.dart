@@ -31,7 +31,7 @@ class _CurrentAmountListState extends State<CurrentAmountListWidget> {
             {
               return Center(
                 child: SpinKitFadingCircle(
-                  color: Colors.white,
+                  color: Colors.grey[500],
                   size: 50.0,
                 ),
               );
@@ -58,8 +58,9 @@ class _CurrentAmountListState extends State<CurrentAmountListWidget> {
                             scale: i == _index ? 1 : 0.9,
                             child: CurrentAmountCardWidget(
                               icon: Icons.account_balance_wallet,
-                              color: Colors.white,
+                              color: Colors.grey[600],
                               account: snapshot.data[i],
+                              showHideButton: true,
                             ),
                           );
                         },
@@ -86,8 +87,8 @@ class _CurrentAmountListState extends State<CurrentAmountListWidget> {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: i == _index
-                                    ? Colors.white
-                                    : Colors.grey[800],
+                                    ? Colors.blue
+                                    : Colors.grey[400],
                               ),
                             ),
                           );

@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:finapp/services/transactionService.dart';
 import 'package:finapp/models/transaction.dart';
-import "package:finapp/widgets/transactionCard.dart";
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:timelines/timelines.dart';
 
@@ -30,7 +29,6 @@ class _DashboardState extends State<Dashboard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            padding: EdgeInsets.only(top: 4),
             child: Column(children: [
               FutureBuilder(
                 future: _accounts,
@@ -43,7 +41,7 @@ class _DashboardState extends State<Dashboard> {
                       {
                         return Center(
                           child: SpinKitFadingCircle(
-                            color: Colors.white,
+                            color: Colors.grey[500],
                             size: 50.0,
                           ),
                         );
@@ -53,134 +51,70 @@ class _DashboardState extends State<Dashboard> {
                         if (snapshot.hasError) {
                           return Text('Error: ${snapshot.error}');
                         } else {
-                          return Padding(
-                            padding: const EdgeInsets.only(
-                              bottom: 15,
+                          return CurrentAmountCardWidget(
+                            account: Account(
+                              amount: snapshot.data
+                                  .map((x) => x.amount)
+                                  .reduce((a, b) => a + b),
+                              description: "Total",
                             ),
-                            child: CurrentAmountCardWidget(
-                              account: Account(
-                                amount: snapshot.data
-                                    .map((x) => x.amount)
-                                    .reduce((a, b) => a + b),
-                                description: "Total",
-                              ),
-                              color: Colors.white,
-                              icon: Icons.account_balance_wallet_sharp,
-                            ),
+                            color: Colors.grey[600],
+                            icon: Icons.account_balance_wallet_sharp,
                           );
                         }
                       }
                   }
                 },
               ),
-              Container(
-                margin: EdgeInsets.only(top: 8),
-                child: Stack(
-                  children: [
-                    FutureBuilder<RecentDepositsAndWithdrawals>(
-                      future: _recentDepositsAndWithdrawals,
-                      builder: (
-                        BuildContext context,
-                        AsyncSnapshot<RecentDepositsAndWithdrawals> snapshot,
-                      ) {
-                        switch (snapshot.connectionState) {
-                          case ConnectionState.waiting:
-                            {
-                              return Center(
-                                child: SpinKitFadingCircle(
-                                  color: Colors.white,
-                                  size: 50.0,
+              FutureBuilder<RecentDepositsAndWithdrawals>(
+                future: _recentDepositsAndWithdrawals,
+                builder: (
+                  BuildContext context,
+                  AsyncSnapshot<RecentDepositsAndWithdrawals> snapshot,
+                ) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.waiting:
+                      {
+                        return Center(
+                          child: SpinKitFadingCircle(
+                            color: Colors.grey[500],
+                            size: 50.0,
+                          ),
+                        );
+                      }
+                    default:
+                      {
+                        if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          return Column(
+                            children: [
+                              CurrentAmountCardWidget(
+                                account: Account(
+                                  amount: snapshot.data.withdrawals,
+                                  description: "Recent withdrawals",
                                 ),
-                              );
-                            }
-                          default:
-                            {
-                              if (snapshot.hasError) {
-                                return Text('Error: ${snapshot.error}');
-                              } else {
-                                return Column(
-                                  children: [
-                                    Stack(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          child: Container(
-                                            height: 20,
-                                            child: LinearProgressIndicator(
-                                              backgroundColor: Colors.red[900],
-                                              value: snapshot.data.withdrawals /
-                                                  (snapshot.data.withdrawals +
-                                                      snapshot.data.deposits),
-                                              valueColor:
-                                                  AlwaysStoppedAnimation(
-                                                Colors.red[700],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Center(
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                              top: 3.0,
-                                            ),
-                                            child: Text(
-                                              "${NumberFormat("#,##0.00", "hr_HR").format(snapshot.data.withdrawals)} HRK",
-                                              style: TextStyle(
-                                                color: Colors.grey[300],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 12.0),
-                                      child: Stack(
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            child: Container(
-                                              height: 20,
-                                              child: LinearProgressIndicator(
-                                                backgroundColor:
-                                                    Colors.green[900],
-                                                value: snapshot.data.deposits /
-                                                    (snapshot.data.withdrawals +
-                                                        snapshot.data.deposits),
-                                                valueColor:
-                                                    AlwaysStoppedAnimation(
-                                                  Colors.green,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Center(
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                top: 3.0,
-                                              ),
-                                              child: Text(
-                                                "${NumberFormat("#,##0.00", "hr_HR").format(snapshot.data.deposits)} HRK",
-                                                style: TextStyle(
-                                                  color: Colors.grey[300],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              }
-                            }
+                                color: Colors.red[300],
+                                icon: Icons.arrow_back,
+                                showHideButton: false,
+                                showInitialValue: true,
+                              ),
+                              CurrentAmountCardWidget(
+                                account: Account(
+                                  amount: snapshot.data.deposits,
+                                  description: "Recent deposits",
+                                ),
+                                color: Colors.green[300],
+                                icon: Icons.arrow_forward,
+                                showHideButton: false,
+                                showInitialValue: true,
+                              ),
+                            ],
+                          );
                         }
-                      },
-                    ),
-                  ],
-                ),
+                      }
+                  }
+                },
               ),
             ]),
           ),
@@ -212,7 +146,7 @@ class _DashboardState extends State<Dashboard> {
                   {
                     return Center(
                       child: SpinKitFadingCircle(
-                        color: Colors.white,
+                        color: Colors.grey[500],
                         size: 50.0,
                       ),
                     );
@@ -234,13 +168,14 @@ class _DashboardState extends State<Dashboard> {
                                 "${DateFormat("dd.MM.yyyy. HH:mm:ss").format(DateTime.parse(snapshot.data[index].createdAt))}",
                                 style: TextStyle(
                                   fontSize: 12,
-                                  color: Colors.grey[300],
                                 ),
                               ),
                             ),
                             contentsBuilder: (context, index) => Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 10.0, right: 10),
+                              padding: const EdgeInsets.only(
+                                left: 10.0,
+                                right: 10,
+                              ),
                               child: Card(
                                 child: Container(
                                   padding: EdgeInsets.all(14.0),
@@ -248,10 +183,16 @@ class _DashboardState extends State<Dashboard> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(snapshot.data[index].description),
+                                      Text(
+                                        snapshot.data[index].description,
+                                        style: TextStyle(
+                                          color: Colors.grey[400],
+                                        ),
+                                      ),
                                       Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 5.0),
+                                        padding: const EdgeInsets.only(
+                                          top: 5.0,
+                                        ),
                                         child: Text(
                                           "${NumberFormat("#,##0.00", "hr_HR").format(snapshot.data[index].amount)} HRK",
                                           style: TextStyle(

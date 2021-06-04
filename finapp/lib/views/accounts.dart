@@ -34,7 +34,7 @@ class _AccountsState extends State<Accounts> {
                     return Padding(
                       padding: const EdgeInsets.only(top: 25.0),
                       child: SpinKitFadingCircle(
-                        color: Colors.white,
+                        color: Colors.grey[500],
                         size: 50.0,
                       ),
                     );
@@ -61,7 +61,7 @@ class _AccountsState extends State<Accounts> {
                                         "${NumberFormat("#,##0.00", "hr_HR").format(snapshot.data[i].amount)} HRK",
                                         style: TextStyle(
                                           fontSize: 20,
-                                          color: Colors.white,
+                                          color: Colors.grey[600],
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -72,6 +72,9 @@ class _AccountsState extends State<Accounts> {
                                       ),
                                       child: Text(
                                         snapshot.data[i].description,
+                                        style: TextStyle(
+                                          color: Colors.grey[400],
+                                        ),
                                       ),
                                     ),
                                     trailing: Icon(Icons.more_vert),

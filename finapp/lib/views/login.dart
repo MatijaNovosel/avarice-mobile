@@ -43,19 +43,16 @@ class _LoginState extends State<Login> {
         onLogin: _onLogin,
         onSignup: (_) => Future(null),
         onSubmitAnimationCompleted: () {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (context) => MainScreen(),
-          ));
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => MainScreen(),
+            ),
+          );
         },
         onRecoverPassword: (_) => Future(null),
         theme: LoginTheme(
           titleStyle: TextStyle(
             letterSpacing: 6,
-          ),
-          bodyStyle: TextStyle(
-            color: Colors.white,
-          ),
-          textFieldStyle: TextStyle(
             color: Colors.white,
           ),
           inputTheme: InputDecorationTheme(
