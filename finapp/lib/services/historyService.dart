@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:finapp/models/account.dart';
 import 'package:finapp/models/history.dart';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import "../constants/apiConstants.dart";
 
@@ -30,15 +29,5 @@ Future<RecentDepositsAndWithdrawals> getRecentDepositsAndWithdrawals() async {
     );
   } finally {
     dio.close();
-  }
-}
-
-Future<List<Account>> getCurrentAmount() async {
-  var client = http.Client();
-  try {
-    var uriResponse = await client.post(Uri.parse(apiUrl));
-    return parseCurrentAmount(uriResponse.body);
-  } finally {
-    client.close();
   }
 }

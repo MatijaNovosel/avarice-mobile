@@ -1,3 +1,4 @@
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:finapp/views/accounts.dart';
 import 'package:finapp/views/history.dart';
 import 'package:finapp/views/dashboard.dart';
@@ -5,6 +6,7 @@ import 'package:finapp/views/login.dart';
 import 'package:finapp/widgets/appBar.dart';
 import 'package:finapp/widgets/drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'views/newTransaction.dart';
 import 'package:jwt_decode/jwt_decode.dart';
@@ -21,6 +23,7 @@ Future<void> main() async {
     var tokenExp = decodedToken["exp"] * 1000;
     var currentTime = DateTime.now().millisecondsSinceEpoch;
     if (currentTime > tokenExp) tokenValid = false;
+    prefs.remove("bearerToekn");
   } else {
     tokenValid = false;
   }
@@ -74,36 +77,61 @@ class MainScreenState extends State<MainScreen> {
       drawer: CustomDrawer(),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          boxShadow: <BoxShadow>[
+          color: Colors.grey[850],
+          boxShadow: [
             BoxShadow(
-              color: Colors.black,
-              blurRadius: 0.5,
-            ),
-          ],
-        ),
-        child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          currentIndex: _currentIndex,
-          selectedItemColor: Colors.orange,
-          items: [
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.dashboard),
-              label: 'Dashboard',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.fiber_new),
-              label: 'New transaction',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.history),
-              label: 'History',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_tree),
-              label: 'Accounts',
+              blurRadius: 20,
+              color: Colors.black.withOpacity(.2),
             )
           ],
-          onTap: _onItemTapped,
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 15.0,
+              vertical: 8,
+            ),
+            child: GNav(
+              rippleColor: Colors.grey[300],
+              hoverColor: Colors.grey[100],
+              gap: 8,
+              activeColor: Colors.white,
+              iconSize: 20,
+              padding: EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 12,
+              ),
+              duration: Duration(
+                milliseconds: 400,
+              ),
+              tabBackgroundColor: Colors.grey[900],
+              color: Colors.grey[600],
+              tabs: [
+                GButton(
+                  icon: Icons.dashboard,
+                  text: 'Dashboard',
+                ),
+                GButton(
+                  icon: Icons.new_label,
+                  text: 'New transaction',
+                ),
+                GButton(
+                  icon: Icons.history,
+                  text: 'History',
+                ),
+                GButton(
+                  icon: Icons.account_balance_wallet,
+                  text: 'Accounts',
+                ),
+              ],
+              selectedIndex: _currentIndex,
+              onTabChange: (index) {
+                setState(() {
+                  _currentIndex = index;
+                });
+              },
+            ),
+          ),
         ),
       ),
       body: _children.elementAt(_currentIndex),
