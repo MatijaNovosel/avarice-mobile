@@ -5,6 +5,7 @@ import 'package:finapp/views/login.dart';
 import 'package:finapp/widgets/appBar.dart';
 import 'package:finapp/widgets/drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'views/newTransaction.dart';
@@ -45,22 +46,6 @@ class MainScreen extends StatefulWidget {
 class MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final List<Widget> _children = [
@@ -76,7 +61,7 @@ class MainScreenState extends State<MainScreen> {
       drawer: CustomDrawer(),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.grey[800],
+          color: Colors.grey[850],
           boxShadow: [
             BoxShadow(
               blurRadius: 20,
@@ -133,7 +118,50 @@ class MainScreenState extends State<MainScreen> {
           ),
         ),
       ),
-      body: _children.elementAt(_currentIndex),
+      body: OfflineBuilder(
+        connectivityBuilder: (
+          BuildContext context,
+          ConnectivityResult connectivity,
+          Widget child,
+        ) {
+          final bool connected = connectivity != ConnectivityResult.none;
+
+          if (connected) {
+            return _children[_currentIndex];
+          } else {
+            return new Stack(
+              fit: StackFit.expand,
+              children: [
+                Positioned(
+                  height: 44.0,
+                  left: 0.0,
+                  right: 0.0,
+                  child: Container(
+                    color: Colors.red[800],
+                    child: Center(
+                      child: Text(
+                        "You are offline.",
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Center(
+                  child: new Text(
+                    'Please connect to the internet.',
+                    style: TextStyle(
+                      fontSize: 22,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }
+        },
+        child: Container(),
+      ),
     );
   }
 }
