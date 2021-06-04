@@ -83,3 +83,30 @@ Future addTransaction(NewTransaction payload) async {
     dio.close();
   }
 }
+
+Future addTransfer(NewTransfer payload) async {
+  var dio = new Dio();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var token = prefs.get("bearerToken");
+
+  dio.options.headers["Authorization"] = "Bearer $token";
+
+  try {
+    await dio.post(
+      "$apiUrl/transfer",
+      data: {
+        "amount": payload.amount,
+        "accountFromId": payload.accountFromId,
+        "accountToId": payload.accountToId,
+        "createdAt": DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").format(
+          DateTime.now(),
+        ),
+        "userId": userId
+      },
+    );
+  } catch (e) {
+    print(e);
+  } finally {
+    dio.close();
+  }
+}

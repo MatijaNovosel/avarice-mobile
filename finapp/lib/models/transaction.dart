@@ -22,7 +22,6 @@ class Transaction {
 
 class NewTransaction {
   double amount;
-  String createdAt;
   String description;
   bool expense;
   int accountId;
@@ -30,10 +29,21 @@ class NewTransaction {
 
   NewTransaction({
     this.amount,
-    this.createdAt,
     this.description,
     this.expense,
     this.accountId,
     this.tags,
+  });
+}
+
+class NewTransfer {
+  int accountFromId;
+  int accountToId;
+  double amount;
+
+  NewTransfer({
+    this.amount,
+    this.accountFromId,
+    this.accountToId,
   });
 }

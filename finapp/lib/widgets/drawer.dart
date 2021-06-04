@@ -3,6 +3,7 @@ import 'package:finapp/helpers/helpers.dart';
 import 'package:finapp/popupTemplates/newTransaction.dart';
 import 'package:finapp/popupTemplates/newTransfer.dart';
 import 'package:finapp/views/login.dart';
+import 'package:finapp/widgets/forms/transferForm.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_beautiful_popup/main.dart';
@@ -100,7 +101,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 popup.show(
                   title: 'New transfer',
                   content: Container(
-                    child: TransactionForm(
+                    child: TransferForm(
                       controller: _formSubmitController,
                     ),
                   ),
