@@ -1,6 +1,7 @@
 import 'package:finapp/models/transaction.dart';
 import 'package:finapp/services/transactionService.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 
@@ -14,36 +15,31 @@ class _HistoryState extends State<History> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          FutureBuilder<List<Transaction>>(
-              future: _transactions,
-              builder: (
-                BuildContext context,
-                AsyncSnapshot<List<Transaction>> snapshot,
-              ) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.waiting:
-                    {
-                      return Center(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 25.0),
-                          child: SpinKitFadingCircle(
-                            color: Colors.grey[500],
-                            size: 50.0,
-                          ),
-                        ),
-                      );
-                    }
-                  default:
-                    {
-                      if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      } else {
-                        return DataTable(
+    return FutureBuilder<List<Transaction>>(
+        future: _transactions,
+        builder: (
+          BuildContext context,
+          AsyncSnapshot<List<Transaction>> snapshot,
+        ) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              {
+                return Center(
+                  child: SpinKitFadingCircle(
+                    color: Colors.grey[500],
+                    size: 50.0,
+                  ),
+                );
+              }
+            default:
+              {
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        DataTable(
                           columns: <DataColumn>[
                             DataColumn(
                               label: Text(
@@ -95,13 +91,13 @@ class _HistoryState extends State<History> {
                                 ],
                               ),
                           ],
-                        );
-                      }
-                    }
+                        ),
+                      ],
+                    ),
+                  );
                 }
-              }),
-        ],
-      ),
-    );
+              }
+          }
+        });
   }
 }

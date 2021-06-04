@@ -44,30 +44,11 @@ class _ExpenseFormState extends State<ExpenseForm> {
         tags: _selectedTags,
       );
 
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return WillPopScope(
-            onWillPop: () async => false,
-            child: AlertDialog(
-              backgroundColor: Colors.transparent,
-              content: SpinKitFoldingCube(
-                color: Colors.grey[500],
-                size: 65,
-              ),
-            ),
-          );
-        },
-      );
-
       try {
         await addTransaction(payload);
         showAlert(context, "Transaction added", false, "top");
       } catch (e) {
         showAlert(context, "Error adding transaction", true, "top");
-      } finally {
-        Navigator.pop(context);
       }
     } else {
       showAlert(context, "Invalid data", true, "top");

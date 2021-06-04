@@ -15,36 +15,31 @@ class _AccountsState extends State<Accounts> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
-        left: 12,
-        right: 12,
-        top: 12,
-      ),
-      child: Column(
-        children: [
-          FutureBuilder<List<Account>>(
-            future: _accounts,
-            builder: (
-              BuildContext context,
-              AsyncSnapshot<List<Account>> snapshot,
-            ) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.waiting:
-                  {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 25.0),
-                      child: SpinKitFadingCircle(
-                        color: Colors.grey[500],
-                        size: 50.0,
-                      ),
-                    );
-                  }
-                default:
-                  {
-                    if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    } else {
-                      return Expanded(
+      padding: const EdgeInsets.all(12),
+      child: FutureBuilder<List<Account>>(
+        future: _accounts,
+        builder: (
+          BuildContext context,
+          AsyncSnapshot<List<Account>> snapshot,
+        ) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              {
+                return Center(
+                  child: SpinKitFadingCircle(
+                    color: Colors.grey[500],
+                    size: 50.0,
+                  ),
+                );
+              }
+            default:
+              {
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  return Column(
+                    children: [
+                      Expanded(
                         child: ListView.builder(
                           shrinkWrap: false,
                           itemCount: snapshot.data.length,
@@ -85,13 +80,13 @@ class _AccountsState extends State<Accounts> {
                             );
                           },
                         ),
-                      );
-                    }
-                  }
+                      ),
+                    ],
+                  );
+                }
               }
-            },
-          ),
-        ],
+          }
+        },
       ),
     );
   }
