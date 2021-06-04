@@ -48,19 +48,6 @@ class _LoginState extends State<Login> {
           ));
         },
         onRecoverPassword: (_) => Future(null),
-        messages: LoginMessages(
-          usernameHint: 'Email',
-          passwordHint: 'Password',
-          confirmPasswordHint: 'Confirm',
-          loginButton: 'Log in',
-          signupButton: 'Register',
-          forgotPasswordButton: 'Forgot password',
-          recoverPasswordButton: 'Recover password',
-          goBackButton: 'Go back',
-          confirmPasswordError: 'Password does not match',
-          recoverPasswordDescription: 'Recover password',
-          recoverPasswordSuccess: 'Password rescued successfully',
-        ),
         theme: LoginTheme(
           titleStyle: TextStyle(
             letterSpacing: 6,

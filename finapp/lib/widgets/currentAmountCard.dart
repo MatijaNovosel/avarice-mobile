@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class _CurrentAmountCardState extends State<CurrentAmountCardWidget> {
-  bool _visible = true;
+  bool _visible = false;
 
   @override
   void initState() {

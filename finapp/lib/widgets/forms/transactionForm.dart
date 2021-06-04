@@ -1,4 +1,5 @@
 import 'package:finapp/controllers/formSubmitController.dart';
+import 'package:finapp/helpers/helpers.dart';
 import 'package:finapp/models/transaction.dart';
 import 'package:finapp/services/tagService.dart';
 import 'package:finapp/services/transactionService.dart';
@@ -31,14 +32,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
   void submitForm() async {
     if (_formKey.currentState.validate()) {
       if (_selectedTags.length == 0) {
-        var snackBar = SnackBar(
-          content: Text(
-            'No tags were selected!',
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: Colors.red[800],
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        showAlert(context, "No tags selected!", true, "top");
         return;
       }
 
@@ -69,35 +63,14 @@ class _ExpenseFormState extends State<ExpenseForm> {
 
       try {
         await addTransaction(payload);
-        var snackBar = SnackBar(
-          content: Text(
-            'Transaction added!',
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: Colors.green,
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        showAlert(context, "Transaction added", false, "top");
       } catch (e) {
-        var snackBar = SnackBar(
-          content: Text(
-            'Error adding transaction!',
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: Colors.red[800],
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        showAlert(context, "Error adding transaction", true, "top");
       } finally {
         Navigator.pop(context);
       }
     } else {
-      var snackBar = SnackBar(
-        content: Text(
-          'Invalid data supplied!',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.red[800],
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      showAlert(context, "Invalid data", true, "top");
     }
   }
 

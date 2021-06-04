@@ -32,7 +32,6 @@ class _DashboardState extends State<Dashboard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // CurrentAmountListWidget(onPaymentSourceChanged: (id) {}),
           Container(
             padding: EdgeInsets.only(top: 4),
             child: Column(children: [

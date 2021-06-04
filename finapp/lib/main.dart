@@ -76,7 +76,7 @@ class MainScreenState extends State<MainScreen> {
       drawer: CustomDrawer(),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.grey[850],
+          color: Colors.grey[800],
           boxShadow: [
             BoxShadow(
               blurRadius: 20,

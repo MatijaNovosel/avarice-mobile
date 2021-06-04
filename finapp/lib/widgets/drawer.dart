@@ -1,3 +1,4 @@
+import 'package:finapp/helpers/helpers.dart';
 import 'package:finapp/views/login.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
@@ -104,17 +105,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     await SharedPreferences.getInstance();
                 prefs.remove("bearerToken");
 
-                var snackBar = SnackBar(
-                  content: Text(
-                    "Signed out!",
-                    style: new TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                  backgroundColor: Colors.green,
-                );
-
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                showAlert(context, "Signed out!", false, "top");
 
                 Navigator.pushAndRemoveUntil(
                   context,
