@@ -18,6 +18,7 @@ dependencies:
   flutter_login: ^1.1.0
   flushbar: ^1.10.4
   flutter_offline: "^2.0.0"
+  timelines: ^0.1.0
 
 flutter:
   uses-material-design: true

@@ -9,6 +9,7 @@ import 'package:finapp/services/transactionService.dart';
 import 'package:finapp/models/transaction.dart';
 import "package:finapp/widgets/transactionCard.dart";
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:timelines/timelines.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -24,11 +25,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
-        left: 12,
-        right: 12,
-        top: 12,
-      ),
+      padding: const EdgeInsets.all(12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -226,22 +223,86 @@ class _DashboardState extends State<Dashboard> {
                       return Text('Error: ${snapshot.error}');
                     } else {
                       return Expanded(
-                        child: ListView.builder(
-                          shrinkWrap: false,
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (context, i) {
-                            return Column(
-                              children: [
-                                TransactionCardWidget(
-                                  transaction: snapshot.data[i],
-                                  visible: true,
+                          child: SingleChildScrollView(
+                        child: FixedTimeline.tileBuilder(
+                          builder: TimelineTileBuilder.connectedFromStyle(
+                            contentsAlign: ContentsAlign.alternating,
+                            oppositeContentsBuilder: (context, index) =>
+                                Padding(
+                              padding: const EdgeInsets.all(18.0),
+                              child: Text(
+                                "${DateFormat("dd.MM.yyyy. HH:mm:ss").format(DateTime.parse(snapshot.data[index].createdAt))}",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey[300],
                                 ),
-                                SizedBox(height: 12),
-                              ],
-                            );
-                          },
+                              ),
+                            ),
+                            contentsBuilder: (context, index) => Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10.0, right: 10),
+                              child: Card(
+                                child: Container(
+                                  padding: EdgeInsets.all(14.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(snapshot.data[index].description),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 5.0),
+                                        child: Text(
+                                          "${NumberFormat("#,##0.00", "hr_HR").format(snapshot.data[index].amount)} HRK",
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            connectorStyleBuilder: (context, index) {
+                              if (index + 1 >= snapshot.data.length) {
+                                return ConnectorStyle.solidLine;
+                              }
+
+                              var date = DateTime.parse(
+                                  snapshot.data[index].createdAt);
+                              var compareDate = DateTime.parse(
+                                  snapshot.data[index + 1].createdAt);
+
+                              if (date.day == compareDate.day &&
+                                  date.month == compareDate.month) {
+                                return ConnectorStyle.dashedLine;
+                              }
+
+                              return ConnectorStyle.solidLine;
+                            },
+                            indicatorStyleBuilder: (context, index) {
+                              if (index + 1 >= snapshot.data.length) {
+                                return IndicatorStyle.outlined;
+                              }
+
+                              var date = DateTime.parse(
+                                  snapshot.data[index].createdAt);
+                              var compareDate = DateTime.parse(
+                                  snapshot.data[index + 1].createdAt);
+
+                              if (date.day == compareDate.day &&
+                                  date.month == compareDate.month) {
+                                return IndicatorStyle.dot;
+                              }
+
+                              return IndicatorStyle.outlined;
+                            },
+                            itemCount: snapshot.data.length,
+                          ),
                         ),
-                      );
+                      ));
                     }
                   }
               }
