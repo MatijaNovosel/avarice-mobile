@@ -1,4 +1,3 @@
-import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:finapp/views/accounts.dart';
 import 'package:finapp/views/history.dart';
 import 'package:finapp/views/dashboard.dart';
