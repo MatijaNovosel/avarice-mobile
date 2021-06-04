@@ -48,7 +48,7 @@ class _CurrentAmountListState extends State<CurrentAmountListWidget> {
                       child: PageView.builder(
                         itemCount: snapshot.data.length,
                         onPageChanged: (i) {
-                          widget.onAccountChange(i);
+                          widget.onAccountChange(snapshot.data[i].id);
                           setState(() {
                             _index = i;
                           });

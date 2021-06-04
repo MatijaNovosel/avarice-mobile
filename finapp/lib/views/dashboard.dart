@@ -60,6 +60,7 @@ class _DashboardState extends State<Dashboard> {
                             ),
                             color: Colors.grey[600],
                             icon: Icons.account_balance_wallet_sharp,
+                            showInitialValue: true,
                           );
                         }
                       }
@@ -198,6 +199,11 @@ class _DashboardState extends State<Dashboard> {
                                           style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
+                                            color:
+                                                snapshot.data[index].expense ==
+                                                        true
+                                                    ? Colors.red[300]
+                                                    : Colors.green[400],
                                           ),
                                         ),
                                       ),
@@ -206,23 +212,8 @@ class _DashboardState extends State<Dashboard> {
                                 ),
                               ),
                             ),
-                            connectorStyleBuilder: (context, index) {
-                              if (index + 1 >= snapshot.data.length) {
-                                return ConnectorStyle.solidLine;
-                              }
-
-                              var date = DateTime.parse(
-                                  snapshot.data[index].createdAt);
-                              var compareDate = DateTime.parse(
-                                  snapshot.data[index + 1].createdAt);
-
-                              if (date.day == compareDate.day &&
-                                  date.month == compareDate.month) {
-                                return ConnectorStyle.dashedLine;
-                              }
-
-                              return ConnectorStyle.solidLine;
-                            },
+                            connectorStyleBuilder: (context, index) =>
+                                ConnectorStyle.solidLine,
                             indicatorStyleBuilder: (context, index) {
                               if (index + 1 >= snapshot.data.length) {
                                 return IndicatorStyle.outlined;
