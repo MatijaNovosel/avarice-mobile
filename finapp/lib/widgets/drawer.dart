@@ -1,8 +1,14 @@
+import 'package:finapp/controllers/formSubmitController.dart';
 import 'package:finapp/helpers/helpers.dart';
+import 'package:finapp/popupTemplates/newTransaction.dart';
+import 'package:finapp/popupTemplates/newTransfer.dart';
 import 'package:finapp/views/login.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_beautiful_popup/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'forms/transactionForm.dart';
 
 class CustomDrawer extends StatefulWidget {
   @override
@@ -12,6 +18,7 @@ class CustomDrawer extends StatefulWidget {
 class _CustomDrawerState extends State<CustomDrawer> {
   String _username;
   String _email;
+  final FormSubmitController _formSubmitController = new FormSubmitController();
 
   @override
   void initState() {
@@ -73,6 +80,74 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   )
                 ],
               ),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.arrow_forward,
+                color: Colors.grey[600],
+              ),
+              title: Text(
+                'New transfer',
+                style: TextStyle(
+                  color: Colors.grey[500],
+                ),
+              ),
+              onTap: () {
+                final popup = BeautifulPopup.customize(
+                  context: context,
+                  build: (options) => NewTransferPopup(options),
+                );
+                popup.show(
+                  title: 'New transfer',
+                  content: Container(
+                    child: TransactionForm(
+                      controller: _formSubmitController,
+                    ),
+                  ),
+                  actions: [
+                    popup.button(
+                      label: 'Save',
+                      onPressed: () {
+                        _formSubmitController.submit();
+                      },
+                    ),
+                  ],
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.account_balance,
+                color: Colors.grey[600],
+              ),
+              title: Text(
+                'New transaction',
+                style: TextStyle(
+                  color: Colors.grey[500],
+                ),
+              ),
+              onTap: () {
+                final popup = BeautifulPopup.customize(
+                  context: context,
+                  build: (options) => NewTransactionPopup(options),
+                );
+                popup.show(
+                  title: 'New transaction',
+                  content: Container(
+                    child: TransactionForm(
+                      controller: _formSubmitController,
+                    ),
+                  ),
+                  actions: [
+                    popup.button(
+                      label: 'Save',
+                      onPressed: () {
+                        _formSubmitController.submit();
+                      },
+                    ),
+                  ],
+                );
+              },
             ),
             ListTile(
               leading: Icon(

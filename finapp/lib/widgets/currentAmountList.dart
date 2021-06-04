@@ -61,6 +61,7 @@ class _CurrentAmountListState extends State<CurrentAmountListWidget> {
                               color: Colors.grey[600],
                               account: snapshot.data[i],
                               showHideButton: true,
+                              showInitialValue: true,
                             ),
                           );
                         },

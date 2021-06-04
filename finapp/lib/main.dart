@@ -9,7 +9,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'views/newTransaction.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
 Future<void> main() async {
@@ -37,9 +36,6 @@ Future<void> main() async {
     debugShowCheckedModeBanner: false,
     theme: new ThemeData(
       primarySwatch: Colors.blue,
-      iconTheme: IconThemeData(
-        color: Colors.black,
-      ),
     ),
     home: tokenValid ? MainScreen() : Login(),
   ));
@@ -57,7 +53,6 @@ class MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     final List<Widget> _children = [
       Dashboard(),
-      NewEntry(),
       History(),
       Accounts(),
     ];
@@ -100,10 +95,6 @@ class MainScreenState extends State<MainScreen> {
                 GButton(
                   icon: Icons.dashboard,
                   text: 'Dashboard',
-                ),
-                GButton(
-                  icon: Icons.new_label,
-                  text: 'New transaction',
                 ),
                 GButton(
                   icon: Icons.history,

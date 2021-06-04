@@ -10,6 +10,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.white,
+      iconTheme: IconThemeData(
+        color: Colors.grey[400],
+      ),
       titleSpacing: 0,
       title: Row(
         crossAxisAlignment: CrossAxisAlignment.baseline,

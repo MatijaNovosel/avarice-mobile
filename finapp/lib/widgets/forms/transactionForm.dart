@@ -6,17 +6,16 @@ import 'package:finapp/services/transactionService.dart';
 import 'package:finapp/widgets/currentAmountList.dart';
 import 'package:finapp/widgets/multiSelectDialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class ExpenseForm extends StatefulWidget {
+class TransactionForm extends StatefulWidget {
   final FormSubmitController controller;
-  ExpenseForm({this.controller});
+  TransactionForm({this.controller});
 
   @override
-  _ExpenseFormState createState() => _ExpenseFormState(controller);
+  _TransactionFormState createState() => _TransactionFormState(controller);
 }
 
-class _ExpenseFormState extends State<ExpenseForm> {
+class _TransactionFormState extends State<TransactionForm> {
   final _formKey = GlobalKey<FormState>();
   final _descriptionController = TextEditingController();
   final _amountController = TextEditingController();
@@ -25,7 +24,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
   List<int> _selectedTags = [];
   final FormSubmitController formSubmitController = FormSubmitController();
 
-  _ExpenseFormState(FormSubmitController _controller) {
+  _TransactionFormState(FormSubmitController _controller) {
     _controller.submit = submit;
   }
 
@@ -47,6 +46,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
       try {
         await addTransaction(payload);
         showAlert(context, "Transaction added", false, "top");
+        Navigator.pop(context);
       } catch (e) {
         showAlert(context, "Error adding transaction", true, "top");
       }
@@ -117,7 +117,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
                 ),
                 child: Icon(
                   Icons.description_rounded,
-                  color: Colors.grey[350],
+                  color: Colors.grey[600],
                 ),
               ),
               title: TextFormField(
@@ -130,19 +130,19 @@ class _ExpenseFormState extends State<ExpenseForm> {
                 },
                 decoration: InputDecoration(
                   enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey[350]),
+                    borderSide: BorderSide(color: Colors.grey[600]),
                   ),
                   focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey[350]),
+                    borderSide: BorderSide(color: Colors.grey[600]),
                   ),
                   border: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey[350]),
+                    borderSide: BorderSide(color: Colors.grey[600]),
                   ),
                   hintText: "Entry description",
                   isDense: true,
                   labelText: "Description",
                   alignLabelWithHint: true,
-                  labelStyle: TextStyle(color: Colors.grey[350]),
+                  labelStyle: TextStyle(color: Colors.grey[600]),
                 ),
               ),
             ),
@@ -153,7 +153,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
                 ),
                 child: Icon(
                   Icons.attach_money_rounded,
-                  color: Colors.grey[350],
+                  color: Colors.grey[600],
                 ),
               ),
               title: TextFormField(
@@ -168,20 +168,20 @@ class _ExpenseFormState extends State<ExpenseForm> {
                 decoration: InputDecoration(
                   suffix: Text("HRK"),
                   enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey[350]),
+                    borderSide: BorderSide(color: Colors.grey[600]),
                   ),
                   focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey[350]),
+                    borderSide: BorderSide(color: Colors.grey[600]),
                   ),
                   border: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey[350]),
+                    borderSide: BorderSide(color: Colors.grey[600]),
                   ),
                   hintText: "Entry amount",
                   isDense: true,
                   labelText: "Amount",
                   alignLabelWithHint: true,
                   labelStyle: TextStyle(
-                    color: Colors.grey[350],
+                    color: Colors.grey[600],
                   ),
                 ),
               ),
@@ -214,24 +214,6 @@ class _ExpenseFormState extends State<ExpenseForm> {
                 child: Text('Select tags'),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.green,
-                ),
-                onPressed: () {
-                  submit();
-                },
-                child: Text(
-                  "Save",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            )
           ],
         ),
       ),
