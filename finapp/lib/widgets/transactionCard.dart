@@ -1,3 +1,4 @@
+import 'package:finapp/helpers/helpers.dart';
 import 'package:finapp/models/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -32,7 +33,9 @@ class _ChangeCardState extends State<TransactionCardWidget> {
                         ),
                       ),
                       Text(
-                        "${DateFormat("dd.MM.yyyy. HH:mm:ss").format(DateTime.parse(widget.transaction.createdAt))}",
+                        formatDateToCroatian(
+                          widget.transaction.createdAt,
+                        ),
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.grey[300],
@@ -44,7 +47,7 @@ class _ChangeCardState extends State<TransactionCardWidget> {
                     padding: EdgeInsets.only(top: 2, bottom: 8),
                     child: Text(
                       widget.visible
-                          ? "${NumberFormat("#,##0.00", "hr_HR").format(widget.transaction.amount)} HRK"
+                          ? formatHrk(widget.transaction.amount)
                           : "${widget.transaction.amount.toStringAsFixed(2)} HRK"
                               .replaceAll(new RegExp(r'[0-9]'), '*'),
                       style: TextStyle(

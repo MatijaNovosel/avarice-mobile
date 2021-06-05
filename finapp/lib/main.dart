@@ -1,4 +1,5 @@
 import 'package:finapp/views/accounts.dart';
+import 'package:finapp/views/chartData.dart';
 import 'package:finapp/views/history.dart';
 import 'package:finapp/views/dashboard.dart';
 import 'package:finapp/views/login.dart';
@@ -54,6 +55,7 @@ class MainScreenState extends State<MainScreen> {
     final List<Widget> _children = [
       Dashboard(),
       History(),
+      ChartData(),
       Accounts(),
     ];
 
@@ -81,7 +83,11 @@ class MainScreenState extends State<MainScreen> {
               hoverColor: Colors.grey[100],
               gap: 8,
               activeColor: Colors.orange,
-              iconSize: 20,
+              iconSize: 24,
+              textStyle: TextStyle(
+                fontSize: 16,
+                color: Colors.orange,
+              ),
               padding: EdgeInsets.symmetric(
                 horizontal: 20,
                 vertical: 12,
@@ -99,6 +105,10 @@ class MainScreenState extends State<MainScreen> {
                 GButton(
                   icon: Icons.history,
                   text: 'History',
+                ),
+                GButton(
+                  icon: Icons.bar_chart,
+                  text: 'Data',
                 ),
                 GButton(
                   icon: Icons.account_balance_wallet,

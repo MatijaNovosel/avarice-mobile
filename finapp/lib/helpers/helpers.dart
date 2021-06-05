@@ -1,6 +1,7 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 void showAlert(context, String msg, bool error, String position) {
   Flushbar(
@@ -16,4 +17,12 @@ void showAlert(context, String msg, bool error, String position) {
       color: Colors.white,
     ),
   )..show(context);
+}
+
+String formatHrk(double amount) {
+  return "${NumberFormat("#,##0.00", "hr_HR").format(amount)} HRK";
+}
+
+String formatDateToCroatian(String date) {
+  return "${DateFormat("dd.MM.yyyy. HH:mm:ss").format(DateTime.parse(date))}";
 }

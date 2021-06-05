@@ -50,8 +50,6 @@ Future<List<HistoryModel>> getTotalHistory() async {
       },
     );
 
-    print(response.data);
-
     for (var history in response.data) {
       data.add(
         new HistoryModel(

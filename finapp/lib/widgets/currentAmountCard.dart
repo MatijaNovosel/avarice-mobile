@@ -1,3 +1,4 @@
+import 'package:finapp/helpers/helpers.dart';
 import 'package:finapp/models/account.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -60,7 +61,7 @@ class _CurrentAmountCardState extends State<CurrentAmountCardWidget> {
                 ),
                 Text(
                   _visible
-                      ? "${NumberFormat("#,##0.00", "hr_HR").format(widget.account.amount)} HRK"
+                      ? formatHrk(widget.account.amount)
                       : "${widget.account.amount.toStringAsFixed(2)} HRK"
                           .replaceAll(new RegExp(r'[0-9]'), '*'),
                   style: TextStyle(
