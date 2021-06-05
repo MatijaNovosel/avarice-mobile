@@ -39,7 +39,7 @@ class _DashboardState extends State<Dashboard> {
               {
                 return Center(
                   child: SpinKitFoldingCube(
-                    color: Colors.grey[500],
+                    color: Colors.orange,
                     size: 50.0,
                   ),
                 );

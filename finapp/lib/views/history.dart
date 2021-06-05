@@ -24,7 +24,7 @@ class _HistoryState extends State<History> {
               {
                 return Center(
                   child: SpinKitFoldingCube(
-                    color: Colors.grey[500],
+                    color: Colors.orange,
                     size: 50.0,
                   ),
                 );
@@ -41,56 +41,68 @@ class _HistoryState extends State<History> {
                           child: Column(
                             children: [
                               DataTable(
-                                columns: <DataColumn>[
-                                  DataColumn(
-                                    label: Text(
-                                      'Description',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    label: Text(
-                                      'Amount',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    label: Expanded(
-                                      child: Text(
-                                        'Details',
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                                rows: <DataRow>[
-                                  for (var transaction in snapshot.data)
-                                    DataRow(
-                                      cells: <DataCell>[
-                                        DataCell(
-                                          Text(transaction.description),
+                                  columns: <DataColumn>[
+                                    DataColumn(
+                                      label: Text(
+                                        'Description',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey[500],
                                         ),
-                                        DataCell(
-                                          Text(formatHrk(transaction.amount)),
+                                      ),
+                                    ),
+                                    DataColumn(
+                                      label: Text(
+                                        'Amount',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey[500],
                                         ),
-                                        DataCell(
-                                          TextButton(
-                                            onPressed: () {},
-                                            child: new Icon(
-                                              Icons.more_horiz_rounded,
-                                              color: Colors.grey,
-                                              size: 20.0,
-                                            ),
+                                      ),
+                                    ),
+                                    DataColumn(
+                                      label: Expanded(
+                                        child: Text(
+                                          'Details',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.grey[500],
                                           ),
+                                          textAlign: TextAlign.center,
                                         ),
-                                      ],
+                                      ),
                                     ),
-                                ],
-                              ),
+                                  ],
+                                  rows: snapshot.data
+                                      .map(
+                                        (t) => DataRow(
+                                          cells: <DataCell>[
+                                            DataCell(
+                                              Text(
+                                                t.description,
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.grey[600],
+                                                ),
+                                              ),
+                                            ),
+                                            DataCell(
+                                              Text(formatHrk(t.amount)),
+                                            ),
+                                            DataCell(
+                                              TextButton(
+                                                onPressed: () {},
+                                                child: new Icon(
+                                                  Icons.more_horiz_rounded,
+                                                  color: Colors.grey,
+                                                  size: 20.0,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                      .toList()),
                             ],
                           ),
                         ),

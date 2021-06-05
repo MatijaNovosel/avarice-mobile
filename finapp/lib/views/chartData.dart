@@ -1,5 +1,6 @@
 import 'package:finapp/models/history.dart';
 import 'package:finapp/services/historyService.dart';
+import 'package:finapp/widgets/charts/tagPercentagesPieChart.dart';
 import 'package:finapp/widgets/charts/totalHistoryChart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -25,7 +26,7 @@ class _ChartDataState extends State<ChartData> {
               {
                 return Center(
                   child: SpinKitFoldingCube(
-                    color: Colors.grey[500],
+                    color: Colors.orange,
                     size: 50.0,
                   ),
                 );
@@ -53,6 +54,18 @@ class _ChartDataState extends State<ChartData> {
                       Padding(
                         padding: const EdgeInsets.all(12),
                         child: HistoryTotalChart(history: history),
+                      ),
+                      Text(
+                        "Spending percentages",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.grey[500],
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: TagPercentagesPieChart(),
                       ),
                     ],
                   );

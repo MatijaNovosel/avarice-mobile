@@ -84,7 +84,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
             ),
             ListTile(
               leading: Icon(
-                Icons.arrow_forward,
+                Icons.sync_alt,
                 color: Colors.grey[600],
               ),
               title: Text(
@@ -118,7 +118,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
             ),
             ListTile(
               leading: Icon(
-                Icons.account_balance,
+                Icons.attach_money,
                 color: Colors.grey[600],
               ),
               title: Text(

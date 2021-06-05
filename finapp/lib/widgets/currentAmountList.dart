@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 typedef PaymentSourceIdCallback = void Function(int paymentSourceId);
+typedef OnLoadingFinishedCallback = void Function(int accountId);
 
 class CurrentAmountListWidget extends StatefulWidget {
-  const CurrentAmountListWidget({this.onAccountChange});
+  const CurrentAmountListWidget({this.onAccountChange, this.onLoadingFinished});
   final PaymentSourceIdCallback onAccountChange;
+  final OnLoadingFinishedCallback onLoadingFinished;
 
   @override
   _CurrentAmountListState createState() => _CurrentAmountListState();
@@ -31,7 +33,7 @@ class _CurrentAmountListState extends State<CurrentAmountListWidget> {
             {
               return Center(
                 child: SpinKitFoldingCube(
-                  color: Colors.grey[500],
+                  color: Colors.orange,
                   size: 50.0,
                 ),
               );
@@ -41,14 +43,16 @@ class _CurrentAmountListState extends State<CurrentAmountListWidget> {
               if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else {
+                var accounts = snapshot.data;
+
                 return Column(
                   children: [
                     SizedBox(
                       height: 80,
                       child: PageView.builder(
-                        itemCount: snapshot.data.length,
+                        itemCount: accounts.length,
                         onPageChanged: (i) {
-                          widget.onAccountChange(snapshot.data[i].id);
+                          widget.onAccountChange(accounts[i].id);
                           setState(() {
                             _index = i;
                           });
@@ -59,7 +63,7 @@ class _CurrentAmountListState extends State<CurrentAmountListWidget> {
                             child: CurrentAmountCardWidget(
                               icon: Icons.account_balance_wallet,
                               color: Colors.grey[600],
-                              account: snapshot.data[i],
+                              account: accounts[i],
                               showHideButton: true,
                               showInitialValue: true,
                               gradient: true,
@@ -77,7 +81,7 @@ class _CurrentAmountListState extends State<CurrentAmountListWidget> {
                         top: 12,
                       ),
                       child: ListView.builder(
-                        itemCount: snapshot.data.length,
+                        itemCount: accounts.length,
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (_, i) {
@@ -86,7 +90,7 @@ class _CurrentAmountListState extends State<CurrentAmountListWidget> {
                             child: Container(
                               width: 10,
                               height: 10,
-                              margin: i != snapshot.data.length
+                              margin: i != accounts.length
                                   ? EdgeInsets.only(right: 4)
                                   : null,
                               decoration: BoxDecoration(

@@ -24,14 +24,6 @@ class _HistoryTotalChartState extends State<HistoryTotalChart> {
 
   get history => widget.history;
 
-  get minY => widget.history
-      .map(
-        (x) => x.amount,
-      )
-      .reduce(
-        (curr, next) => curr < next ? curr : next,
-      );
-
   get maxY => widget.history
       .map(
         (x) => x.amount,
@@ -113,7 +105,7 @@ class _HistoryTotalChartState extends State<HistoryTotalChart> {
           ),
           margin: 15,
           reservedSize: 25,
-          interval: 100,
+          interval: maxY < 1000 ? (maxY < 10 ? 0.5 : 30) : 100,
         ),
       ),
       borderData: FlBorderData(

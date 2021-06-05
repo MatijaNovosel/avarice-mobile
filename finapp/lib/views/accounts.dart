@@ -1,9 +1,10 @@
-import 'package:finapp/models/account.dart';
+import 'package:finapp/models/history.dart';
 import 'package:finapp/services/accountService.dart';
-import 'package:finapp/widgets/currentAmountCard.dart';
+import 'package:finapp/services/historyService.dart';
+import 'package:finapp/widgets/charts/totalHistoryChart.dart';
+import 'package:finapp/widgets/currentAmountList.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:intl/intl.dart';
 
 class Accounts extends StatefulWidget {
   @override
@@ -11,67 +12,64 @@ class Accounts extends StatefulWidget {
 }
 
 class _AccountsState extends State<Accounts> {
-  final Future<List<Account>> _accounts = getLatestAccountValues();
+  int _accountId;
+  List<HistoryModel> accountHistory;
+  bool loaded = false;
+
+  void sync(accountId) async {
+    setState(() {
+      loaded = false;
+    });
+
+    var history = await getTotalHistoryForAccount(accountId);
+
+    setState(() {
+      _accountId = accountId;
+      accountHistory = history;
+      loaded = true;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    (() async {
+      var accounts = await getLatestAccountValues();
+      sync(accounts[0].id);
+    })();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(12),
-      child: FutureBuilder<List<Account>>(
-        future: _accounts,
-        builder: (
-          BuildContext context,
-          AsyncSnapshot<List<Account>> snapshot,
-        ) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              {
-                return Center(
+      child: Column(
+        children: [
+          loaded
+              ? Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: _accountId != null
+                      ? HistoryTotalChart(
+                          history: accountHistory,
+                        )
+                      : Container(),
+                )
+              : Padding(
+                  padding: const EdgeInsets.all(60.0),
                   child: SpinKitFoldingCube(
-                    color: Colors.grey[500],
+                    color: Colors.orange,
                     size: 50.0,
                   ),
-                );
-              }
-            default:
-              {
-                if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  return Column(
-                    children: [
-                      Expanded(
-                        child: ListView.builder(
-                          shrinkWrap: false,
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (context, i) {
-                            return Column(
-                              children: [
-                                CurrentAmountCardWidget(
-                                  account: Account(
-                                    amount: snapshot.data[i].amount,
-                                    description: snapshot.data[i].description,
-                                  ),
-                                  color: Colors.grey[600],
-                                  icon: Icons.account_balance_wallet_sharp,
-                                  showInitialValue: true,
-                                  gradient: true,
-                                  gradientFrom: Colors.orange[700],
-                                  gradientTo: Colors.red[400],
-                                  mainTextColor: Colors.white,
-                                ),
-                                SizedBox(height: 5),
-                              ],
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  );
-                }
-              }
-          }
-        },
+                ),
+          CurrentAmountListWidget(
+            onLoadingFinished: (id) {
+              print(id);
+            },
+            onAccountChange: (id) {
+              sync(id);
+            },
+          ),
+        ],
       ),
     );
   }
