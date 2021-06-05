@@ -17,7 +17,7 @@ class _TransferFormState extends State<TransferForm> {
   final _formKey = GlobalKey<FormState>();
   final _amountController = TextEditingController();
   int _accountFromId = 1;
-  int _accountToId = 2;
+  int _accountToId = 1;
   final FormSubmitController formSubmitController = FormSubmitController();
 
   _TransferFormState(FormSubmitController _controller) {
@@ -26,6 +26,11 @@ class _TransferFormState extends State<TransferForm> {
 
   void submitForm() async {
     if (_formKey.currentState.validate()) {
+      if (_accountFromId == _accountToId) {
+        showAlert(context, "Accounts must not be the same!", true, "top");
+        return;
+      }
+
       NewTransfer payload = new NewTransfer(
         amount: double.parse(_amountController.text),
         accountToId: _accountFromId,

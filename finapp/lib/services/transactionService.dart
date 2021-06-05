@@ -93,7 +93,7 @@ Future addTransfer(NewTransfer payload) async {
 
   try {
     await dio.post(
-      "$apiUrl/transfer",
+      "$apiUrl/transaction/transfer",
       data: {
         "amount": payload.amount,
         "accountFromId": payload.accountFromId,
