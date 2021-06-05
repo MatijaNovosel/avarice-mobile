@@ -1,22 +1,37 @@
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-void showAlert(context, String msg, bool error, String position) {
-  Flushbar(
-    flushbarPosition:
-        position == "top" ? FlushbarPosition.TOP : FlushbarPosition.BOTTOM,
-    margin: EdgeInsets.all(8),
-    borderRadius: 6,
-    backgroundColor: error ? Colors.red[800] : Colors.green,
-    message: msg,
-    duration: Duration(seconds: 3),
-    icon: Icon(
-      error ? Icons.error : Icons.check,
-      color: Colors.white,
+void showAlert(context, String msg, bool error) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Icon(
+              Icons.check,
+              color: Colors.white,
+            ),
+          ),
+          Text(msg),
+        ],
+      ),
+      backgroundColor: error ? Colors.red : Colors.green,
+      duration: const Duration(milliseconds: 4500),
+      elevation: 1000000000000,
+      margin: const EdgeInsets.all(
+        8.0,
+      ),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 8.0,
+      ),
+      behavior: SnackBarBehavior.floating,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
     ),
-  )..show(context);
+  );
 }
 
 String formatHrk(double amount) {

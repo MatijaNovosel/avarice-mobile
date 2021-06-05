@@ -181,7 +181,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     await SharedPreferences.getInstance();
                 prefs.remove("bearerToken");
 
-                showAlert(context, "Signed out!", false, "top");
+                showAlert(context, "Signed out!", false);
 
                 Navigator.pushAndRemoveUntil(
                   context,

@@ -27,7 +27,7 @@ class _TransferFormState extends State<TransferForm> {
   void submitForm() async {
     if (_formKey.currentState.validate()) {
       if (_accountFromId == _accountToId) {
-        showAlert(context, "Accounts must not be the same!", true, "top");
+        showAlert(context, "Accounts must not be the same!", true);
         return;
       }
 
@@ -39,13 +39,11 @@ class _TransferFormState extends State<TransferForm> {
 
       try {
         await addTransfer(payload);
-        showAlert(context, "Transfer added", false, "top");
+        showAlert(context, "Transfer added", false);
         Navigator.pop(context);
       } catch (e) {
-        showAlert(context, "Error adding transfer", true, "top");
+        showAlert(context, "Error adding transfer", true);
       }
-    } else {
-      showAlert(context, "Invalid data", true, "top");
     }
   }
 
