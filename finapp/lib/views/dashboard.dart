@@ -2,6 +2,7 @@ import 'package:finapp/models/account.dart';
 import 'package:finapp/models/history.dart';
 import 'package:finapp/services/accountService.dart';
 import 'package:finapp/services/historyService.dart';
+import 'package:finapp/widgets/chart.dart';
 import 'package:finapp/widgets/currentAmountCard.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -36,7 +37,7 @@ class _DashboardState extends State<Dashboard> {
             case ConnectionState.waiting:
               {
                 return Center(
-                  child: SpinKitFadingCircle(
+                  child: SpinKitFoldingCube(
                     color: Colors.grey[500],
                     size: 50.0,
                   ),

@@ -27,7 +27,7 @@ class _AccountsState extends State<Accounts> {
             case ConnectionState.waiting:
               {
                 return Center(
-                  child: SpinKitFadingCircle(
+                  child: SpinKitFoldingCube(
                     color: Colors.grey[500],
                     size: 50.0,
                   ),

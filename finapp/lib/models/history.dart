@@ -7,3 +7,13 @@ class RecentDepositsAndWithdrawals {
     this.deposits,
   });
 }
+
+class HistoryModel {
+  double amount;
+  String createdAt;
+
+  HistoryModel({
+    this.amount,
+    this.createdAt,
+  });
+}
