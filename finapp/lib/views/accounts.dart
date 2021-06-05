@@ -1,5 +1,6 @@
 import 'package:finapp/models/account.dart';
 import 'package:finapp/services/accountService.dart';
+import 'package:finapp/widgets/currentAmountCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
@@ -46,34 +47,18 @@ class _AccountsState extends State<Accounts> {
                           itemBuilder: (context, i) {
                             return Column(
                               children: [
-                                Card(
-                                  child: ListTile(
-                                    subtitle: Padding(
-                                      padding: const EdgeInsets.only(
-                                        left: 12.0,
-                                      ),
-                                      child: Text(
-                                        "${NumberFormat("#,##0.00", "hr_HR").format(snapshot.data[i].amount)} HRK",
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.grey[600],
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    title: Padding(
-                                      padding: const EdgeInsets.only(
-                                        left: 12.0,
-                                      ),
-                                      child: Text(
-                                        snapshot.data[i].description,
-                                        style: TextStyle(
-                                          color: Colors.grey[400],
-                                        ),
-                                      ),
-                                    ),
-                                    trailing: Icon(Icons.more_vert),
+                                CurrentAmountCardWidget(
+                                  account: Account(
+                                    amount: snapshot.data[i].amount,
+                                    description: snapshot.data[i].description,
                                   ),
+                                  color: Colors.grey[600],
+                                  icon: Icons.account_balance_wallet_sharp,
+                                  showInitialValue: true,
+                                  gradient: true,
+                                  gradientFrom: Colors.orange[700],
+                                  gradientTo: Colors.red[400],
+                                  mainTextColor: Colors.white,
                                 ),
                                 SizedBox(height: 5),
                               ],

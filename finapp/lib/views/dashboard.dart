@@ -63,16 +63,30 @@ class _DashboardState extends State<Dashboard> {
                         color: Colors.grey[600],
                         icon: Icons.account_balance_wallet_sharp,
                         showInitialValue: true,
+                        gradient: true,
+                        gradientFrom: Colors.orange[700],
+                        gradientTo: Colors.red[400],
+                        mainTextColor: Colors.white,
                       ),
-                      CurrentAmountCardWidget(
-                        account: Account(
-                          amount: recentDepositsAndWithdrawals.withdrawals,
-                          description: "Recent withdrawals",
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 8.0,
+                          bottom: 8,
                         ),
-                        color: Colors.red[300],
-                        icon: Icons.arrow_back,
-                        showHideButton: false,
-                        showInitialValue: true,
+                        child: CurrentAmountCardWidget(
+                          account: Account(
+                            amount: recentDepositsAndWithdrawals.withdrawals,
+                            description: "Recent withdrawals",
+                          ),
+                          color: Colors.red[300],
+                          icon: Icons.arrow_back,
+                          showHideButton: false,
+                          showInitialValue: true,
+                          gradient: true,
+                          gradientFrom: Colors.red[900],
+                          gradientTo: Colors.red[400],
+                          mainTextColor: Colors.white,
+                        ),
                       ),
                       CurrentAmountCardWidget(
                         account: Account(
@@ -83,6 +97,10 @@ class _DashboardState extends State<Dashboard> {
                         icon: Icons.arrow_forward,
                         showHideButton: false,
                         showInitialValue: true,
+                        gradient: true,
+                        gradientFrom: Colors.green[800],
+                        gradientTo: Colors.green[400],
+                        mainTextColor: Colors.white,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(

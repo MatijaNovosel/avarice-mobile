@@ -66,11 +66,21 @@ class _MultiSelectDialogState<V> extends State<MultiSelectDialog<V>> {
       ),
       actions: <Widget>[
         TextButton(
-          child: Text('CANCEL'),
+          child: Text(
+            'CANCEL',
+            style: TextStyle(
+              color: Colors.orange,
+            ),
+          ),
           onPressed: _onCancelTap,
         ),
         TextButton(
-          child: Text('OK'),
+          child: Text(
+            'OK',
+            style: TextStyle(
+              color: Colors.orange,
+            ),
+          ),
           onPressed: _onSubmitTap,
         )
       ],
@@ -82,9 +92,9 @@ class _MultiSelectDialogState<V> extends State<MultiSelectDialog<V>> {
     return CheckboxListTile(
       value: checked,
       title: Text(item.label),
-      checkColor: Colors.red,
-      selectedTileColor: Colors.redAccent,
-      activeColor: Colors.redAccent,
+      checkColor: Colors.orange,
+      selectedTileColor: Colors.orangeAccent,
+      activeColor: Colors.orangeAccent,
       controlAffinity: ListTileControlAffinity.leading,
       onChanged: (checked) => _onItemCheckedChange(item.value, checked),
     );

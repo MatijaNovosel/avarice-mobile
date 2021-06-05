@@ -27,9 +27,10 @@ class _TransferFormState extends State<TransferForm> {
   void submitForm() async {
     if (_formKey.currentState.validate()) {
       NewTransfer payload = new NewTransfer(
-          amount: double.parse(_amountController.text),
-          accountToId: _accountFromId,
-          accountFromId: _accountToId);
+        amount: double.parse(_amountController.text),
+        accountToId: _accountFromId,
+        accountFromId: _accountToId,
+      );
 
       try {
         await addTransfer(payload);
@@ -59,21 +60,39 @@ class _TransferFormState extends State<TransferForm> {
       key: _formKey,
       child: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CurrentAmountListWidget(
-              onAccountChange: (id) {
-                setState(() {
-                  _accountFromId = id;
-                });
-              },
+            Text(
+              "Account from",
+              style: TextStyle(
+                color: Colors.grey[600],
+              ),
             ),
-            CurrentAmountListWidget(
-              onAccountChange: (id) {
-                setState(() {
-                  _accountToId = id;
-                });
-              },
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: CurrentAmountListWidget(
+                onAccountChange: (id) {
+                  setState(() {
+                    _accountFromId = id;
+                  });
+                },
+              ),
+            ),
+            Text(
+              "Account to",
+              style: TextStyle(
+                color: Colors.grey[600],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: CurrentAmountListWidget(
+                onAccountChange: (id) {
+                  setState(() {
+                    _accountToId = id;
+                  });
+                },
+              ),
             ),
             ListTile(
               leading: Padding(

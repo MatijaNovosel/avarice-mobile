@@ -62,6 +62,10 @@ class _CurrentAmountListState extends State<CurrentAmountListWidget> {
                               account: snapshot.data[i],
                               showHideButton: true,
                               showInitialValue: true,
+                              gradient: true,
+                              gradientFrom: Colors.orange[700],
+                              gradientTo: Colors.red[400],
+                              mainTextColor: Colors.white,
                             ),
                           );
                         },
@@ -88,7 +92,7 @@ class _CurrentAmountListState extends State<CurrentAmountListWidget> {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: i == _index
-                                    ? Colors.blue
+                                    ? Colors.orange
                                     : Colors.grey[400],
                               ),
                             ),

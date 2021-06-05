@@ -85,7 +85,7 @@ class _TagCheckboxListWidget extends State<TagCheckboxListWidget> {
                     Icons.favorite,
                     color: Colors.grey[350],
                   ),
-                  activeColor: Colors.blue,
+                  activeColor: Colors.orange,
                 );
               },
             ),

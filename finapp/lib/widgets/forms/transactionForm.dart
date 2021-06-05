@@ -191,7 +191,7 @@ class _TransactionFormState extends State<TransactionForm> {
               child: SwitchListTile(
                 title: const Text('Expense'),
                 value: _expense,
-                activeColor: Colors.blue,
+                activeColor: Colors.orange,
                 onChanged: (bool value) {
                   setState(() {
                     _expense = !_expense;
@@ -206,7 +206,7 @@ class _TransactionFormState extends State<TransactionForm> {
               width: double.infinity,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  primary: Colors.blue,
+                  primary: Colors.orange,
                 ),
                 onPressed: () {
                   _showMultiSelect(context);

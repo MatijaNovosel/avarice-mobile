@@ -9,7 +9,7 @@ class NewTransactionPopup extends BeautifulPopupTemplate {
   final illustrationKey = 'assets/images/empty.png';
 
   @override
-  Color get primaryColor => options.primaryColor ?? Colors.blue;
+  Color get primaryColor => options.primaryColor ?? Colors.orange;
   @override
   final maxWidth = 400;
   @override
@@ -25,7 +25,7 @@ class NewTransactionPopup extends BeautifulPopupTemplate {
         child: background,
       ),
       Positioned(
-        top: percentH(5),
+        top: percentH(3),
         child: title,
       ),
       Positioned(

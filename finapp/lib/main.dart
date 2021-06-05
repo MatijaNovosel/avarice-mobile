@@ -35,7 +35,7 @@ Future<void> main() async {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     theme: new ThemeData(
-      primarySwatch: Colors.blue,
+      primarySwatch: Colors.orange,
     ),
     home: tokenValid ? MainScreen() : Login(),
   ));
@@ -80,7 +80,7 @@ class MainScreenState extends State<MainScreen> {
               rippleColor: Colors.grey[300],
               hoverColor: Colors.grey[100],
               gap: 8,
-              activeColor: Colors.blue,
+              activeColor: Colors.orange,
               iconSize: 20,
               padding: EdgeInsets.symmetric(
                 horizontal: 20,
