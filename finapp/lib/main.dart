@@ -1,3 +1,5 @@
+import 'package:finapp/popupTemplates/newTransaction.dart';
+import 'package:finapp/popupTemplates/newTransfer.dart';
 import 'package:finapp/views/accounts.dart';
 import 'package:finapp/views/chartData.dart';
 import 'package:finapp/views/history.dart';
@@ -5,12 +7,17 @@ import 'package:finapp/views/dashboard.dart';
 import 'package:finapp/views/login.dart';
 import 'package:finapp/widgets/appBar.dart';
 import 'package:finapp/widgets/drawer.dart';
+import 'package:finapp/widgets/forms/transactionForm.dart';
+import 'package:finapp/widgets/forms/transferForm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_beautiful_popup/main.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jwt_decode/jwt_decode.dart';
+
+import 'controllers/formSubmitController.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,7 +55,54 @@ class MainScreen extends StatefulWidget {
 }
 
 class MainScreenState extends State<MainScreen> {
+  final FormSubmitController _formSubmitController = new FormSubmitController();
   int _currentIndex = 0;
+
+  void _openTransactionPopup() {
+    final popup = BeautifulPopup.customize(
+      context: context,
+      build: (options) => NewTransactionPopup(options),
+    );
+    popup.show(
+      title: 'New transaction',
+      content: Container(
+        child: TransactionForm(
+          controller: _formSubmitController,
+        ),
+      ),
+      actions: [
+        popup.button(
+          label: 'Save',
+          onPressed: () {
+            _formSubmitController.submit();
+          },
+        ),
+      ],
+    );
+  }
+
+  void _openTransferPopup() {
+    final popup = BeautifulPopup.customize(
+      context: context,
+      build: (options) => NewTransferPopup(options),
+    );
+    popup.show(
+      title: 'New transfer',
+      content: Container(
+        child: TransferForm(
+          controller: _formSubmitController,
+        ),
+      ),
+      actions: [
+        popup.button(
+          label: 'Save',
+          onPressed: () {
+            _formSubmitController.submit();
+          },
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +115,10 @@ class MainScreenState extends State<MainScreen> {
 
     return Scaffold(
       appBar: CustomAppBar(),
-      drawer: CustomDrawer(),
+      drawer: CustomDrawer(
+        onTransactionPopup: _openTransactionPopup,
+        onTransferPopup: _openTransferPopup,
+      ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: Colors.white,

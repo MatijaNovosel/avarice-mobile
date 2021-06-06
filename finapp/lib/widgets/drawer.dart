@@ -1,17 +1,17 @@
-import 'package:finapp/controllers/formSubmitController.dart';
 import 'package:finapp/helpers/helpers.dart';
-import 'package:finapp/popupTemplates/newTransaction.dart';
-import 'package:finapp/popupTemplates/newTransfer.dart';
 import 'package:finapp/views/login.dart';
-import 'package:finapp/widgets/forms/transferForm.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_beautiful_popup/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'forms/transactionForm.dart';
+typedef OpenTransactionPopupCallback = void Function();
+typedef OpenTransferPopupCallback = void Function();
 
 class CustomDrawer extends StatefulWidget {
+  const CustomDrawer({this.onTransferPopup, this.onTransactionPopup});
+  final OpenTransferPopupCallback onTransferPopup;
+  final OpenTransactionPopupCallback onTransactionPopup;
+
   @override
   _CustomDrawerState createState() => _CustomDrawerState();
 }
@@ -19,7 +19,6 @@ class CustomDrawer extends StatefulWidget {
 class _CustomDrawerState extends State<CustomDrawer> {
   String _username;
   String _email;
-  final FormSubmitController _formSubmitController = new FormSubmitController();
 
   @override
   void initState() {
@@ -94,26 +93,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 ),
               ),
               onTap: () {
-                final popup = BeautifulPopup.customize(
-                  context: context,
-                  build: (options) => NewTransferPopup(options),
-                );
-                popup.show(
-                  title: 'New transfer',
-                  content: Container(
-                    child: TransferForm(
-                      controller: _formSubmitController,
-                    ),
-                  ),
-                  actions: [
-                    popup.button(
-                      label: 'Save',
-                      onPressed: () {
-                        _formSubmitController.submit();
-                      },
-                    ),
-                  ],
-                );
+                Navigator.pop(context);
+                widget.onTransferPopup();
               },
             ),
             ListTile(
@@ -128,26 +109,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 ),
               ),
               onTap: () {
-                final popup = BeautifulPopup.customize(
-                  context: context,
-                  build: (options) => NewTransactionPopup(options),
-                );
-                popup.show(
-                  title: 'New transaction',
-                  content: Container(
-                    child: TransactionForm(
-                      controller: _formSubmitController,
-                    ),
-                  ),
-                  actions: [
-                    popup.button(
-                      label: 'Save',
-                      onPressed: () {
-                        _formSubmitController.submit();
-                      },
-                    ),
-                  ],
-                );
+                Navigator.pop(context);
+                widget.onTransactionPopup();
               },
             ),
             ListTile(
