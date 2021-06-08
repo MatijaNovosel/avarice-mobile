@@ -55,7 +55,7 @@ class _DashboardState extends State<Dashboard> {
 
                   return Column(
                     children: [
-                      CurrentAmountCardWidget(
+                      CurrentAmountCard(
                         account: Account(
                           amount: accounts
                               .map((x) => x.amount)
@@ -75,7 +75,7 @@ class _DashboardState extends State<Dashboard> {
                           top: 8.0,
                           bottom: 8,
                         ),
-                        child: CurrentAmountCardWidget(
+                        child: CurrentAmountCard(
                           account: Account(
                             amount: recentDepositsAndWithdrawals.withdrawals,
                             description: "Recent withdrawals",
@@ -90,7 +90,7 @@ class _DashboardState extends State<Dashboard> {
                           mainTextColor: Colors.white,
                         ),
                       ),
-                      CurrentAmountCardWidget(
+                      CurrentAmountCard(
                         account: Account(
                           amount: recentDepositsAndWithdrawals.deposits,
                           description: "Recent deposits",

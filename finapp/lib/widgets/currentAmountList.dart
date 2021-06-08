@@ -60,7 +60,7 @@ class _CurrentAmountListState extends State<CurrentAmountListWidget> {
                         itemBuilder: (_, i) {
                           return Transform.scale(
                             scale: i == _index ? 1 : 0.9,
-                            child: CurrentAmountCardWidget(
+                            child: CurrentAmountCard(
                               icon: Icons.account_balance_wallet,
                               color: Colors.grey[600],
                               account: accounts[i],

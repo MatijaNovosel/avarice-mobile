@@ -4,7 +4,7 @@ import 'package:finapp/helpers/helpers.dart';
 import 'package:finapp/models/account.dart';
 import 'package:flutter/material.dart';
 
-class _CurrentAmountCardState extends State<CurrentAmountCardWidget> {
+class _CurrentAmountCardState extends State<CurrentAmountCard> {
   bool _visible = false;
 
   @override
@@ -98,7 +98,7 @@ class _CurrentAmountCardState extends State<CurrentAmountCardWidget> {
   }
 }
 
-class CurrentAmountCardWidget extends StatefulWidget {
+class CurrentAmountCard extends StatefulWidget {
   final Account account;
   final Color color;
   final IconData icon;
@@ -109,7 +109,7 @@ class CurrentAmountCardWidget extends StatefulWidget {
   final Color gradientTo;
   final Color mainTextColor;
 
-  const CurrentAmountCardWidget({
+  const CurrentAmountCard({
     Key key,
     this.account,
     this.color,

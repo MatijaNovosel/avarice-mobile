@@ -1,8 +1,11 @@
 import 'package:finapp/helpers/helpers.dart';
 import 'package:finapp/models/transaction.dart';
+import 'package:finapp/popupTemplates/transactionDetails.dart';
 import 'package:finapp/services/transactionService.dart';
+import 'package:finapp/widgets/historyTable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_beautiful_popup/main.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class History extends StatefulWidget {
@@ -12,6 +15,19 @@ class History extends StatefulWidget {
 
 class _HistoryState extends State<History> {
   final Future<List<Transaction>> _transactions = getTransactions();
+
+  void _openTransactionDetailsPopup() {
+    final popup = BeautifulPopup.customize(
+      context: context,
+      build: (options) => TransactionDetailsPopup(options),
+    );
+    popup.show(
+      title: 'Transaction details',
+      content: Container(
+        child: Text("Haha"),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,82 +49,7 @@ class _HistoryState extends State<History> {
                 if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 } else {
-                  return Column(
-                    children: [
-                      Expanded(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              DataTable(
-                                columns: <DataColumn>[
-                                  DataColumn(
-                                    label: Text(
-                                      'Description',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey[500],
-                                      ),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    label: Text(
-                                      'Amount',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey[500],
-                                      ),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    label: Expanded(
-                                      child: Text(
-                                        'Details',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.grey[500],
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                                rows: snapshot.data
-                                    .map(
-                                      (t) => DataRow(
-                                        cells: <DataCell>[
-                                          DataCell(
-                                            Text(
-                                              t.description,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.grey[600],
-                                              ),
-                                            ),
-                                          ),
-                                          DataCell(
-                                            Text(formatHrk(t.amount)),
-                                          ),
-                                          DataCell(
-                                            TextButton(
-                                              onPressed: () {},
-                                              child: new Icon(
-                                                Icons.more_horiz_rounded,
-                                                color: Colors.grey,
-                                                size: 20.0,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                    .toList(),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
+                  return HistoryTable(transactions: snapshot.data);
                 }
               }
           }
