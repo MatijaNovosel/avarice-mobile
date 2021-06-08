@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 class RecentDepositsAndWithdrawals {
   double withdrawals;
   double deposits;
@@ -15,5 +17,17 @@ class HistoryModel {
   HistoryModel({
     this.amount,
     this.createdAt,
+  });
+}
+
+class TagPercentageModel {
+  double percentage;
+  String description;
+  Color color;
+
+  TagPercentageModel({
+    this.percentage,
+    this.description,
+    this.color,
   });
 }

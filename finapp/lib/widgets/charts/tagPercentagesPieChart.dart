@@ -1,14 +1,23 @@
+import 'package:finapp/helpers/helpers.dart';
+import 'package:finapp/models/history.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'indicator.dart';
 
 class TagPercentagesPieChart extends StatefulWidget {
+  final List<TagPercentageModel> tagPercentages;
+
+  const TagPercentagesPieChart({
+    Key key,
+    this.tagPercentages,
+  }) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() => PieChart2State();
+  State<StatefulWidget> createState() => TagPercentagesPieChartState();
 }
 
-class PieChart2State extends State {
+class TagPercentagesPieChartState extends State<TagPercentagesPieChart> {
   int touchedIndex = -1;
 
   @override
@@ -40,7 +49,7 @@ class PieChart2State extends State {
                     show: false,
                   ),
                   sectionsSpace: 0,
-                  centerSpaceRadius: 40,
+                  centerSpaceRadius: 35,
                   sections: showingSections(),
                 ),
               ),
@@ -50,40 +59,20 @@ class PieChart2State extends State {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const <Widget>[
-              Indicator(
-                color: Color(0xff0293ee),
-                text: 'First',
-                isSquare: true,
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              Indicator(
-                color: Color(0xfff8b250),
-                text: 'Second',
-                isSquare: true,
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              Indicator(
-                color: Color(0xff845bef),
-                text: 'Third',
-                isSquare: true,
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              Indicator(
-                color: Color(0xff13d38e),
-                text: 'Fourth',
-                isSquare: true,
-              ),
-              SizedBox(
-                height: 18,
-              ),
-            ],
+            children: widget.tagPercentages.map<Widget>((x) {
+              return Column(
+                children: [
+                  Indicator(
+                    color: x.color,
+                    text: x.description,
+                    isSquare: true,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  )
+                ],
+              );
+            }).toList(),
           ),
           const SizedBox(
             width: 28,
@@ -94,62 +83,25 @@ class PieChart2State extends State {
   }
 
   List<PieChartSectionData> showingSections() {
-    return List.generate(4, (i) {
+    return List.generate(widget.tagPercentages.length, (i) {
       final isTouched = i == touchedIndex;
       final fontSize = isTouched ? 25.0 : 16.0;
       final radius = isTouched ? 60.0 : 50.0;
-      switch (i) {
-        case 0:
-          return PieChartSectionData(
-            color: const Color(0xff0293ee),
-            value: 40,
-            title: '40%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: const Color(0xffffffff),
-            ),
-          );
-        case 1:
-          return PieChartSectionData(
-            color: const Color(0xfff8b250),
-            value: 30,
-            title: '30%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: const Color(0xffffffff),
-            ),
-          );
-        case 2:
-          return PieChartSectionData(
-            color: const Color(0xff845bef),
-            value: 15,
-            title: '15%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: const Color(0xffffffff),
-            ),
-          );
-        case 3:
-          return PieChartSectionData(
-            color: const Color(0xff13d38e),
-            value: 15,
-            title: '15%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: const Color(0xffffffff),
-            ),
-          );
-        default:
-          throw Error();
-      }
+
+      return PieChartSectionData(
+        color: widget.tagPercentages[i].color,
+        value: num.parse(
+          (widget.tagPercentages[i].percentage * 100).toStringAsFixed(2),
+        ),
+        title: (widget.tagPercentages[i].percentage * 100).toStringAsFixed(2) +
+            "%",
+        radius: radius,
+        titleStyle: TextStyle(
+          fontSize: fontSize,
+          fontWeight: FontWeight.bold,
+          color: const Color(0xffffffff),
+        ),
+      );
     });
   }
 }

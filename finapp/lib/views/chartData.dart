@@ -13,13 +13,12 @@ class ChartData extends StatefulWidget {
 
 class _ChartDataState extends State<ChartData> {
   final Future<List<HistoryModel>> _history = getTotalHistory();
+  final Future<List<TagPercentageModel>> _tagPercentages = getTagPercentages();
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: Future.wait([
-          _history,
-        ]),
+        future: Future.wait([_history, _tagPercentages]),
         builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -37,6 +36,7 @@ class _ChartDataState extends State<ChartData> {
                   return Text('Error: ${snapshot.error}');
                 } else {
                   List<HistoryModel> history = snapshot.data[0];
+                  List<TagPercentageModel> tagPercentages = snapshot.data[1];
 
                   return Column(
                     children: [
@@ -65,7 +65,9 @@ class _ChartDataState extends State<ChartData> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(12),
-                        child: TagPercentagesPieChart(),
+                        child: TagPercentagesPieChart(
+                          tagPercentages: tagPercentages,
+                        ),
                       ),
                     ],
                   );
