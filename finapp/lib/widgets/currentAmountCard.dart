@@ -1,7 +1,6 @@
 import 'package:finapp/helpers/helpers.dart';
 import 'package:finapp/models/account.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class _CurrentAmountCardState extends State<CurrentAmountCardWidget> {
   bool _visible = false;
@@ -18,7 +17,7 @@ class _CurrentAmountCardState extends State<CurrentAmountCardWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80,
+      height: 55,
       decoration: BoxDecoration(
         gradient: widget.gradient != null
             ? widget.gradient == true

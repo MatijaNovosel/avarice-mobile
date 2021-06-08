@@ -41,44 +41,55 @@ class _CustomDrawerState extends State<CustomDrawer> {
         color: Colors.white,
         child: ListView(
           children: <Widget>[
-            DrawerHeader(
-              child: Row(
-                children: [
-                  Container(
-                    width: 40,
-                    height: 40,
-                    margin: const EdgeInsets.only(
-                      right: 14,
-                    ),
-                    decoration: new BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: new DecorationImage(
-                        fit: BoxFit.fill,
-                        image: AssetImage("assets/images/zhu.jpg"),
-                      ),
-                    ),
+            Container(
+              height: 110,
+              child: DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.grey[100],
+                ),
+                child: Container(
+                  margin: const EdgeInsets.only(
+                    bottom: 10,
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
                     children: [
-                      Text(
-                        _username == null ? "" : _username,
-                        style: TextStyle(
-                          fontSize: 27,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 255, 138, 0),
+                      Container(
+                        width: 40,
+                        height: 40,
+                        margin: const EdgeInsets.only(
+                          right: 14,
+                        ),
+                        decoration: new BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: new DecorationImage(
+                            fit: BoxFit.fill,
+                            image: AssetImage("assets/images/zhu.jpg"),
+                          ),
                         ),
                       ),
-                      Text(
-                        _email == null ? "" : _email,
-                        style: TextStyle(
-                          color: Colors.grey[400],
-                        ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            _username == null ? "" : _username,
+                            style: TextStyle(
+                              fontSize: 27,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 255, 138, 0),
+                            ),
+                          ),
+                          Text(
+                            _email == null ? "" : _email,
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ),
+                          )
+                        ],
                       )
                     ],
-                  )
-                ],
+                  ),
+                ),
               ),
             ),
             ListTile(

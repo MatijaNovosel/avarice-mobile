@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_beautiful_popup/main.dart';
 
-class NewTransferPopup extends BeautifulPopupTemplate {
+class TransactionDetailsPopup extends BeautifulPopupTemplate {
   final BeautifulPopup options;
-  NewTransferPopup(this.options) : super(options);
+  TransactionDetailsPopup(this.options) : super(options);
 
   @override
   final illustrationKey = 'assets/images/empty.png';
@@ -33,7 +33,7 @@ class NewTransferPopup extends BeautifulPopupTemplate {
       ),
       Positioned(
         top: percentH(15),
-        height: percentH(actions == null ? 60 : 65),
+        height: percentH(65),
         left: percentW(5),
         right: percentW(5),
         child: content,

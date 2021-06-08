@@ -10,10 +10,13 @@ class NewTransactionPopup extends BeautifulPopupTemplate {
 
   @override
   Color get primaryColor => options.primaryColor ?? Colors.orange;
+
   @override
   final maxWidth = 400;
+
   @override
   final maxHeight = 600;
+
   @override
   final bodyMargin = 10;
 
