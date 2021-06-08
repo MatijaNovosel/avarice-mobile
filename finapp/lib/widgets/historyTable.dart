@@ -1,6 +1,9 @@
+import 'package:finapp/helpers/helpers.dart';
 import 'package:finapp/models/transaction.dart';
+import 'package:finapp/popupTemplates/transactionDetails.dart';
 import 'package:finapp/services/transactionService.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_beautiful_popup/main.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class HistoryTable extends StatefulWidget {
@@ -19,12 +22,26 @@ class _HistoryTableState extends State<HistoryTable> {
   List<Transaction> transactions = <Transaction>[];
   TransactionDataSource transactionDataSource;
 
+  void _openTransactionDetailsPopup() {
+    final popup = BeautifulPopup.customize(
+      context: context,
+      build: (options) => TransactionDetailsPopup(options),
+    );
+    popup.show(
+      title: 'Transaction details',
+      content: Container(
+        child: Text("Haha"),
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
     transactions = widget.transactions;
-    transactionDataSource =
-        TransactionDataSource(transactionData: transactions);
+    transactionDataSource = TransactionDataSource(
+      transactionData: transactions,
+    );
   }
 
   @override
@@ -37,7 +54,6 @@ class _HistoryTableState extends State<HistoryTable> {
           GridTextColumn(
             columnName: 'description',
             label: Container(
-              padding: EdgeInsets.all(8.0),
               alignment: Alignment.center,
               child: Text('Description'),
             ),
@@ -45,22 +61,18 @@ class _HistoryTableState extends State<HistoryTable> {
           GridTextColumn(
             columnName: 'amount',
             label: Container(
-              padding: EdgeInsets.all(8.0),
               alignment: Alignment.center,
               child: Text(
                 'Amount',
-                overflow: TextOverflow.ellipsis,
               ),
             ),
           ),
           GridTextColumn(
-            columnName: 'createdAt',
+            columnName: 'actions',
             label: Container(
-              padding: EdgeInsets.all(8.0),
               alignment: Alignment.center,
               child: Text(
-                'Created at',
-                overflow: TextOverflow.ellipsis,
+                "Actions",
               ),
             ),
           ),
@@ -82,9 +94,20 @@ class TransactionDataSource extends DataGridSource {
           (e) => DataGridRow(
             cells: [
               DataGridCell<String>(
-                  columnName: 'description', value: e.description),
-              DataGridCell<double>(columnName: 'amount', value: e.amount),
-              DataGridCell<String>(columnName: 'createdAt', value: e.createdAt),
+                columnName: 'description',
+                value: e.description,
+              ),
+              DataGridCell<dynamic>(
+                columnName: 'amount',
+                value: {
+                  "expense": e.expense,
+                  "amount": e.amount,
+                },
+              ),
+              DataGridCell<int>(
+                columnName: 'actions',
+                value: e.id,
+              ),
             ],
           ),
         )
@@ -101,11 +124,40 @@ class TransactionDataSource extends DataGridSource {
     return DataGridRowAdapter(
       cells: row.getCells().map<Widget>(
         (e) {
-          return Container(
-            alignment: Alignment.center,
-            padding: EdgeInsets.all(8.0),
-            child: Text(e.value.toString()),
-          );
+          switch (e.columnName) {
+            case "amount":
+              return Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: e.value["expense"] == true ? Colors.red : Colors.green,
+                ),
+                child: Text(
+                  formatHrk(
+                    e.value["amount"].toDouble(),
+                  ),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              );
+            case "actions":
+              return IconButton(
+                onPressed: () {
+                  print(e.value);
+                },
+                icon: Icon(
+                  Icons.keyboard_control_rounded,
+                ),
+              );
+            default:
+              return Container(
+                alignment: Alignment.center,
+                child: Text(
+                  e.value.toString(),
+                ),
+              );
+          }
         },
       ).toList(),
     );
