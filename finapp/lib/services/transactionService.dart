@@ -21,7 +21,6 @@ Future<List<Transaction>> getTransactions() async {
     var response = await dio.get(
       "$apiUrl/transaction",
       queryParameters: {
-        "userId": userId,
         "skip": 0,
         "take": 25,
       },
@@ -74,7 +73,6 @@ Future addTransaction(NewTransaction payload) async {
         ),
         "expense": payload.expense,
         "tagIds": payload.tags,
-        "userId": userId
       },
     );
   } catch (e) {
@@ -101,7 +99,6 @@ Future addTransfer(NewTransfer payload) async {
         "createdAt": DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").format(
           DateTime.now(),
         ),
-        "userId": userId
       },
     );
   } catch (e) {

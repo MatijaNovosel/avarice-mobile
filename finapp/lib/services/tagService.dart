@@ -17,9 +17,6 @@ Future<List<Tag>> getTags() async {
 
     var response = await dio.get(
       "$apiUrl/tag",
-      queryParameters: {
-        "userId": userId,
-      },
     );
 
     for (var tag in response.data) {

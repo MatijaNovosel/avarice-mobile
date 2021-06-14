@@ -17,9 +17,6 @@ Future<List<Account>> getLatestAccountValues() async {
 
     var response = await dio.get(
       "$apiUrl/account/latest-values",
-      queryParameters: {
-        "userId": userId,
-      },
     );
 
     for (var account in response.data) {

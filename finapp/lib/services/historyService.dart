@@ -14,9 +14,6 @@ Future<RecentDepositsAndWithdrawals> getRecentDepositsAndWithdrawals() async {
   try {
     var response = await dio.get(
       "$apiUrl/history/recent-deposits-and-withdrawals",
-      queryParameters: {
-        "userId": userId,
-      },
     );
 
     return RecentDepositsAndWithdrawals(
@@ -41,7 +38,6 @@ Future<List<HistoryModel>> getTotalHistory() async {
     var response = await dio.get(
       "$apiUrl/history/total",
       queryParameters: {
-        "userId": userId,
         "from": DateTime.now().subtract(
           Duration(
             days: 30,
@@ -79,7 +75,6 @@ Future<List<HistoryModel>> getTotalHistoryForAccount(int accountId) async {
     var response = await dio.get(
       "$apiUrl/history/account/$accountId",
       queryParameters: {
-        "userId": userId,
         "from": DateTime.now().subtract(
           Duration(
             days: 30,
@@ -116,9 +111,6 @@ Future<List<TagPercentageModel>> getTagPercentages() async {
   try {
     var response = await dio.get(
       "$apiUrl/history/tag-percentages",
-      queryParameters: {
-        "userId": userId,
-      },
     );
 
     for (var tagPercentage in response.data) {
