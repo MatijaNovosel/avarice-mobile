@@ -94,22 +94,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
             ),
             ListTile(
               leading: Icon(
-                Icons.sync_alt,
-                color: Colors.grey[600],
-              ),
-              title: Text(
-                'New transfer',
-                style: TextStyle(
-                  color: Colors.grey[500],
-                ),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-                widget.onTransferPopup();
-              },
-            ),
-            ListTile(
-              leading: Icon(
                 Icons.attach_money,
                 color: Colors.grey[600],
               ),
@@ -122,6 +106,22 @@ class _CustomDrawerState extends State<CustomDrawer> {
               onTap: () {
                 Navigator.pop(context);
                 widget.onTransactionPopup();
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.sync_alt,
+                color: Colors.grey[600],
+              ),
+              title: Text(
+                'New transfer',
+                style: TextStyle(
+                  color: Colors.grey[500],
+                ),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                widget.onTransferPopup();
               },
             ),
             ListTile(

@@ -32,6 +32,14 @@ class _HistoryTotalChartState extends State<HistoryTotalChart> {
         (curr, next) => curr > next ? curr : next,
       );
 
+  get minY => widget.history
+      .map(
+        (x) => x.amount,
+      )
+      .reduce(
+        (curr, next) => curr < next ? curr : next,
+      );
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -105,7 +113,10 @@ class _HistoryTotalChartState extends State<HistoryTotalChart> {
           ),
           margin: 15,
           reservedSize: 25,
-          interval: maxY < 1000 ? (maxY < 10 ? 0.5 : 30) : 100,
+          interval: getYAxisInterval(
+            minY,
+            maxY,
+          ),
         ),
       ),
       borderData: FlBorderData(

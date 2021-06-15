@@ -3,14 +3,13 @@ import 'package:finapp/models/account.dart';
 import 'package:finapp/models/history.dart';
 import 'package:finapp/services/accountService.dart';
 import 'package:finapp/services/historyService.dart';
-import 'package:finapp/widgets/charts/totalHistoryChart.dart';
 import 'package:finapp/widgets/currentAmountCard.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:finapp/services/transactionService.dart';
 import 'package:finapp/models/transaction.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:timelines/timelines.dart';
+import 'package:intl/intl.dart';
+import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -20,8 +19,11 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   final Future<List<Transaction>> _transactions = getTransactions();
   final Future<List<Account>> _accounts = getLatestAccountValues();
-  final Future<RecentDepositsAndWithdrawals> _recentDepositsAndWithdrawals =
-      getRecentDepositsAndWithdrawals();
+  final Future<RecentDepositsAndWithdrawals> _recentDepositsAndWithdrawals = getRecentDepositsAndWithdrawals();
+
+  void loadMore() {
+    print("load moreeee");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +59,7 @@ class _DashboardState extends State<Dashboard> {
                     children: [
                       CurrentAmountCard(
                         account: Account(
-                          amount: accounts
-                              .map((x) => x.amount)
-                              .reduce((a, b) => a + b),
+                          amount: accounts.map((x) => x.amount).reduce((a, b) => a + b),
                           description: "Total",
                         ),
                         color: Colors.grey[600],
@@ -106,8 +106,8 @@ class _DashboardState extends State<Dashboard> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                          top: 23.0,
-                          bottom: 12,
+                          top: 12.0,
+                          bottom: 6,
                         ),
                         child: Row(
                           children: [
@@ -122,85 +122,62 @@ class _DashboardState extends State<Dashboard> {
                         ),
                       ),
                       Expanded(
-                        child: SingleChildScrollView(
-                          child: FixedTimeline.tileBuilder(
-                            builder: TimelineTileBuilder.connectedFromStyle(
-                              contentsAlign: ContentsAlign.alternating,
-                              oppositeContentsBuilder: (context, index) =>
-                                  Padding(
-                                padding: const EdgeInsets.all(18.0),
-                                child: Text(
-                                  formatDateToCroatian(
-                                    transactions[index].createdAt,
+                        child: LazyLoadScrollView(
+                          onEndOfPage: () => loadMore(),
+                          child: ListView.builder(
+                            itemCount: transactions.length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                child: ListTile(
+                                  leading: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        DateTime.parse(transactions[index].createdAt).day.toString(),
+                                        style: TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        DateFormat('MMM')
+                                            .format(
+                                              DateTime.parse(transactions[index].createdAt),
+                                            )
+                                            .toUpperCase(),
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ),
-                              contentsBuilder: (context, index) => Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 10.0,
-                                  right: 10,
-                                ),
-                                child: Card(
-                                  child: Container(
-                                    padding: EdgeInsets.all(14.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          transactions[index].description,
+                                  title: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(bottom: 4.0),
+                                        child: Text(
+                                          '${transactions[index].description}',
                                           style: TextStyle(
+                                            fontSize: 14,
                                             color: Colors.grey[400],
                                           ),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            top: 5.0,
-                                          ),
-                                          child: Text(
-                                            formatHrk(
-                                              transactions[index].amount,
-                                            ),
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                              color:
-                                                  transactions[index].expense ==
-                                                          true
-                                                      ? Colors.red[300]
-                                                      : Colors.green[400],
-                                            ),
-                                          ),
+                                      ),
+                                      Text(
+                                        (transactions[index].expense ? "-" : "+") + '${formatHrk(transactions[index].amount)}',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: transactions[index].expense == false ? Colors.green[300] : null,
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ),
-                              connectorStyleBuilder: (context, index) =>
-                                  ConnectorStyle.solidLine,
-                              indicatorStyleBuilder: (context, index) {
-                                if (index + 1 >= transactions.length) {
-                                  return IndicatorStyle.outlined;
-                                }
-
-                                var date = DateTime.parse(
-                                    transactions[index].createdAt);
-                                var compareDate = DateTime.parse(
-                                    transactions[index + 1].createdAt);
-
-                                if (date.day == compareDate.day &&
-                                    date.month == compareDate.month) {
-                                  return IndicatorStyle.dot;
-                                }
-
-                                return IndicatorStyle.outlined;
-                              },
-                              itemCount: transactions.length,
-                            ),
+                              );
+                            },
                           ),
                         ),
                       ),
