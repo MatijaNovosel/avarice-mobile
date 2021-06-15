@@ -10,7 +10,7 @@ class History extends StatefulWidget {
 }
 
 class _HistoryState extends State<History> {
-  final Future<List<Transaction>> _transactions = getTransactions();
+  final Future<List<Transaction>> _transactions = getTransactions(0, 15);
 
   @override
   Widget build(BuildContext context) {

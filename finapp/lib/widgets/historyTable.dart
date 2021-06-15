@@ -82,7 +82,7 @@ class _HistoryTableState extends State<HistoryTable> {
   }
 
   Future<List<Transaction>> getTransactionData() async {
-    var transactions = await getTransactions();
+    var transactions = await getTransactions(0, 15);
     return transactions;
   }
 }

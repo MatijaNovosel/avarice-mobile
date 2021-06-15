@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/transaction.dart';
 
-Future<List<Transaction>> getTransactions() async {
+Future<List<Transaction>> getTransactions(int skip, int take) async {
   var dio = new Dio();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var token = prefs.get("bearerToken");
@@ -21,16 +21,15 @@ Future<List<Transaction>> getTransactions() async {
     var response = await dio.get(
       "$apiUrl/transaction",
       queryParameters: {
-        "skip": 0,
-        "take": 25,
+        "skip": skip,
+        "take": take,
       },
     );
 
     for (var transaction in response.data["results"]) {
       data.add(
         new Transaction(
-          amount: transaction["amount"]
-              .toDouble(), // Dynamic types may be binded to an int instead of a double ...
+          amount: transaction["amount"].toDouble(), // Dynamic types may be binded to an int instead of a double ...
           description: transaction["description"],
           id: transaction["id"],
           accountDescription: transaction["account"]["description"],

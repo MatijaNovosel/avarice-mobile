@@ -17,7 +17,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  final Future<List<Transaction>> _transactions = getTransactions();
+  final Future<List<Transaction>> _transactions = getTransactions(0, 15);
   final Future<List<Account>> _accounts = getLatestAccountValues();
   final Future<RecentDepositsAndWithdrawals> _recentDepositsAndWithdrawals = getRecentDepositsAndWithdrawals();
 
