@@ -1,4 +1,4 @@
-# finapp
+# FinApp
 
 A new Flutter project.
 
