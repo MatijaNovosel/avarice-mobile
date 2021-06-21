@@ -1,9 +1,7 @@
 import 'package:finapp/helpers/helpers.dart';
 import 'package:finapp/models/transaction.dart';
-import 'package:finapp/popupTemplates/transactionDetails.dart';
 import 'package:finapp/services/transactionService.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_beautiful_popup/main.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class HistoryTable extends StatefulWidget {
@@ -19,28 +17,15 @@ class HistoryTable extends StatefulWidget {
 }
 
 class _HistoryTableState extends State<HistoryTable> {
-  List<Transaction> transactions = <Transaction>[];
+  List<Transaction> _transactions = <Transaction>[];
   TransactionDataSource transactionDataSource;
-
-  void _openTransactionDetailsPopup() {
-    final popup = BeautifulPopup.customize(
-      context: context,
-      build: (options) => TransactionDetailsPopup(options),
-    );
-    popup.show(
-      title: 'Transaction details',
-      content: Container(
-        child: Text("Haha"),
-      ),
-    );
-  }
 
   @override
   void initState() {
     super.initState();
-    transactions = widget.transactions;
+    _transactions = widget.transactions;
     transactionDataSource = TransactionDataSource(
-      transactionData: transactions,
+      transactionData: _transactions,
     );
   }
 
@@ -48,6 +33,40 @@ class _HistoryTableState extends State<HistoryTable> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SfDataGrid(
+        loadMoreViewBuilder: (BuildContext context, LoadMoreRows loadMoreRows) {
+          Future<String> loadRows() async {
+            await loadMoreRows();
+            return Future<String>.value('Completed');
+          }
+
+          return FutureBuilder<String>(
+            initialData: 'loading',
+            future: loadRows(),
+            builder: (context, snapShot) {
+              if (snapShot.data == 'loading') {
+                return Container(
+                  height: 60.0,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: BorderDirectional(
+                      top: BorderSide(
+                        width: 1.0,
+                        color: Color.fromRGBO(0, 0, 0, 0.26),
+                      ),
+                    ),
+                  ),
+                  alignment: Alignment.center,
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation(Colors.deepPurple),
+                  ),
+                );
+              } else {
+                return SizedBox.fromSize(size: Size.zero);
+              }
+            },
+          );
+        },
         source: transactionDataSource,
         columnWidthMode: ColumnWidthMode.fill,
         columns: <GridColumn>[
@@ -80,16 +99,52 @@ class _HistoryTableState extends State<HistoryTable> {
       ),
     );
   }
-
-  Future<List<Transaction>> getTransactionData() async {
-    var transactions = await getTransactions(0, 15);
-    return transactions;
-  }
 }
 
 class TransactionDataSource extends DataGridSource {
+  List<DataGridRow> dataGridRows = [];
+  List<Transaction> _transactions = <Transaction>[];
+
   TransactionDataSource({List<Transaction> transactionData}) {
-    _transactionData = transactionData
+    _transactions = transactionData;
+    buildDataGridRows();
+  }
+
+  List<DataGridRow> _transactionData = [];
+
+  @override
+  List<DataGridRow> get rows => _transactionData;
+
+  @override
+  Future<void> handleLoadMoreRows() async {
+    await _addMoreRows(_transactions, 15);
+    buildDataGridRows();
+    notifyListeners();
+  }
+
+  Future<void> _addMoreRows(List<Transaction> transactions, int count) async {
+    final startIndex = transactions.isNotEmpty ? transactions.length : 0, endIndex = startIndex + count;
+    print(startIndex);
+    print(endIndex);
+
+    var data = await getTransactions(startIndex, endIndex);
+
+    for (int i = 0; i < data.length; i++) {
+      transactions.add(
+        new Transaction(
+          id: data[i].id,
+          accountDescription: data[i].accountDescription,
+          amount: data[i].amount,
+          createdAt: data[i].createdAt,
+          description: data[i].description,
+          expense: data[i].expense,
+        ),
+      );
+    }
+  }
+
+  void buildDataGridRows() {
+    _transactionData = _transactions
         .map<DataGridRow>(
           (e) => DataGridRow(
             cells: [
@@ -114,11 +169,6 @@ class TransactionDataSource extends DataGridSource {
         .toList();
   }
 
-  List<DataGridRow> _transactionData = [];
-
-  @override
-  List<DataGridRow> get rows => _transactionData;
-
   @override
   DataGridRowAdapter buildRow(DataGridRow row) {
     return DataGridRowAdapter(
@@ -128,16 +178,12 @@ class TransactionDataSource extends DataGridSource {
             case "amount":
               return Container(
                 alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: e.value["expense"] == true ? Colors.red : Colors.green,
-                ),
                 child: Text(
-                  formatHrk(
-                    e.value["amount"].toDouble(),
-                  ),
+                  (e.value["expense"] ? "-" : "+") + '${formatHrk(e.value["amount"].toDouble())}',
                   style: TextStyle(
-                    color: Colors.white,
+                    fontSize: 14,
                     fontWeight: FontWeight.bold,
+                    color: e.value["expense"] == false ? Colors.green[300] : null,
                   ),
                 ),
               );
