@@ -9,7 +9,6 @@ import 'package:finapp/services/transactionService.dart';
 import 'package:finapp/models/transaction.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
-import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -20,10 +19,6 @@ class _DashboardState extends State<Dashboard> {
   final Future<List<Transaction>> _transactions = getTransactions(0, 15);
   final Future<List<Account>> _accounts = getLatestAccountValues();
   final Future<RecentDepositsAndWithdrawals> _recentDepositsAndWithdrawals = getRecentDepositsAndWithdrawals();
-
-  void loadMore() {
-    print("load moreeee");
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,63 +117,60 @@ class _DashboardState extends State<Dashboard> {
                         ),
                       ),
                       Expanded(
-                        child: LazyLoadScrollView(
-                          onEndOfPage: () => loadMore(),
-                          child: ListView.builder(
-                            itemCount: transactions.length,
-                            itemBuilder: (context, index) {
-                              return Card(
-                                child: ListTile(
-                                  leading: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        DateTime.parse(transactions[index].createdAt).day.toString(),
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                        child: ListView.builder(
+                          itemCount: transactions.length,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              child: ListTile(
+                                leading: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      DateTime.parse(transactions[index].createdAt).day.toString(),
+                                      style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                                      Text(
-                                        DateFormat('MMM')
-                                            .format(
-                                              DateTime.parse(transactions[index].createdAt),
-                                            )
-                                            .toUpperCase(),
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  title: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(bottom: 4.0),
-                                        child: Text(
-                                          '${transactions[index].description}',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.grey[400],
-                                          ),
-                                        ),
+                                    ),
+                                    Text(
+                                      DateFormat('MMM')
+                                          .format(
+                                            DateTime.parse(transactions[index].createdAt),
+                                          )
+                                          .toUpperCase(),
+                                      style: TextStyle(
+                                        fontSize: 16,
                                       ),
-                                      Text(
-                                        (transactions[index].expense ? "-" : "+") + '${formatHrk(transactions[index].amount)}',
+                                    )
+                                  ],
+                                ),
+                                title: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(bottom: 4.0),
+                                      child: Text(
+                                        '${transactions[index].description}',
                                         style: TextStyle(
                                           fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                          color: transactions[index].expense == false ? Colors.green[300] : null,
+                                          color: Colors.grey[400],
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                    Text(
+                                      (transactions[index].expense ? "-" : "+") + '${formatHrk(transactions[index].amount)}',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: transactions[index].expense == false ? Colors.green[300] : null,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              );
-                            },
-                          ),
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ],
