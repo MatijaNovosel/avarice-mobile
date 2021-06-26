@@ -27,6 +27,7 @@ class _DashboardState extends State<Dashboard> {
         top: 12,
         left: 12,
         right: 12,
+        bottom: 6,
       ),
       child: FutureBuilder(
         future: Future.wait([
@@ -121,12 +122,9 @@ class _DashboardState extends State<Dashboard> {
                         ),
                       ),
                       Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(
-                              8,
-                            ),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
                           child: ListView.separated(
                             separatorBuilder: (context, i) {

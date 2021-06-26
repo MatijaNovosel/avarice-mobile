@@ -177,9 +177,11 @@ class MainScreenState extends State<MainScreen> {
               ],
               selectedIndex: _currentIndex,
               onTabChange: (index) {
-                setState(() {
-                  _currentIndex = index;
-                });
+                if (index != _currentIndex) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                }
               },
             ),
           ),
