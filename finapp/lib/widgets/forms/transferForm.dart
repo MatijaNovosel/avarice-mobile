@@ -33,8 +33,8 @@ class _TransferFormState extends State<TransferForm> {
 
       NewTransfer payload = new NewTransfer(
         amount: double.parse(_amountController.text),
-        accountToId: _accountFromId,
-        accountFromId: _accountToId,
+        accountToId: _accountToId,
+        accountFromId: _accountFromId,
       );
 
       try {

@@ -16,6 +16,7 @@ import 'package:flutter_offline/flutter_offline.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jwt_decode/jwt_decode.dart';
+import 'package:slide_to_confirm/slide_to_confirm.dart';
 
 import 'controllers/formSubmitController.dart';
 
@@ -71,9 +72,10 @@ class MainScreenState extends State<MainScreen> {
         ),
       ),
       actions: [
-        popup.button(
-          label: 'Save',
-          onPressed: () {
+        ConfirmationSlider(
+          height: 50,
+          foregroundColor: Colors.orange,
+          onConfirmation: () {
             _formSubmitController.submit();
           },
         ),
@@ -94,9 +96,10 @@ class MainScreenState extends State<MainScreen> {
         ),
       ),
       actions: [
-        popup.button(
-          label: 'Save',
-          onPressed: () {
+        ConfirmationSlider(
+          height: 50,
+          foregroundColor: Colors.orange,
+          onConfirmation: () {
             _formSubmitController.submit();
           },
         ),

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:finapp/helpers/helpers.dart';
 import 'package:finapp/models/history.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import "../constants/apiConstants.dart";
 
@@ -113,8 +114,20 @@ Future<List<TagPercentageModel>> getTagPercentages() async {
       "$apiUrl/history/tag-percentages",
     );
 
+    List<Color> colors = [];
+
     for (var tagPercentage in response.data) {
-      var randColor = randomColor();
+      Color randColor = randomColor();
+
+      while (true) {
+        if (colors.contains(randColor)) {
+          randColor = randomColor();
+        } else {
+          colors.add(randColor);
+          break;
+        }
+      }
+
       data.add(
         new TagPercentageModel(
           percentage: tagPercentage["percentage"].toDouble(),

@@ -23,7 +23,11 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.only(
+        top: 12,
+        left: 12,
+        right: 12,
+      ),
       child: FutureBuilder(
         future: Future.wait([
           _accounts,
@@ -117,11 +121,22 @@ class _DashboardState extends State<Dashboard> {
                         ),
                       ),
                       Expanded(
-                        child: ListView.builder(
-                          itemCount: transactions.length,
-                          itemBuilder: (context, index) {
-                            return Card(
-                              child: ListTile(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(
+                              8,
+                            ),
+                          ),
+                          child: ListView.separated(
+                            separatorBuilder: (context, i) {
+                              return Divider(
+                                height: 0.1,
+                              );
+                            },
+                            itemCount: transactions.length,
+                            itemBuilder: (context, index) {
+                              return ListTile(
                                 leading: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -168,9 +183,9 @@ class _DashboardState extends State<Dashboard> {
                                     ),
                                   ],
                                 ),
-                              ),
-                            );
-                          },
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ],

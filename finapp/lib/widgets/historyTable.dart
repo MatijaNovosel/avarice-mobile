@@ -73,7 +73,10 @@ class _HistoryTableState extends State<HistoryTable> {
           GridTextColumn(
             columnName: 'description',
             label: Container(
-              alignment: Alignment.center,
+              alignment: Alignment.centerLeft,
+              margin: EdgeInsets.only(
+                left: 15,
+              ),
               child: Text('Description'),
             ),
           ),
@@ -123,11 +126,8 @@ class TransactionDataSource extends DataGridSource {
   }
 
   Future<void> _addMoreRows(List<Transaction> transactions, int count) async {
-    final startIndex = transactions.isNotEmpty ? transactions.length : 0, endIndex = startIndex + count;
-    print(startIndex);
-    print(endIndex);
-
-    var data = await getTransactions(startIndex, endIndex);
+    final startIndex = transactions.length != 0 ? transactions.length : 0;
+    var data = await getTransactions(startIndex, count);
 
     for (int i = 0; i < data.length; i++) {
       transactions.add(
@@ -198,7 +198,10 @@ class TransactionDataSource extends DataGridSource {
               );
             default:
               return Container(
-                alignment: Alignment.center,
+                alignment: Alignment.centerLeft,
+                margin: EdgeInsets.only(
+                  left: 15,
+                ),
                 child: Text(
                   e.value.toString(),
                 ),

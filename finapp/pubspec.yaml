@@ -23,6 +23,7 @@ dependencies:
   syncfusion_flutter_datagrid: ^19.1.67-beta
   lazy_load_scrollview: ^1.3.0
   flutter_launcher_icons: "^0.8.0"
+  slide_to_confirm: ^0.0.7
 
 flutter_icons:
   android: "launcher_icon"
