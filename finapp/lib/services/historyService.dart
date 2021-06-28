@@ -144,3 +144,34 @@ Future<List<TagPercentageModel>> getTagPercentages() async {
     dio.close();
   }
 }
+
+Future<List<SpendingByTagModel>> getSpendingByTag() async {
+  var dio = new Dio();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var token = prefs.get("bearerToken");
+
+  dio.options.headers["Authorization"] = "Bearer $token";
+
+  List<SpendingByTagModel> data = [];
+
+  try {
+    var response = await dio.get(
+      "$apiUrl/history/spending-by-tag",
+    );
+
+    for (var spendingByTag in response.data) {
+      data.add(
+        new SpendingByTagModel(
+          amount: spendingByTag["amount"].toDouble(),
+          description: spendingByTag["description"],
+        ),
+      );
+    }
+
+    data.sort((a, b) => a.amount.compareTo(b.amount));
+
+    return data.reversed.toList();
+  } finally {
+    dio.close();
+  }
+}

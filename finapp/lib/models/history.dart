@@ -31,3 +31,13 @@ class TagPercentageModel {
     this.color,
   });
 }
+
+class SpendingByTagModel {
+  double amount;
+  String description;
+
+  SpendingByTagModel({
+    this.amount,
+    this.description,
+  });
+}
