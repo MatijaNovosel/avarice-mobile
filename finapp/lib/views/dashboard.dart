@@ -1,14 +1,9 @@
-import 'package:finapp/helpers/helpers.dart';
 import 'package:finapp/models/account.dart';
-import 'package:finapp/models/history.dart';
-import 'package:finapp/services/accountService.dart';
-import 'package:finapp/services/historyService.dart';
-import 'package:finapp/widgets/currentAmountCard.dart';
-import 'package:flutter/material.dart';
-import 'package:finapp/services/transactionService.dart';
+import 'package:finapp/models/tag.dart';
 import 'package:finapp/models/transaction.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:intl/intl.dart';
+import 'package:finapp/widgets/currentAmountCard.dart';
+import 'package:finapp/widgets/transactionCard.dart';
+import 'package:flutter/material.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -16,182 +11,93 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  final Future<List<Transaction>> _transactions = getTransactions(0, 15);
-  final Future<List<Account>> _accounts = getLatestAccountValues();
-  final Future<RecentDepositsAndWithdrawals> _recentDepositsAndWithdrawals = getRecentDepositsAndWithdrawals();
-
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
-        top: 12,
         left: 12,
         right: 12,
         bottom: 6,
       ),
-      child: FutureBuilder(
-        future: Future.wait([
-          _accounts,
-          _transactions,
-          _recentDepositsAndWithdrawals,
-        ]),
-        builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              {
-                return Center(
-                  child: SpinKitFoldingCube(
-                    color: Colors.orange,
-                    size: 50.0,
+      child: Column(
+        children: [
+          CurrentAmountCard(
+            height: 100,
+            account: Account(
+              amount: 2500,
+              description: "Total",
+            ),
+            showInitialValue: true,
+            gradient: true,
+            gradientFrom: Colors.purple,
+            gradientTo: Colors.red[400],
+            mainTextColor: Colors.white,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 20.0,
+              bottom: 12,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Recent transactions",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
                   ),
-                );
-              }
-            default:
-              {
-                if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  var accounts = snapshot.data[0];
-                  var transactions = snapshot.data[1];
-                  var recentDepositsAndWithdrawals = snapshot.data[2];
-
-                  return Column(
-                    children: [
-                      CurrentAmountCard(
-                        account: Account(
-                          amount: accounts.map((x) => x.amount).reduce((a, b) => a + b),
-                          description: "Total",
-                        ),
-                        color: Colors.grey[600],
-                        icon: Icons.account_balance_wallet_sharp,
-                        showInitialValue: true,
-                        gradient: true,
-                        gradientFrom: Colors.orange[700],
-                        gradientTo: Colors.red[400],
-                        mainTextColor: Colors.white,
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "View all",
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.redAccent,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: 8.0,
-                          bottom: 8,
-                        ),
-                        child: CurrentAmountCard(
-                          account: Account(
-                            amount: recentDepositsAndWithdrawals.withdrawals,
-                            description: "Recent withdrawals",
-                          ),
-                          color: Colors.red[300],
-                          icon: Icons.arrow_back,
-                          showHideButton: false,
-                          showInitialValue: true,
-                          gradient: true,
-                          gradientFrom: Colors.red[900],
-                          gradientTo: Colors.red[400],
-                          mainTextColor: Colors.white,
-                        ),
+                    ),
+                    Icon(
+                      Icons.chevron_right_sharp,
+                      size: 24,
+                      color: Colors.redAccent,
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView(
+              children: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                  .map<Widget>(
+                    (n) => Padding(
+                      padding: EdgeInsets.only(
+                        bottom: n == 10 ? 0.0 : 8.0,
                       ),
-                      CurrentAmountCard(
-                        account: Account(
-                          amount: recentDepositsAndWithdrawals.deposits,
-                          description: "Recent deposits",
-                        ),
-                        color: Colors.green[300],
-                        icon: Icons.arrow_forward,
-                        showHideButton: false,
-                        showInitialValue: true,
-                        gradient: true,
-                        gradientFrom: Colors.green[800],
-                        gradientTo: Colors.green[400],
-                        mainTextColor: Colors.white,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: 12.0,
-                          bottom: 6,
-                        ),
-                        child: Row(
-                          children: [
-                            Text(
-                              "Recent transactions",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w200,
-                              ),
+                      child: TransactionCardWidget(
+                        visible: true,
+                        transaction: Transaction(
+                          accountDescription: "Item $n",
+                          amount: (n % 2 == 0 ? -n : n) * 250.0,
+                          createdAt: "21.02.2022. 14:34",
+                          description: "Item $n",
+                          expense: n % 2 == 0,
+                          id: n,
+                          tags: [
+                            Tag(
+                              description: "Test",
+                              id: 1,
                             ),
                           ],
                         ),
                       ),
-                      Expanded(
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          child: ListView.separated(
-                            separatorBuilder: (context, i) {
-                              return Divider(
-                                height: 0.1,
-                              );
-                            },
-                            itemCount: transactions.length,
-                            itemBuilder: (context, index) {
-                              return ListTile(
-                                leading: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      DateTime.parse(transactions[index].createdAt).day.toString(),
-                                      style: TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(
-                                      DateFormat('MMM')
-                                          .format(
-                                            DateTime.parse(transactions[index].createdAt),
-                                          )
-                                          .toUpperCase(),
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                title: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(bottom: 4.0),
-                                      child: Text(
-                                        '${transactions[index].description}',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.grey[400],
-                                        ),
-                                      ),
-                                    ),
-                                    Text(
-                                      (transactions[index].expense ? "-" : "+") + '${formatHrk(transactions[index].amount)}',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: transactions[index].expense == false ? Colors.green[300] : null,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                }
-              }
-          }
-        },
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
+        ],
       ),
     );
   }

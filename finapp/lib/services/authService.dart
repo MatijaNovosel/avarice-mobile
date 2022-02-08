@@ -17,9 +17,7 @@ Future<AuthResponse> login(String email, String password) async {
     return new AuthResponse(
       token: response.data["token"],
       result: response.data["result"],
-      errors: response.data["errors"] != null
-          ? response.data["errors"].cast<String>()
-          : [],
+      errors: response.data["errors"] != null ? response.data["errors"].cast<String>() : [],
     );
   } finally {
     dio.close();

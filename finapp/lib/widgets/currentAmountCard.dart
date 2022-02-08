@@ -1,8 +1,36 @@
-import 'dart:ui';
-
 import 'package:finapp/helpers/helpers.dart';
 import 'package:finapp/models/account.dart';
 import 'package:flutter/material.dart';
+
+class CurrentAmountCard extends StatefulWidget {
+  final Account account;
+  final Color color;
+  final IconData icon;
+  final bool showHideButton;
+  final bool showInitialValue;
+  final bool gradient;
+  final Color gradientFrom;
+  final Color gradientTo;
+  final Color mainTextColor;
+  final double height;
+
+  const CurrentAmountCard({
+    Key key,
+    this.account,
+    this.color,
+    this.icon,
+    this.showHideButton,
+    this.showInitialValue,
+    this.gradient,
+    this.gradientFrom,
+    this.gradientTo,
+    this.mainTextColor,
+    this.height,
+  }) : super(key: key);
+
+  @override
+  _CurrentAmountCardState createState() => _CurrentAmountCardState();
+}
 
 class _CurrentAmountCardState extends State<CurrentAmountCard> {
   bool _visible = false;
@@ -10,8 +38,7 @@ class _CurrentAmountCardState extends State<CurrentAmountCard> {
   @override
   void initState() {
     setState(() {
-      _visible =
-          widget.showInitialValue != null ? widget.showInitialValue : false;
+      _visible = widget.showInitialValue != null ? widget.showInitialValue : false;
     });
     super.initState();
   }
@@ -19,7 +46,7 @@ class _CurrentAmountCardState extends State<CurrentAmountCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 55,
+      height: widget.height ?? 55,
       decoration: BoxDecoration(
         gradient: widget.gradient != null
             ? widget.gradient == true
@@ -35,16 +62,22 @@ class _CurrentAmountCardState extends State<CurrentAmountCard> {
       ),
       child: Row(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 20.0,
-              right: 12.0,
-            ),
-            child: Icon(
-              widget.icon,
-              color: Colors.white,
-            ),
-          ),
+          widget.icon != null
+              ? Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20.0,
+                    right: 12.0,
+                  ),
+                  child: Icon(
+                    widget.icon,
+                    color: Colors.white,
+                  ),
+                )
+              : Padding(
+                  padding: EdgeInsets.only(
+                    left: 16,
+                  ),
+                ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,10 +96,9 @@ class _CurrentAmountCardState extends State<CurrentAmountCard> {
                 Text(
                   _visible
                       ? formatHrk(widget.account.amount)
-                      : "${widget.account.amount.toStringAsFixed(2)} HRK"
-                          .replaceAll(new RegExp(r'[0-9]'), '*'),
+                      : "${widget.account.amount.toStringAsFixed(2)} HRK".replaceAll(new RegExp(r'[0-9]'), '*'),
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 32,
                     fontWeight: FontWeight.bold,
                     color: widget.mainTextColor,
                   ),
@@ -81,9 +113,7 @@ class _CurrentAmountCardState extends State<CurrentAmountCard> {
                     right: 24.0,
                   ),
                   child: IconButton(
-                    icon: _visible
-                        ? Icon(Icons.stop_circle)
-                        : Icon(Icons.panorama_fish_eye),
+                    icon: _visible ? Icon(Icons.stop_circle) : Icon(Icons.panorama_fish_eye),
                     color: Colors.white,
                     onPressed: () {
                       setState(() {
@@ -96,32 +126,4 @@ class _CurrentAmountCardState extends State<CurrentAmountCard> {
       ),
     );
   }
-}
-
-class CurrentAmountCard extends StatefulWidget {
-  final Account account;
-  final Color color;
-  final IconData icon;
-  final bool showHideButton;
-  final bool showInitialValue;
-  final bool gradient;
-  final Color gradientFrom;
-  final Color gradientTo;
-  final Color mainTextColor;
-
-  const CurrentAmountCard({
-    Key key,
-    this.account,
-    this.color,
-    this.icon,
-    this.showHideButton,
-    this.showInitialValue,
-    this.gradient,
-    this.gradientFrom,
-    this.gradientTo,
-    this.mainTextColor,
-  }) : super(key: key);
-
-  @override
-  _CurrentAmountCardState createState() => _CurrentAmountCardState();
 }
