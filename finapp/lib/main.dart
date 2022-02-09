@@ -42,6 +42,7 @@ Future<void> main() async {
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
+        scaffoldBackgroundColor: Color(0xFF081B33),
       ),
       themeMode: ThemeMode.dark,
       // home: tokenValid ? MainScreen() : Login(),
@@ -118,18 +119,18 @@ class MainScreenState extends State<MainScreen> {
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.grey[800],
+          color: Color(0xFF152642),
         ),
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: 15.0,
-              vertical: 8,
+              horizontal: 8.0,
+              vertical: 6,
             ),
             child: GNav(
               gap: 8,
               activeColor: Colors.white,
-              backgroundColor: Colors.grey[800],
+              backgroundColor: Color(0xFF152642),
               iconSize: 24,
               textStyle: TextStyle(
                 fontSize: 16,
@@ -142,7 +143,7 @@ class MainScreenState extends State<MainScreen> {
               duration: Duration(
                 milliseconds: 400,
               ),
-              tabBackgroundColor: Colors.grey[850],
+              tabBackgroundColor: Color(0xFF081B33),
               color: Colors.white,
               tabs: [
                 GButton(
