@@ -109,6 +109,7 @@ class MainScreenState extends State<MainScreen> {
                     "Welcome back Matija Novosel!",
                     style: TextStyle(
                       fontSize: 16,
+                      color: Colors.grey[300],
                     ),
                   ),
                 ),

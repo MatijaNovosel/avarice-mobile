@@ -13,6 +13,8 @@ class CurrentAmountCard extends StatefulWidget {
   final Color gradientTo;
   final Color mainTextColor;
   final double height;
+  final double width;
+  final double margin;
 
   const CurrentAmountCard({
     Key key,
@@ -26,6 +28,8 @@ class CurrentAmountCard extends StatefulWidget {
     this.gradientTo,
     this.mainTextColor,
     this.height,
+    this.width,
+    this.margin,
   }) : super(key: key);
 
   @override
@@ -46,7 +50,11 @@ class _CurrentAmountCardState extends State<CurrentAmountCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: widget.width ?? null,
       height: widget.height ?? 55,
+      margin: EdgeInsets.symmetric(
+        horizontal: widget.margin,
+      ),
       decoration: BoxDecoration(
         gradient: widget.gradient != null
             ? widget.gradient == true

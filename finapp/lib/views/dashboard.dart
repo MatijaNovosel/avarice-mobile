@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:finapp/models/account.dart';
 import 'package:finapp/models/tag.dart';
 import 'package:finapp/models/transaction.dart';
@@ -32,31 +33,35 @@ class _DashboardState extends State<Dashboard> {
         children: [
           Column(
             children: [
-              SizedBox(
-                height: 125,
-                child: PageView.builder(
-                  itemCount: _accounts.length,
-                  onPageChanged: (i) {
-                    setState(() {
-                      _index = i;
-                    });
-                  },
-                  itemBuilder: (_, i) {
-                    return Transform.scale(
-                      scale: i == _index ? 1 : 0.9,
-                      child: CurrentAmountCard(
-                        height: 125,
-                        account: _accounts[i],
-                        showHideButton: true,
-                        showInitialValue: true,
-                        gradient: true,
-                        gradientFrom: Colors.purple[700],
-                        gradientTo: Colors.red[400],
-                        mainTextColor: Colors.white,
-                      ),
+              CarouselSlider(
+                options: CarouselOptions(
+                  height: 150.0,
+                  onPageChanged: (i, reason) {
+                    setState(
+                      () {
+                        _index = i;
+                      },
                     );
                   },
                 ),
+                items: _accounts.map(
+                  (account) {
+                    return Builder(
+                      builder: (BuildContext context) {
+                        return CurrentAmountCard(
+                          account: account,
+                          gradient: true,
+                          gradientFrom: Colors.purple,
+                          gradientTo: Colors.red,
+                          height: 150,
+                          width: MediaQuery.of(context).size.width,
+                          margin: 8.0,
+                          showInitialValue: true,
+                        );
+                      },
+                    );
+                  },
+                ).toList(),
               ),
               Container(
                 height: 25,
@@ -87,7 +92,7 @@ class _DashboardState extends State<Dashboard> {
           ),
           Padding(
             padding: const EdgeInsets.only(
-              top: 20.0,
+              top: 8.0,
               bottom: 12,
             ),
             child: Text(
@@ -100,32 +105,86 @@ class _DashboardState extends State<Dashboard> {
           ),
           Expanded(
             child: ListView(
-              children: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-                  .map<Widget>(
-                    (n) => Padding(
-                      padding: EdgeInsets.only(
-                        bottom: n == 10 ? 0.0 : 8.0,
-                      ),
-                      child: TransactionCardWidget(
-                        visible: true,
-                        transaction: Transaction(
-                          accountDescription: "",
-                          amount: (n % 2 == 0 ? -n : n) * 250.0,
-                          createdAt: "21 Feb 2022 14:34",
-                          description: (['Food', 'Books', 'Drink', 'Rent', 'Salary'].toList()..shuffle()).first,
-                          expense: n % 2 == 0,
-                          id: n,
-                          tags: [
-                            Tag(
-                              description: "Test",
-                              id: 1,
-                            ),
-                          ],
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 4.0,
+                    bottom: 8,
+                  ),
+                  child: Text(
+                    "Today",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey[400],
+                    ),
+                  ),
+                ),
+                ...[1, 2, 3]
+                    .map<Widget>(
+                      (n) => Padding(
+                        padding: EdgeInsets.only(
+                          bottom: n == 10 ? 0.0 : 8.0,
+                        ),
+                        child: TransactionCardWidget(
+                          visible: true,
+                          transaction: Transaction(
+                            accountDescription: "",
+                            amount: (n % 2 == 0 ? -n : n) * 250.0,
+                            createdAt: "21 Feb 2022 14:34",
+                            description: (['Food', 'Books', 'Drink', 'Rent', 'Salary'].toList()..shuffle()).first,
+                            expense: n % 2 == 0,
+                            id: n,
+                            tags: [
+                              Tag(
+                                description: "Test",
+                                id: 1,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
+                    )
+                    .toList(),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 4.0,
+                    bottom: 8,
+                  ),
+                  child: Text(
+                    "Yesterday",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey[400],
                     ),
-                  )
-                  .toList(),
+                  ),
+                ),
+                ...[1, 2, 3, 4, 5, 6]
+                    .map<Widget>(
+                      (n) => Padding(
+                        padding: EdgeInsets.only(
+                          bottom: n == 10 ? 0.0 : 8.0,
+                        ),
+                        child: TransactionCardWidget(
+                          visible: true,
+                          transaction: Transaction(
+                            accountDescription: "",
+                            amount: (n % 2 == 0 ? -n : n) * 250.0,
+                            createdAt: "21 Feb 2022 14:34",
+                            description: (['Food', 'Books', 'Drink', 'Rent', 'Salary'].toList()..shuffle()).first,
+                            expense: n % 2 == 0,
+                            id: n,
+                            tags: [
+                              Tag(
+                                description: "Test",
+                                id: 1,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ],
             ),
           ),
         ],
