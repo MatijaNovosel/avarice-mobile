@@ -1,7 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:finapp/models/account.dart';
+import 'package:finapp/models/history.dart';
 import 'package:finapp/models/tag.dart';
 import 'package:finapp/models/transaction.dart';
+import 'package:finapp/widgets/charts/totalHistoryChart.dart';
 import 'package:finapp/widgets/currentAmountCard.dart';
 import 'package:finapp/widgets/transactionCard.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +21,32 @@ class _DashboardState extends State<Dashboard> {
     Account(amount: 125, description: "Pocket", id: 3),
     Account(amount: 55, description: "Credit", id: 4)
   ];
+  List<HistoryModel> _history = [
+    HistoryModel(
+      amount: 2500,
+      createdAt: "21. Feb 2022.",
+    ),
+    HistoryModel(
+      amount: 2600,
+      createdAt: "21. Feb 2022.",
+    ),
+    HistoryModel(
+      amount: 2700,
+      createdAt: "21. Feb 2022.",
+    ),
+    HistoryModel(
+      amount: 2800,
+      createdAt: "21. Feb 2022.",
+    ),
+    HistoryModel(
+      amount: 2200,
+      createdAt: "21. Feb 2022.",
+    ),
+    HistoryModel(
+      amount: 2100,
+      createdAt: "21. Feb 2022.",
+    )
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +59,14 @@ class _DashboardState extends State<Dashboard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          HistoryTotalChart(
+            history: _history,
+          ),
           Column(
             children: [
               CarouselSlider(
                 options: CarouselOptions(
-                  height: 150.0,
+                  height: 115.0,
                   onPageChanged: (i, reason) {
                     setState(
                       () {
@@ -53,7 +84,7 @@ class _DashboardState extends State<Dashboard> {
                           gradient: true,
                           gradientFrom: Colors.purple,
                           gradientTo: Colors.red,
-                          height: 150,
+                          height: 135,
                           width: MediaQuery.of(context).size.width,
                           margin: 8.0,
                           showInitialValue: true,
@@ -66,7 +97,7 @@ class _DashboardState extends State<Dashboard> {
               Container(
                 height: 25,
                 margin: EdgeInsets.only(
-                  top: 12,
+                  top: 6,
                 ),
                 child: ListView.builder(
                   itemCount: _accounts.length,
@@ -89,19 +120,6 @@ class _DashboardState extends State<Dashboard> {
                 ),
               ),
             ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 8.0,
-              bottom: 12,
-            ),
-            child: Text(
-              "Recent transactions",
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.white,
-              ),
-            ),
           ),
           Expanded(
             child: ListView(

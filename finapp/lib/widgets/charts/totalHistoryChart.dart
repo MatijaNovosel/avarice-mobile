@@ -1,8 +1,6 @@
-import 'package:finapp/helpers/helpers.dart';
 import 'package:finapp/models/history.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class HistoryTotalChart extends StatefulWidget {
   final List<HistoryModel> history;
@@ -18,8 +16,8 @@ class HistoryTotalChart extends StatefulWidget {
 
 class _HistoryTotalChartState extends State<HistoryTotalChart> {
   List<Color> gradientColors = [
+    Colors.purple,
     Colors.red,
-    Colors.amber,
   ];
 
   get history => widget.history;
@@ -42,20 +40,21 @@ class _HistoryTotalChartState extends State<HistoryTotalChart> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        AspectRatio(
-          aspectRatio: 2,
-          child: Container(
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: LineChart(
-                mainData(),
-              ),
-            ),
+    return AspectRatio(
+      aspectRatio: 3,
+      child: Container(
+        child: Padding(
+          padding: const EdgeInsets.only(
+            top: 24,
+            bottom: 12,
+            right: 4,
+            left: 4,
+          ),
+          child: LineChart(
+            mainData(),
           ),
         ),
-      ],
+      ),
     );
   }
 
@@ -63,12 +62,12 @@ class _HistoryTotalChartState extends State<HistoryTotalChart> {
     return LineChartData(
       lineTouchData: LineTouchData(
         touchTooltipData: LineTouchTooltipData(
-          tooltipBgColor: Colors.orange,
+          tooltipBgColor: Colors.purple,
           getTooltipItems: (List<LineBarSpot> touchedBarSpots) {
             return touchedBarSpots.map((barSpot) {
               final flSpot = barSpot;
               return LineTooltipItem(
-                "${formatDateToCroatian(history[flSpot.x.toInt()].createdAt)}\n",
+                "${history[flSpot.x.toInt()].createdAt}\n",
                 const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
@@ -97,27 +96,7 @@ class _HistoryTotalChartState extends State<HistoryTotalChart> {
         bottomTitles: SideTitles(
           showTitles: false,
         ),
-        leftTitles: SideTitles(
-          getTitles: (value) {
-            return NumberFormat.compactCurrency(
-              decimalDigits: 2,
-              symbol: '',
-            ).format(value);
-          },
-          rotateAngle: -10,
-          showTitles: true,
-          getTextStyles: (value) => const TextStyle(
-            color: Color(0xff67727d),
-            fontWeight: FontWeight.bold,
-            fontSize: 12,
-          ),
-          margin: 15,
-          reservedSize: 25,
-          interval: getYAxisInterval(
-            minY,
-            maxY,
-          ),
-        ),
+        leftTitles: SideTitles(showTitles: false),
       ),
       borderData: FlBorderData(
         show: false,
@@ -133,10 +112,10 @@ class _HistoryTotalChartState extends State<HistoryTotalChart> {
           ],
           isCurved: true,
           colors: gradientColors,
-          barWidth: 5,
+          barWidth: 3,
           isStrokeCapRound: true,
           dotData: FlDotData(
-            show: false,
+            show: true,
           ),
           belowBarData: BarAreaData(
             show: true,
