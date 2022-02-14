@@ -106,7 +106,7 @@ class _CurrentAmountCardState extends State<CurrentAmountCard> {
                       ? formatHrk(widget.account.amount)
                       : "${widget.account.amount.toStringAsFixed(2)} HRK".replaceAll(new RegExp(r'[0-9]'), '*'),
                   style: TextStyle(
-                    fontSize: 32,
+                    fontSize: 28,
                     fontWeight: FontWeight.bold,
                     color: widget.mainTextColor,
                   ),

@@ -21,31 +21,111 @@ class _DashboardState extends State<Dashboard> {
     Account(amount: 125, description: "Pocket", id: 3),
     Account(amount: 55, description: "Credit", id: 4)
   ];
-  List<HistoryModel> _history = [
-    HistoryModel(
-      amount: 2500,
-      createdAt: "21. Feb 2022.",
-    ),
-    HistoryModel(
-      amount: 2600,
-      createdAt: "21. Feb 2022.",
-    ),
-    HistoryModel(
-      amount: 2700,
-      createdAt: "21. Feb 2022.",
-    ),
-    HistoryModel(
-      amount: 2800,
-      createdAt: "21. Feb 2022.",
-    ),
-    HistoryModel(
-      amount: 2200,
-      createdAt: "21. Feb 2022.",
-    ),
-    HistoryModel(
-      amount: 2100,
-      createdAt: "21. Feb 2022.",
-    )
+  List<List<HistoryModel>> _history = [
+    [
+      HistoryModel(
+        amount: 2500,
+        createdAt: "21. Feb 2022.",
+      ),
+      HistoryModel(
+        amount: 2600,
+        createdAt: "21. Feb 2022.",
+      ),
+      HistoryModel(
+        amount: 2700,
+        createdAt: "21. Feb 2022.",
+      ),
+      HistoryModel(
+        amount: 2800,
+        createdAt: "21. Feb 2022.",
+      ),
+      HistoryModel(
+        amount: 2200,
+        createdAt: "21. Feb 2022.",
+      ),
+      HistoryModel(
+        amount: 2100,
+        createdAt: "21. Feb 2022.",
+      )
+    ],
+    [
+      HistoryModel(
+        amount: 2100,
+        createdAt: "21. Feb 2022.",
+      ),
+      HistoryModel(
+        amount: 2900,
+        createdAt: "21. Feb 2022.",
+      ),
+      HistoryModel(
+        amount: 5700,
+        createdAt: "21. Feb 2022.",
+      ),
+      HistoryModel(
+        amount: 1800,
+        createdAt: "21. Feb 2022.",
+      ),
+      HistoryModel(
+        amount: 6200,
+        createdAt: "21. Feb 2022.",
+      ),
+      HistoryModel(
+        amount: 2100,
+        createdAt: "21. Feb 2022.",
+      )
+    ],
+    [
+      HistoryModel(
+        amount: 2500,
+        createdAt: "21. Feb 2022.",
+      ),
+      HistoryModel(
+        amount: 2500,
+        createdAt: "21. Feb 2022.",
+      ),
+      HistoryModel(
+        amount: 2500,
+        createdAt: "21. Feb 2022.",
+      ),
+      HistoryModel(
+        amount: 2500,
+        createdAt: "21. Feb 2022.",
+      ),
+      HistoryModel(
+        amount: 2500,
+        createdAt: "21. Feb 2022.",
+      ),
+      HistoryModel(
+        amount: 2700,
+        createdAt: "21. Feb 2022.",
+      )
+    ],
+    [
+      HistoryModel(
+        amount: 1500,
+        createdAt: "21. Feb 2022.",
+      ),
+      HistoryModel(
+        amount: 1600,
+        createdAt: "21. Feb 2022.",
+      ),
+      HistoryModel(
+        amount: 1700,
+        createdAt: "21. Feb 2022.",
+      ),
+      HistoryModel(
+        amount: 2800,
+        createdAt: "21. Feb 2022.",
+      ),
+      HistoryModel(
+        amount: 2200,
+        createdAt: "21. Feb 2022.",
+      ),
+      HistoryModel(
+        amount: 2100,
+        createdAt: "21. Feb 2022.",
+      )
+    ],
   ];
 
   @override
@@ -60,7 +140,7 @@ class _DashboardState extends State<Dashboard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           HistoryTotalChart(
-            history: _history,
+            history: _history[_index],
           ),
           Column(
             children: [

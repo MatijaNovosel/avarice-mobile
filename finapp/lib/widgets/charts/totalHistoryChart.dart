@@ -63,6 +63,7 @@ class _HistoryTotalChartState extends State<HistoryTotalChart> {
       lineTouchData: LineTouchData(
         touchTooltipData: LineTouchTooltipData(
           tooltipBgColor: Colors.purple,
+          fitInsideHorizontally: true,
           getTooltipItems: (List<LineBarSpot> touchedBarSpots) {
             return touchedBarSpots.map((barSpot) {
               final flSpot = barSpot;
