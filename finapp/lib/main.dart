@@ -2,16 +2,23 @@ import 'package:finapp/views/accounts.dart';
 import 'package:finapp/views/chartData.dart';
 import 'package:finapp/views/history.dart';
 import 'package:finapp/views/dashboard.dart';
-// import 'package:finapp/views/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter_offline/flutter_offline.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:jwt_decode/jwt_decode.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final database = openDatabase(
+    join(await getDatabasesPath(), 'database.db'),
+    onCreate: (db, version) {
+      return db.execute(
+        'CREATE TABLE accounts(id INTEGER PRIMARY KEY, description TEXT, amount REAL)',
+      );
+    },
+    version: 1,
+  );
   /*
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -106,7 +113,7 @@ class MainScreenState extends State<MainScreen> {
                     top: 4.0,
                   ),
                   child: Text(
-                    "Welcome back Matija Novosel!",
+                    "Welcome back mnovosel5!",
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.grey[300],

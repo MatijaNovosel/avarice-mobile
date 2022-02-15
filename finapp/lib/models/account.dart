@@ -8,4 +8,17 @@ class Account {
     this.description,
     this.id,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'description': description,
+      'amount': amount,
+    };
+  }
+
+  @override
+  String toString() {
+    return 'Account{id: $id, description: $description, amount: $amount}';
+  }
 }

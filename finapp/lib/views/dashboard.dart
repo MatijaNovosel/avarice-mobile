@@ -256,7 +256,46 @@ class _DashboardState extends State<Dashboard> {
                     ),
                   ),
                 ),
-                ...[1, 2, 3, 4, 5, 6]
+                ...[1, 2, 3]
+                    .map<Widget>(
+                      (n) => Padding(
+                        padding: EdgeInsets.only(
+                          bottom: n == 10 ? 0.0 : 8.0,
+                        ),
+                        child: TransactionCardWidget(
+                          visible: true,
+                          transaction: Transaction(
+                            accountDescription: "",
+                            amount: (n % 2 == 0 ? -n : n) * 250.0,
+                            createdAt: "21 Feb 2022 14:34",
+                            description: (['Food', 'Books', 'Drink', 'Rent', 'Salary'].toList()..shuffle()).first,
+                            expense: n % 2 == 0,
+                            id: n,
+                            tags: [
+                              Tag(
+                                description: "Test",
+                                id: 1,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 4.0,
+                    bottom: 8,
+                  ),
+                  child: Text(
+                    "15 February",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey[400],
+                    ),
+                  ),
+                ),
+                ...[1, 2, 3]
                     .map<Widget>(
                       (n) => Padding(
                         padding: EdgeInsets.only(

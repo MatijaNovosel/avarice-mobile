@@ -21,6 +21,7 @@ dependencies:
   lazy_load_scrollview: ^1.3.0
   flutter_launcher_icons: "^0.8.0"
   carousel_slider: ^4.0.0
+  sqflite:
 
 flutter_icons:
   android: "launcher_icon"
