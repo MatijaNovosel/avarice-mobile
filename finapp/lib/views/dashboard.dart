@@ -139,9 +139,6 @@ class _DashboardState extends State<Dashboard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          HistoryTotalChart(
-            history: _history[_index],
-          ),
           Column(
             children: [
               CarouselSlider(
@@ -161,9 +158,6 @@ class _DashboardState extends State<Dashboard> {
                       builder: (BuildContext context) {
                         return CurrentAmountCard(
                           account: account,
-                          gradient: true,
-                          gradientFrom: Colors.purple,
-                          gradientTo: Colors.red,
                           height: 135,
                           width: MediaQuery.of(context).size.width,
                           margin: 8.0,

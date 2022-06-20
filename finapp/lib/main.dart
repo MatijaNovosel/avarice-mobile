@@ -5,20 +5,9 @@ import 'package:finapp/views/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final database = openDatabase(
-    join(await getDatabasesPath(), 'database.db'),
-    onCreate: (db, version) {
-      return db.execute(
-        'CREATE TABLE accounts(id INTEGER PRIMARY KEY, description TEXT, amount REAL)',
-      );
-    },
-    version: 1,
-  );
   /*
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -47,11 +36,6 @@ Future<void> main() async {
       theme: ThemeData(
         brightness: Brightness.light,
       ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        scaffoldBackgroundColor: Color(0xFF081B33),
-      ),
-      themeMode: ThemeMode.dark,
       // home: tokenValid ? MainScreen() : Login(),
       home: MainScreen(),
     ),
@@ -77,9 +61,8 @@ class MainScreenState extends State<MainScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 105,
-        backgroundColor: Color(0x121212),
-        elevation: 0.0,
+        backgroundColor: Colors.white,
+        elevation: 1,
         actions: [
           IconButton(
             icon: Icon(Icons.add),
@@ -97,37 +80,17 @@ class MainScreenState extends State<MainScreen> {
             onPressed: () {},
           ),
         ],
-        title: Row(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "FinApp",
-                  style: TextStyle(
-                    fontSize: 38,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 4.0,
-                  ),
-                  child: Text(
-                    "Welcome back mnovosel5!",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey[300],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
+        title: Text(
+          "FinApp",
+          style: TextStyle(
+            fontSize: 24,
+            color: Colors.black,
+          ),
         ),
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Color(0xFF152642),
+          color: Color.fromARGB(255, 227, 229, 232),
         ),
         child: SafeArea(
           child: Padding(
@@ -138,7 +101,7 @@ class MainScreenState extends State<MainScreen> {
             child: GNav(
               gap: 8,
               activeColor: Colors.white,
-              backgroundColor: Color(0xFF152642),
+              backgroundColor: Color.fromARGB(255, 227, 229, 232),
               iconSize: 24,
               textStyle: TextStyle(
                 fontSize: 16,
@@ -151,7 +114,7 @@ class MainScreenState extends State<MainScreen> {
               duration: Duration(
                 milliseconds: 400,
               ),
-              tabBackgroundColor: Color(0xFF081B33),
+              tabBackgroundColor: Color.fromARGB(255, 212, 212, 220),
               color: Colors.white,
               tabs: [
                 GButton(
@@ -183,7 +146,12 @@ class MainScreenState extends State<MainScreen> {
           ),
         ),
       ),
-      body: _children[_currentIndex],
+      body: Padding(
+        child: _children[_currentIndex],
+        padding: EdgeInsets.only(
+          top: 12,
+        ),
+      ),
     );
   }
 }

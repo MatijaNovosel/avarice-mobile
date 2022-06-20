@@ -51,7 +51,6 @@ class _ChangeCardState extends State<TransactionCardWidget> {
                         .first),
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: Color(0xFF2F4562),
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
@@ -63,8 +62,8 @@ class _ChangeCardState extends State<TransactionCardWidget> {
                     Text(
                       widget.transaction.description,
                       style: TextStyle(
-                        fontSize: 22,
-                        color: Colors.grey[300],
+                        fontSize: 16,
+                        color: Colors.black,
                       ),
                     ),
                     Padding(
@@ -88,9 +87,9 @@ class _ChangeCardState extends State<TransactionCardWidget> {
                   ? formatHrk(widget.transaction.amount)
                   : "${widget.transaction.amount.toStringAsFixed(2)} HRK".replaceAll(new RegExp(r'[0-9]'), '*'),
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 12,
                 fontWeight: FontWeight.bold,
-                color: widget.transaction.expense == true ? Colors.white : Colors.green[400],
+                color: widget.transaction.expense == true ? Colors.black : Colors.green[400],
               ),
             ),
           ],

@@ -49,88 +49,91 @@ class _CurrentAmountCardState extends State<CurrentAmountCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: widget.width ?? null,
-      height: widget.height ?? 55,
-      margin: EdgeInsets.symmetric(
-        horizontal: widget.margin,
-      ),
-      decoration: BoxDecoration(
-        gradient: widget.gradient != null
-            ? widget.gradient == true
-                ? LinearGradient(
-                    colors: [
-                      widget.gradientFrom,
-                      widget.gradientTo,
-                    ],
+    return Card(
+      elevation: 3,
+      child: Container(
+        width: widget.width ?? null,
+        height: widget.height ?? 55,
+        margin: EdgeInsets.symmetric(
+          horizontal: widget.margin,
+        ),
+        decoration: BoxDecoration(
+          gradient: widget.gradient != null
+              ? widget.gradient == true
+                  ? LinearGradient(
+                      colors: [
+                        widget.gradientFrom,
+                        widget.gradientTo,
+                      ],
+                    )
+                  : null
+              : null,
+          borderRadius: BorderRadius.circular(6),
+        ),
+        child: Row(
+          children: <Widget>[
+            widget.icon != null
+                ? Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20.0,
+                      right: 12.0,
+                    ),
+                    child: Icon(
+                      widget.icon,
+                      color: Colors.black,
+                    ),
                   )
-                : null
-            : null,
-        borderRadius: BorderRadius.circular(6),
-      ),
-      child: Row(
-        children: <Widget>[
-          widget.icon != null
-              ? Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20.0,
-                    right: 12.0,
-                  ),
-                  child: Icon(
-                    widget.icon,
-                    color: Colors.white,
-                  ),
-                )
-              : Padding(
-                  padding: EdgeInsets.only(
-                    left: 16,
-                  ),
-                ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 3.0),
-                  child: Text(
-                    widget.account.description,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.white,
+                : Padding(
+                    padding: EdgeInsets.only(
+                      left: 16,
                     ),
                   ),
-                ),
-                Text(
-                  _visible
-                      ? formatHrk(widget.account.amount)
-                      : "${widget.account.amount.toStringAsFixed(2)} HRK".replaceAll(new RegExp(r'[0-9]'), '*'),
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: widget.mainTextColor,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 3.0),
+                    child: Text(
+                      widget.account.description,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black,
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                  Text(
+                    _visible
+                        ? formatHrk(widget.account.amount)
+                        : "${widget.account.amount.toStringAsFixed(2)} HRK".replaceAll(new RegExp(r'[0-9]'), '*'),
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: widget.mainTextColor,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          widget.showHideButton == false
-              ? Container()
-              : Padding(
-                  padding: const EdgeInsets.only(
-                    right: 24.0,
+            widget.showHideButton == false
+                ? Container()
+                : Padding(
+                    padding: const EdgeInsets.only(
+                      right: 24.0,
+                    ),
+                    child: IconButton(
+                      icon: _visible ? Icon(Icons.circle) : Icon(Icons.panorama_fish_eye),
+                      color: Colors.black,
+                      onPressed: () {
+                        setState(() {
+                          _visible = !_visible;
+                        });
+                      },
+                    ),
                   ),
-                  child: IconButton(
-                    icon: _visible ? Icon(Icons.stop_circle) : Icon(Icons.panorama_fish_eye),
-                    color: Colors.white,
-                    onPressed: () {
-                      setState(() {
-                        _visible = !_visible;
-                      });
-                    },
-                  ),
-                ),
-        ],
+          ],
+        ),
       ),
     );
   }
