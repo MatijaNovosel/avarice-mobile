@@ -4,9 +4,9 @@ import 'package:finapp/models/history/historyModel/historyModel.dart';
 import 'package:finapp/models/history/recentDepositsAndWithdrawals/recentDepositsAndWithdrawals.dart';
 import 'package:finapp/models/history/spendingByTagModel/spendingByTagModel.dart';
 import 'package:finapp/models/history/tagPercentageModel/tagPercentageModel.dart';
+import 'package:finapp/utils/config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import "../constants/apiConstants.dart";
 
 Future<RecentDepositsAndWithdrawals> getRecentDepositsAndWithdrawals() async {
   var dio = new Dio();
@@ -16,7 +16,7 @@ Future<RecentDepositsAndWithdrawals> getRecentDepositsAndWithdrawals() async {
   dio.options.headers["Authorization"] = "Bearer $token";
 
   try {
-    var response = await dio.get("$apiUrl/history/recent-deposits-and-withdrawals");
+    var response = await dio.get("${Config.API_URL}/history/recent-deposits-and-withdrawals");
     return RecentDepositsAndWithdrawals.fromJson(response.data);
   } finally {
     dio.close();
@@ -34,7 +34,7 @@ Future<List<HistoryModel>> getTotalHistory() async {
 
   try {
     var response = await dio.get(
-      "$apiUrl/history/total",
+      "${Config.API_URL}/history/total",
       queryParameters: {
         "from": DateTime.now().subtract(
           Duration(
@@ -66,7 +66,7 @@ Future<List<HistoryModel>> getTotalHistoryForAccount(int accountId) async {
 
   try {
     var response = await dio.get(
-      "$apiUrl/history/account/$accountId",
+      "${Config.API_URL}/history/account/$accountId",
       queryParameters: {
         "from": DateTime.now().subtract(
           Duration(
@@ -103,7 +103,7 @@ Future<List<TagPercentageModel>> getTagPercentages() async {
 
   try {
     var response = await dio.get(
-      "$apiUrl/history/tag-percentages",
+      "${Config.API_URL}/history/tag-percentages",
     );
 
     List<Color> colors = [];
@@ -148,7 +148,7 @@ Future<List<SpendingByTagModel>> getSpendingByTag() async {
 
   try {
     var response = await dio.get(
-      "$apiUrl/history/spending-by-tag",
+      "${Config.API_URL}/history/spending-by-tag",
     );
 
     for (var spendingByTag in response.data) {

@@ -2,8 +2,8 @@ library account_service;
 
 import 'package:dio/dio.dart';
 import 'package:finapp/models/account/account.dart';
+import 'package:finapp/utils/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import "../constants/apiConstants.dart";
 
 Future<List<Account>> getLatestAccountValues() async {
   var dio = new Dio();
@@ -16,7 +16,7 @@ Future<List<Account>> getLatestAccountValues() async {
     List<Account> data = [];
 
     var response = await dio.get(
-      "$apiUrl/account/latest-values",
+      "${Config.API_URL}/account/latest-values",
     );
 
     for (var account in response.data) {

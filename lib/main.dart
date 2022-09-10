@@ -1,13 +1,18 @@
+import 'package:finapp/utils/config.dart';
 import 'package:finapp/views/accounts.dart';
 import 'package:finapp/views/chartData.dart';
 import 'package:finapp/views/history.dart';
 import 'package:finapp/views/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await dotenv.load(fileName: Config.ENV_FILE);
+
   /*
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();

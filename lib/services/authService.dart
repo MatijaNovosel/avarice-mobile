@@ -2,13 +2,13 @@ library auth_service;
 
 import 'package:dio/dio.dart';
 import 'package:finapp/models/auth.dart';
-import "../constants/apiConstants.dart";
+import 'package:finapp/utils/config.dart';
 
 Future<AuthResponse> login(String email, String password) async {
   var dio = new Dio();
   try {
     var response = await dio.post(
-      "$apiUrl/auth/login",
+      "${Config.API_URL}/auth/login",
       data: {
         "email": email,
         "password": password,

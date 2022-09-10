@@ -1,10 +1,10 @@
 library transaction_service;
 
 import 'package:dio/dio.dart';
-import 'package:finapp/constants/apiConstants.dart';
 import 'package:finapp/models/newTransaction/newTransaction.dart';
 import 'package:finapp/models/newTransfer/newTransfer.dart';
 import 'package:finapp/models/transaction/transaction.dart';
+import 'package:finapp/utils/config.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,7 +19,7 @@ Future<List<Transaction>> getTransactions(int skip, int take) async {
     List<Transaction> data = [];
 
     var response = await dio.get(
-      "$apiUrl/transaction",
+      "${Config.API_URL}/transaction",
       queryParameters: {
         "skip": skip,
         "take": take,
@@ -45,7 +45,7 @@ Future addTransaction(NewTransaction payload) async {
 
   try {
     await dio.post(
-      "$apiUrl/transaction",
+      "${Config.API_URL}/transaction",
       data: {
         "amount": payload.amount,
         "description": payload.description,
@@ -73,7 +73,7 @@ Future addTransfer(NewTransfer payload) async {
 
   try {
     await dio.post(
-      "$apiUrl/transaction/transfer",
+      "${Config.API_URL}/transaction/transfer",
       data: {
         "amount": payload.amount,
         "accountFromId": payload.accountFromId,
