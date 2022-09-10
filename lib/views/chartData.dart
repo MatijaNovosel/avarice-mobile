@@ -1,4 +1,6 @@
-import 'package:finapp/models/history.dart';
+import 'package:finapp/models/history/historyModel/historyModel.dart';
+import 'package:finapp/models/history/spendingByTagModel/spendingByTagModel.dart';
+import 'package:finapp/models/history/tagPercentageModel/tagPercentageModel.dart';
 import 'package:finapp/services/historyService.dart';
 import 'package:finapp/widgets/charts/tagPercentagesPieChart.dart';
 import 'package:finapp/widgets/charts/totalHistoryChart.dart';

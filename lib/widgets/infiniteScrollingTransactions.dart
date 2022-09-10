@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:finapp/helpers/helpers.dart';
-import 'package:finapp/models/transaction.dart';
+import 'package:finapp/models/transaction/transaction.dart';
 import 'package:finapp/services/transactionService.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

@@ -1,5 +1,5 @@
 import 'package:finapp/helpers/helpers.dart';
-import 'package:finapp/models/history.dart';
+import 'package:finapp/models/history/spendingByTagModel/spendingByTagModel.dart';
 import 'package:finapp/services/historyService.dart';
 import 'package:flutter/material.dart';
 

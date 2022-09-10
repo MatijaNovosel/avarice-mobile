@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:finapp/models/account/account.dart';
 import 'package:finapp/models/tag/tag.dart';
-import 'package:finapp/models/transaction.dart';
+import 'package:finapp/models/transaction/transaction.dart';
 import 'package:finapp/widgets/currentAmountCard.dart';
 import 'package:finapp/widgets/transactionCard.dart';
 import 'package:flutter/material.dart';

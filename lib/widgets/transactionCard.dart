@@ -1,5 +1,5 @@
 import 'package:finapp/helpers/helpers.dart';
-import 'package:finapp/models/transaction.dart';
+import 'package:finapp/models/transaction/transaction.dart';
 import 'package:flutter/material.dart';
 
 class TransactionCardWidget extends StatefulWidget {

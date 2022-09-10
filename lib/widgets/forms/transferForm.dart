@@ -1,6 +1,6 @@
 import 'package:finapp/controllers/formSubmitController.dart';
 import 'package:finapp/helpers/helpers.dart';
-import 'package:finapp/models/transaction.dart';
+import 'package:finapp/models/newTransfer/newTransfer.dart';
 import 'package:finapp/services/transactionService.dart';
 import 'package:finapp/widgets/currentAmountList.dart';
 import 'package:flutter/material.dart';

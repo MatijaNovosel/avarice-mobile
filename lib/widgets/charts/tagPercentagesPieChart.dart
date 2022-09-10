@@ -1,4 +1,4 @@
-import 'package:finapp/models/history.dart';
+import 'package:finapp/models/history/tagPercentageModel/tagPercentageModel.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';

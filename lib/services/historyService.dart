@@ -1,26 +1,23 @@
 import 'package:dio/dio.dart';
 import 'package:finapp/helpers/helpers.dart';
-import 'package:finapp/models/history.dart';
+import 'package:finapp/models/history/historyModel/historyModel.dart';
+import 'package:finapp/models/history/recentDepositsAndWithdrawals/recentDepositsAndWithdrawals.dart';
+import 'package:finapp/models/history/spendingByTagModel/spendingByTagModel.dart';
+import 'package:finapp/models/history/tagPercentageModel/tagPercentageModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import "../constants/apiConstants.dart";
 
 Future<RecentDepositsAndWithdrawals> getRecentDepositsAndWithdrawals() async {
   var dio = new Dio();
+
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var token = prefs.get("bearerToken");
-
   dio.options.headers["Authorization"] = "Bearer $token";
 
   try {
-    var response = await dio.get(
-      "$apiUrl/history/recent-deposits-and-withdrawals",
-    );
-
-    return RecentDepositsAndWithdrawals(
-      deposits: response.data["deposits"].toDouble(),
-      withdrawals: response.data["withdrawals"].toDouble(),
-    );
+    var response = await dio.get("$apiUrl/history/recent-deposits-and-withdrawals");
+    return RecentDepositsAndWithdrawals.fromJson(response.data);
   } finally {
     dio.close();
   }
@@ -28,9 +25,9 @@ Future<RecentDepositsAndWithdrawals> getRecentDepositsAndWithdrawals() async {
 
 Future<List<HistoryModel>> getTotalHistory() async {
   var dio = new Dio();
+
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var token = prefs.get("bearerToken");
-
   dio.options.headers["Authorization"] = "Bearer $token";
 
   List<HistoryModel> data = [];
@@ -49,12 +46,7 @@ Future<List<HistoryModel>> getTotalHistory() async {
     );
 
     for (var history in response.data) {
-      data.add(
-        new HistoryModel(
-          amount: history["amount"].toDouble(),
-          createdAt: history["createdAt"],
-        ),
-      );
+      data.add(new HistoryModel.fromJson(history));
     }
 
     return data;
@@ -65,9 +57,9 @@ Future<List<HistoryModel>> getTotalHistory() async {
 
 Future<List<HistoryModel>> getTotalHistoryForAccount(int accountId) async {
   var dio = new Dio();
+
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var token = prefs.get("bearerToken");
-
   dio.options.headers["Authorization"] = "Bearer $token";
 
   List<HistoryModel> data = [];
@@ -102,9 +94,9 @@ Future<List<HistoryModel>> getTotalHistoryForAccount(int accountId) async {
 
 Future<List<TagPercentageModel>> getTagPercentages() async {
   var dio = new Dio();
+
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var token = prefs.get("bearerToken");
-
   dio.options.headers["Authorization"] = "Bearer $token";
 
   List<TagPercentageModel> data = [];
@@ -147,9 +139,9 @@ Future<List<TagPercentageModel>> getTagPercentages() async {
 
 Future<List<SpendingByTagModel>> getSpendingByTag() async {
   var dio = new Dio();
+
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var token = prefs.get("bearerToken");
-
   dio.options.headers["Authorization"] = "Bearer $token";
 
   List<SpendingByTagModel> data = [];
@@ -160,12 +152,7 @@ Future<List<SpendingByTagModel>> getSpendingByTag() async {
     );
 
     for (var spendingByTag in response.data) {
-      data.add(
-        new SpendingByTagModel(
-          amount: spendingByTag["amount"].toDouble(),
-          description: spendingByTag["description"],
-        ),
-      );
+      data.add(new SpendingByTagModel.fromJson(spendingByTag));
     }
 
     data.sort((a, b) => a.amount.compareTo(b.amount));
