@@ -1,5 +1,5 @@
 import 'package:finapp/helpers/helpers.dart';
-import 'package:finapp/models/account.dart';
+import 'package:finapp/models/account/account.dart';
 import 'package:flutter/material.dart';
 
 class CurrentAmountCard extends StatefulWidget {

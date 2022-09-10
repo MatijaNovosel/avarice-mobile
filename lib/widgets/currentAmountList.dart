@@ -1,4 +1,4 @@
-import 'package:finapp/models/account.dart';
+import 'package:finapp/models/account/account.dart';
 import 'package:finapp/services/accountService.dart';
 import 'package:finapp/widgets/currentAmountCard.dart';
 import 'package:flutter/material.dart';
