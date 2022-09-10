@@ -1,9 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:finapp/models/account.dart';
-import 'package:finapp/models/history.dart';
 import 'package:finapp/models/tag.dart';
 import 'package:finapp/models/transaction.dart';
-import 'package:finapp/widgets/charts/totalHistoryChart.dart';
 import 'package:finapp/widgets/currentAmountCard.dart';
 import 'package:finapp/widgets/transactionCard.dart';
 import 'package:flutter/material.dart';
@@ -20,112 +18,6 @@ class _DashboardState extends State<Dashboard> {
     Account(amount: 2500, description: "Gyro", id: 2),
     Account(amount: 125, description: "Pocket", id: 3),
     Account(amount: 55, description: "Credit", id: 4)
-  ];
-  List<List<HistoryModel>> _history = [
-    [
-      HistoryModel(
-        amount: 2500,
-        createdAt: "21. Feb 2022.",
-      ),
-      HistoryModel(
-        amount: 2600,
-        createdAt: "21. Feb 2022.",
-      ),
-      HistoryModel(
-        amount: 2700,
-        createdAt: "21. Feb 2022.",
-      ),
-      HistoryModel(
-        amount: 2800,
-        createdAt: "21. Feb 2022.",
-      ),
-      HistoryModel(
-        amount: 2200,
-        createdAt: "21. Feb 2022.",
-      ),
-      HistoryModel(
-        amount: 2100,
-        createdAt: "21. Feb 2022.",
-      )
-    ],
-    [
-      HistoryModel(
-        amount: 2100,
-        createdAt: "21. Feb 2022.",
-      ),
-      HistoryModel(
-        amount: 2900,
-        createdAt: "21. Feb 2022.",
-      ),
-      HistoryModel(
-        amount: 5700,
-        createdAt: "21. Feb 2022.",
-      ),
-      HistoryModel(
-        amount: 1800,
-        createdAt: "21. Feb 2022.",
-      ),
-      HistoryModel(
-        amount: 6200,
-        createdAt: "21. Feb 2022.",
-      ),
-      HistoryModel(
-        amount: 2100,
-        createdAt: "21. Feb 2022.",
-      )
-    ],
-    [
-      HistoryModel(
-        amount: 2500,
-        createdAt: "21. Feb 2022.",
-      ),
-      HistoryModel(
-        amount: 2500,
-        createdAt: "21. Feb 2022.",
-      ),
-      HistoryModel(
-        amount: 2500,
-        createdAt: "21. Feb 2022.",
-      ),
-      HistoryModel(
-        amount: 2500,
-        createdAt: "21. Feb 2022.",
-      ),
-      HistoryModel(
-        amount: 2500,
-        createdAt: "21. Feb 2022.",
-      ),
-      HistoryModel(
-        amount: 2700,
-        createdAt: "21. Feb 2022.",
-      )
-    ],
-    [
-      HistoryModel(
-        amount: 1500,
-        createdAt: "21. Feb 2022.",
-      ),
-      HistoryModel(
-        amount: 1600,
-        createdAt: "21. Feb 2022.",
-      ),
-      HistoryModel(
-        amount: 1700,
-        createdAt: "21. Feb 2022.",
-      ),
-      HistoryModel(
-        amount: 2800,
-        createdAt: "21. Feb 2022.",
-      ),
-      HistoryModel(
-        amount: 2200,
-        createdAt: "21. Feb 2022.",
-      ),
-      HistoryModel(
-        amount: 2100,
-        createdAt: "21. Feb 2022.",
-      )
-    ],
   ];
 
   @override

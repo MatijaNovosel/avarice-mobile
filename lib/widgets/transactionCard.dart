@@ -7,9 +7,9 @@ class TransactionCardWidget extends StatefulWidget {
   final bool visible;
 
   const TransactionCardWidget({
-    Key key,
-    this.transaction,
-    this.visible,
+    Key? key,
+    required this.transaction,
+    required this.visible,
   }) : super(key: key);
 
   @override

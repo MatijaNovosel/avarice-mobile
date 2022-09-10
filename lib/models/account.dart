@@ -4,9 +4,9 @@ class Account {
   int id;
 
   Account({
-    this.amount,
-    this.description,
-    this.id,
+    required this.amount,
+    required this.description,
+    required this.id,
   });
 
   Map<String, dynamic> toMap() {

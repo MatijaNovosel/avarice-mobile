@@ -8,16 +8,16 @@ class MultiSelectDialogItem<V> {
 }
 
 class MultiSelectDialog<V> extends StatefulWidget {
-  MultiSelectDialog({
-    Key key,
-    this.items,
-    this.initialSelectedValues,
-    this.title,
-  }) : super(key: key);
-
   final List<MultiSelectDialogItem<V>> items;
-  final Set<V> initialSelectedValues;
+  final Set<V>? initialSelectedValues;
   final String title;
+
+  MultiSelectDialog({
+    Key? key,
+    required this.items,
+    required this.title,
+    this.initialSelectedValues,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _MultiSelectDialogState<V>();
@@ -29,16 +29,18 @@ class _MultiSelectDialogState<V> extends State<MultiSelectDialog<V>> {
   void initState() {
     super.initState();
     if (widget.initialSelectedValues != null) {
-      _selectedValues.addAll(widget.initialSelectedValues);
+      _selectedValues.addAll(widget.initialSelectedValues!.toList());
     }
   }
 
-  void _onItemCheckedChange(V itemValue, bool checked) {
+  void _onItemCheckedChange(V itemValue, bool? checked) {
     setState(() {
-      if (checked) {
-        _selectedValues.add(itemValue);
-      } else {
-        _selectedValues.remove(itemValue);
+      if (checked != null) {
+        if (checked) {
+          _selectedValues.add(itemValue);
+        } else {
+          _selectedValues.remove(itemValue);
+        }
       }
     });
   }

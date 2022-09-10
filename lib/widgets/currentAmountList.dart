@@ -8,9 +8,13 @@ typedef PaymentSourceIdCallback = void Function(int paymentSourceId);
 typedef OnLoadingFinishedCallback = void Function(int accountId);
 
 class CurrentAmountListWidget extends StatefulWidget {
-  const CurrentAmountListWidget({this.onAccountChange, this.onLoadingFinished});
   final PaymentSourceIdCallback onAccountChange;
-  final OnLoadingFinishedCallback onLoadingFinished;
+  final OnLoadingFinishedCallback? onLoadingFinished;
+
+  const CurrentAmountListWidget({
+    required this.onAccountChange,
+    this.onLoadingFinished,
+  });
 
   @override
   _CurrentAmountListState createState() => _CurrentAmountListState();
@@ -50,7 +54,7 @@ class _CurrentAmountListState extends State<CurrentAmountListWidget> {
                     SizedBox(
                       height: 55,
                       child: PageView.builder(
-                        itemCount: accounts.length,
+                        itemCount: accounts!.length,
                         onPageChanged: (i) {
                           widget.onAccountChange(accounts[i].id);
                           setState(() {
@@ -90,14 +94,10 @@ class _CurrentAmountListState extends State<CurrentAmountListWidget> {
                             child: Container(
                               width: 10,
                               height: 10,
-                              margin: i != accounts.length
-                                  ? EdgeInsets.only(right: 4)
-                                  : null,
+                              margin: i != accounts.length ? EdgeInsets.only(right: 4) : null,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: i == _index
-                                    ? Colors.orange
-                                    : Colors.grey[400],
+                                color: i == _index ? Colors.orange : Colors.grey[400],
                               ),
                             ),
                           );

@@ -5,15 +5,15 @@ typedef TagCheckboxListSelectedCallback = void Function(List<int> selectedTags);
 typedef IsValidCallback = void Function(bool isValid);
 
 class TagCheckboxListWidget extends StatefulWidget {
-  const TagCheckboxListWidget({
-    this.onTagCheckboxListChanged,
-    this.isValid,
-    this.controller,
-  });
-
   final TagCheckboxListSelectedCallback onTagCheckboxListChanged;
   final IsValidCallback isValid;
   final FormSubmitController controller;
+
+  const TagCheckboxListWidget({
+    required this.onTagCheckboxListChanged,
+    required this.isValid,
+    required this.controller,
+  });
 
   @override
   _TagCheckboxListWidget createState() => _TagCheckboxListWidget(controller);
@@ -48,7 +48,7 @@ class _TagCheckboxListWidget extends State<TagCheckboxListWidget> {
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
                 width: 1,
-                color: _invalid && _touched ? Colors.red : Colors.grey[350],
+                color: _invalid && _touched ? Colors.red : Colors.grey[350] as Color,
               ),
             ),
             constraints: BoxConstraints(
@@ -60,10 +60,10 @@ class _TagCheckboxListWidget extends State<TagCheckboxListWidget> {
               itemBuilder: (context, i) {
                 return CheckboxListTile(
                   value: _checkboxValues[i],
-                  onChanged: (bool val) {
+                  onChanged: (bool? val) {
                     setState(() {
                       _checkboxValues[i] = !_checkboxValues[i];
-                      if (val) {
+                      if (val == true) {
                         _selectedTags.add(1);
                       } else {
                         _selectedTags.remove(1);

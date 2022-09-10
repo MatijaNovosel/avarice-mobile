@@ -4,32 +4,32 @@ import 'package:flutter/material.dart';
 
 class CurrentAmountCard extends StatefulWidget {
   final Account account;
-  final Color color;
-  final IconData icon;
-  final bool showHideButton;
   final bool showInitialValue;
-  final bool gradient;
-  final Color gradientFrom;
-  final Color gradientTo;
-  final Color mainTextColor;
-  final double height;
-  final double width;
-  final double margin;
+  final bool? showHideButton;
+  final bool? gradient;
+  final Color? color;
+  final IconData? icon;
+  final Color? gradientFrom;
+  final Color? gradientTo;
+  final Color? mainTextColor;
+  final double? height;
+  final double? width;
+  final double? margin;
 
-  const CurrentAmountCard({
-    Key key,
-    this.account,
-    this.color,
-    this.icon,
+  CurrentAmountCard({
+    Key? key,
+    required this.account,
+    required this.showInitialValue,
     this.showHideButton,
-    this.showInitialValue,
+    this.mainTextColor,
+    this.color,
+    this.width,
+    this.margin,
+    this.icon,
     this.gradient,
     this.gradientFrom,
     this.gradientTo,
-    this.mainTextColor,
     this.height,
-    this.width,
-    this.margin,
   }) : super(key: key);
 
   @override
@@ -42,7 +42,7 @@ class _CurrentAmountCardState extends State<CurrentAmountCard> {
   @override
   void initState() {
     setState(() {
-      _visible = widget.showInitialValue != null ? widget.showInitialValue : false;
+      _visible = widget.showInitialValue ? widget.showInitialValue : false;
     });
     super.initState();
   }
@@ -52,18 +52,18 @@ class _CurrentAmountCardState extends State<CurrentAmountCard> {
     return Card(
       elevation: 3,
       child: Container(
-        width: widget.width ?? null,
+        width: widget.width ?? 150,
         height: widget.height ?? 55,
         margin: EdgeInsets.symmetric(
-          horizontal: widget.margin,
+          horizontal: widget.margin ?? 0,
         ),
         decoration: BoxDecoration(
           gradient: widget.gradient != null
-              ? widget.gradient == true
+              ? widget.gradient!
                   ? LinearGradient(
                       colors: [
-                        widget.gradientFrom,
-                        widget.gradientTo,
+                        widget.gradientFrom!,
+                        widget.gradientTo!,
                       ],
                     )
                   : null
@@ -79,7 +79,7 @@ class _CurrentAmountCardState extends State<CurrentAmountCard> {
                       right: 12.0,
                     ),
                     child: Icon(
-                      widget.icon,
+                      widget.icon ?? Icons.account_balance,
                       color: Colors.black,
                     ),
                   )
@@ -110,15 +110,14 @@ class _CurrentAmountCardState extends State<CurrentAmountCard> {
                     style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
-                      color: widget.mainTextColor,
+                      color: widget.mainTextColor ?? Colors.white,
                     ),
                   ),
                 ],
               ),
             ),
             widget.showHideButton == false
-                ? Container()
-                : Padding(
+                ? Padding(
                     padding: const EdgeInsets.only(
                       right: 24.0,
                     ),
@@ -126,12 +125,15 @@ class _CurrentAmountCardState extends State<CurrentAmountCard> {
                       icon: _visible ? Icon(Icons.circle) : Icon(Icons.panorama_fish_eye),
                       color: Colors.black,
                       onPressed: () {
-                        setState(() {
-                          _visible = !_visible;
-                        });
+                        setState(
+                          () {
+                            _visible = !_visible;
+                          },
+                        );
                       },
                     ),
-                  ),
+                  )
+                : Container(),
           ],
         ),
       ),

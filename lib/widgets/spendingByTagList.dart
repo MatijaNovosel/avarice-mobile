@@ -59,8 +59,8 @@ class SpendingByTagList extends StatefulWidget {
   final List<SpendingByTagModel> spendingByTag;
 
   const SpendingByTagList({
-    Key key,
-    this.spendingByTag,
+    Key? key,
+    required this.spendingByTag,
   }) : super(key: key);
 
   @override

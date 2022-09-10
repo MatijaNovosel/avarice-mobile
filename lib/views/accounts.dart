@@ -12,8 +12,8 @@ class Accounts extends StatefulWidget {
 }
 
 class _AccountsState extends State<Accounts> {
-  int _accountId;
-  List<HistoryModel> accountHistory;
+  late int? _accountId;
+  late List<HistoryModel> accountHistory;
   bool loaded = false;
 
   void sync(accountId) async {

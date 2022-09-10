@@ -8,8 +8,8 @@ class TagPercentagesPieChart extends StatefulWidget {
   final List<TagPercentageModel> tagPercentages;
 
   const TagPercentagesPieChart({
-    Key key,
-    this.tagPercentages,
+    Key? key,
+    required this.tagPercentages,
   }) : super(key: key);
 
   @override
@@ -34,7 +34,7 @@ class TagPercentagesPieChartState extends State<TagPercentagesPieChart> {
                     setState(() {
                       final desiredTouch = pieTouchResponse.touchInput is! PointerExitEvent && pieTouchResponse.touchInput is! PointerUpEvent;
                       if (desiredTouch && pieTouchResponse.touchedSection != null) {
-                        touchedIndex = pieTouchResponse.touchedSection.touchedSectionIndex;
+                        touchedIndex = pieTouchResponse.touchedSection!.touchedSectionIndex;
                       } else {
                         touchedIndex = -1;
                       }
@@ -92,7 +92,7 @@ class TagPercentagesPieChartState extends State<TagPercentagesPieChart> {
 
       return PieChartSectionData(
         color: widget.tagPercentages[i].color,
-        value: num.parse(
+        value: double.parse(
           (widget.tagPercentages[i].percentage * 100).toStringAsFixed(2),
         ),
         title: (widget.tagPercentages[i].percentage * 100).toStringAsFixed(2) + "%",

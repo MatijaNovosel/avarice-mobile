@@ -5,8 +5,8 @@ class RecentDepositsAndWithdrawals {
   double deposits;
 
   RecentDepositsAndWithdrawals({
-    this.withdrawals,
-    this.deposits,
+    required this.withdrawals,
+    required this.deposits,
   });
 }
 
@@ -15,8 +15,8 @@ class HistoryModel {
   String createdAt;
 
   HistoryModel({
-    this.amount,
-    this.createdAt,
+    required this.amount,
+    required this.createdAt,
   });
 }
 
@@ -26,9 +26,9 @@ class TagPercentageModel {
   Color color;
 
   TagPercentageModel({
-    this.percentage,
-    this.description,
-    this.color,
+    required this.percentage,
+    required this.description,
+    required this.color,
   });
 }
 
@@ -37,7 +37,7 @@ class SpendingByTagModel {
   String description;
 
   SpendingByTagModel({
-    this.amount,
-    this.description,
+    required this.amount,
+    required this.description,
   });
 }

@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 class Indicator extends StatelessWidget {
   final Color color;
   final String text;
-  final bool isSquare;
+  final bool? isSquare;
   final double size;
   final Color textColor;
 
   const Indicator({
-    Key key,
-    this.color,
-    this.text,
+    Key? key,
+    required this.text,
+    required this.color,
     this.isSquare,
     this.size = 16,
     this.textColor = const Color(0xff505050),
@@ -24,7 +24,7 @@ class Indicator extends StatelessWidget {
           width: size,
           height: size,
           decoration: BoxDecoration(
-            shape: isSquare ? BoxShape.rectangle : BoxShape.circle,
+            shape: isSquare != null ? (isSquare! ? BoxShape.rectangle : BoxShape.circle) : BoxShape.circle,
             color: color,
           ),
         ),

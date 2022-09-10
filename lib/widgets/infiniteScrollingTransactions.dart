@@ -13,11 +13,12 @@ class InfiniteScroll extends StatefulWidget {
 
 class _InfiniteScrollState extends State<InfiniteScroll> {
   List<Transaction> _data = [];
-  Future<List<Transaction>> _future;
+  late Future<List<Transaction>> _future;
   int _currentPage = 0, _limit = 15;
   ScrollController _controller = ScrollController(initialScrollOffset: 0.0, keepScrollOffset: true);
 
-  _InfiniteScrollState() {
+  @override
+  void initState() {
     _controller.addListener(() {
       var isEnd = _controller.offset == _controller.position.maxScrollExtent;
       if (isEnd)
@@ -27,6 +28,7 @@ class _InfiniteScrollState extends State<InfiniteScroll> {
     });
 
     _future = loadData();
+    super.initState();
   }
 
   Future<List<Transaction>> loadData() async {

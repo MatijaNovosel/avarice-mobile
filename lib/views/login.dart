@@ -14,7 +14,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final FormSubmitController formSubmitController = new FormSubmitController();
 
-  Future<String> _onLogin(LoginData data) async {
+  Future<String?>? _onLogin(LoginData data) async {
     var response = await login(
       data.name,
       data.password,
@@ -41,7 +41,7 @@ class _LoginState extends State<Login> {
       body: FlutterLogin(
         title: 'FinApp',
         onLogin: _onLogin,
-        onSignup: (_) => Future(null),
+        onSignup: (_) => null,
         onSubmitAnimationCompleted: () {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
@@ -49,7 +49,7 @@ class _LoginState extends State<Login> {
             ),
           );
         },
-        onRecoverPassword: (_) => Future(null),
+        onRecoverPassword: (_) => null,
         theme: LoginTheme(
           titleStyle: TextStyle(
             letterSpacing: 6,

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 class TransferForm extends StatefulWidget {
   final FormSubmitController controller;
-  TransferForm({this.controller});
+  TransferForm({required this.controller});
 
   @override
   _TransferFormState createState() => _TransferFormState(controller);
@@ -25,7 +25,7 @@ class _TransferFormState extends State<TransferForm> {
   }
 
   void submitForm() async {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState!.validate()) {
       if (_accountFromId == _accountToId) {
         showAlert(context, "Accounts must not be the same!", true);
         return;
@@ -110,7 +110,7 @@ class _TransferFormState extends State<TransferForm> {
               title: TextFormField(
                 controller: _amountController,
                 validator: (value) {
-                  if (value.isEmpty) {
+                  if (value!.isEmpty) {
                     return 'This field is required!';
                   }
                   return null;
@@ -119,13 +119,13 @@ class _TransferFormState extends State<TransferForm> {
                 decoration: InputDecoration(
                   suffix: Text("HRK"),
                   enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey[600]),
+                    borderSide: BorderSide(color: Colors.grey[600] as Color),
                   ),
                   focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey[600]),
+                    borderSide: BorderSide(color: Colors.grey[600] as Color),
                   ),
                   border: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey[600]),
+                    borderSide: BorderSide(color: Colors.grey[600] as Color),
                   ),
                   hintText: "Entry amount",
                   isDense: true,

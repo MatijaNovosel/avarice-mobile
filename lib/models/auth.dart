@@ -4,8 +4,8 @@ class AuthResponse {
   List<String> errors;
 
   AuthResponse({
-    this.token,
-    this.result,
-    this.errors,
+    required this.token,
+    required this.result,
+    required this.errors,
   });
 }

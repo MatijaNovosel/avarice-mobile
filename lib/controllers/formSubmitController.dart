@@ -1,3 +1,3 @@
 class FormSubmitController {
-  void Function() submit;
+  void Function()? submit;
 }

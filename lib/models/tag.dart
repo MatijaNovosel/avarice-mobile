@@ -3,7 +3,7 @@ class Tag {
   String description;
 
   Tag({
-    this.id,
-    this.description,
+    required this.id,
+    required this.description,
   });
 }

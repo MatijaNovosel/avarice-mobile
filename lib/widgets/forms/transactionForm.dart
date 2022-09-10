@@ -10,7 +10,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class TransactionForm extends StatefulWidget {
   final FormSubmitController controller;
-  TransactionForm({this.controller});
+  TransactionForm({required this.controller});
 
   @override
   _TransactionFormState createState() => _TransactionFormState(controller);
@@ -31,7 +31,7 @@ class _TransactionFormState extends State<TransactionForm> {
   }
 
   void submitForm() async {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState!.validate()) {
       if (_selectedTags.length == 0) {
         showAlert(context, "No tags selected!", true);
         return;
@@ -138,20 +138,20 @@ class _TransactionFormState extends State<TransactionForm> {
                     title: TextFormField(
                       controller: _descriptionController,
                       validator: (value) {
-                        if (value.isEmpty) {
+                        if (value!.isEmpty) {
                           return 'This field is required!';
                         }
                         return null;
                       },
                       decoration: InputDecoration(
                         enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[600]),
+                          borderSide: BorderSide(color: Colors.grey[600] as Color),
                         ),
                         focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[600]),
+                          borderSide: BorderSide(color: Colors.grey[600] as Color),
                         ),
                         border: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[600]),
+                          borderSide: BorderSide(color: Colors.grey[600] as Color),
                         ),
                         hintText: "Entry description",
                         isDense: true,
@@ -174,7 +174,7 @@ class _TransactionFormState extends State<TransactionForm> {
                     title: TextFormField(
                       controller: _amountController,
                       validator: (value) {
-                        if (value.isEmpty) {
+                        if (value!.isEmpty) {
                           return 'This field is required!';
                         }
                         return null;
@@ -183,13 +183,13 @@ class _TransactionFormState extends State<TransactionForm> {
                       decoration: InputDecoration(
                         suffix: Text("HRK"),
                         enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[600]),
+                          borderSide: BorderSide(color: Colors.grey[600] as Color),
                         ),
                         focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[600]),
+                          borderSide: BorderSide(color: Colors.grey[600] as Color),
                         ),
                         border: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[600]),
+                          borderSide: BorderSide(color: Colors.grey[600] as Color),
                         ),
                         hintText: "Entry amount",
                         isDense: true,
@@ -221,7 +221,7 @@ class _TransactionFormState extends State<TransactionForm> {
                     width: double.infinity,
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                        primary: Colors.orange,
+                        foregroundColor: Colors.orange,
                       ),
                       onPressed: () {
                         _showMultiSelect(context);

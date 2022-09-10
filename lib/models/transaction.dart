@@ -10,13 +10,13 @@ class Transaction {
   List<Tag> tags;
 
   Transaction({
-    this.id,
-    this.amount,
-    this.createdAt,
-    this.description,
-    this.expense,
-    this.accountDescription,
-    this.tags,
+    required this.id,
+    required this.amount,
+    required this.createdAt,
+    required this.description,
+    required this.expense,
+    required this.accountDescription,
+    required this.tags,
   });
 }
 
@@ -28,11 +28,11 @@ class NewTransaction {
   List<int> tags;
 
   NewTransaction({
-    this.amount,
-    this.description,
-    this.expense,
-    this.accountId,
-    this.tags,
+    required this.amount,
+    required this.description,
+    required this.expense,
+    required this.accountId,
+    required this.tags,
   });
 }
 
@@ -42,8 +42,8 @@ class NewTransfer {
   double amount;
 
   NewTransfer({
-    this.amount,
-    this.accountFromId,
-    this.accountToId,
+    required this.amount,
+    required this.accountFromId,
+    required this.accountToId,
   });
 }

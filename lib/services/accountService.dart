@@ -22,8 +22,7 @@ Future<List<Account>> getLatestAccountValues() async {
     for (var account in response.data) {
       data.add(
         new Account(
-          amount: account["amount"]
-              .toDouble(), // Dynamic types may be binded to an int instead of a double ...
+          amount: account["amount"].toDouble(), // Dynamic types may be binded to an int instead of a double ...
           description: account["description"],
           id: account["id"],
         ),

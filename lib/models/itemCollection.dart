@@ -1,4 +1,4 @@
 class ItemCollection<T> {
-  int count;
-  List<T> items;
+  int? count;
+  List<T>? items;
 }

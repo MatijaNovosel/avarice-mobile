@@ -6,8 +6,8 @@ class HistoryTotalChart extends StatefulWidget {
   final List<HistoryModel> history;
 
   const HistoryTotalChart({
-    Key key,
-    this.history,
+    Key? key,
+    required this.history,
   }) : super(key: key);
 
   @override

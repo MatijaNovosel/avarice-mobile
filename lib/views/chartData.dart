@@ -4,7 +4,6 @@ import 'package:finapp/widgets/charts/tagPercentagesPieChart.dart';
 import 'package:finapp/widgets/charts/totalHistoryChart.dart';
 import 'package:finapp/widgets/spendingByTagList.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class ChartData extends StatefulWidget {
@@ -37,9 +36,9 @@ class _ChartDataState extends State<ChartData> {
                 if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 } else {
-                  List<HistoryModel> history = snapshot.data[0];
-                  List<TagPercentageModel> tagPercentages = snapshot.data[1];
-                  List<SpendingByTagModel> spendingByTag = snapshot.data[2];
+                  List<HistoryModel> history = snapshot.data![0];
+                  List<TagPercentageModel> tagPercentages = snapshot.data![1];
+                  List<SpendingByTagModel> spendingByTag = snapshot.data![2];
 
                   return Column(
                     children: [
