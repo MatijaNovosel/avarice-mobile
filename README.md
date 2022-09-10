@@ -22,7 +22,11 @@ Dart SDK: 2.17.0
 - Open this project folder with Terminal/CMD
 - Ensure there's no cache/build leftover by running `flutter clean` in the Terminal
 - Run in the Terminal `flutter packages get`
-- Run in the Terminal `flutter packages pub run build_runner build --delete-conflicting-outputs`
+
+## ⚠️ Additional notes
+
+- To generate models run `flutter pub run build_runner build --delete-conflicting-outputs`
+- To generate translations run `flutter gen-l10n`
 
 ## Additional steps for iOS
 

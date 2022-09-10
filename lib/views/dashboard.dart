@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:finapp/models/account/account.dart';
-import 'package:finapp/models/tag.dart';
+import 'package:finapp/models/tag/tag.dart';
 import 'package:finapp/models/transaction.dart';
 import 'package:finapp/widgets/currentAmountCard.dart';
 import 'package:finapp/widgets/transactionCard.dart';
@@ -119,10 +119,7 @@ class _DashboardState extends State<Dashboard> {
                             expense: n % 2 == 0,
                             id: n,
                             tags: [
-                              Tag(
-                                description: "Test",
-                                id: 1,
-                              ),
+                              Tag(description: "Test", id: 1),
                             ],
                           ),
                         ),

@@ -2,7 +2,7 @@ library transaction_service;
 
 import 'package:dio/dio.dart';
 import 'package:finapp/constants/apiConstants.dart';
-import 'package:finapp/models/tag.dart';
+import 'package:finapp/models/tag/tag.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -35,14 +35,7 @@ Future<List<Transaction>> getTransactions(int skip, int take) async {
           accountDescription: transaction["account"]["description"],
           createdAt: transaction["createdAt"],
           expense: transaction["expense"],
-          tags: transaction["tags"]
-              .map<Tag>(
-                (x) => new Tag(
-                  description: x["description"],
-                  id: x["id"],
-                ),
-              )
-              .toList(),
+          tags: transaction["tags"].map<Tag>((tag) => new Tag.fromJson(tag)).toList(),
         ),
       );
     }

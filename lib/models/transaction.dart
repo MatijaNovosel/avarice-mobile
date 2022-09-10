@@ -1,4 +1,4 @@
-import 'package:finapp/models/tag.dart';
+import 'package:finapp/models/tag/tag.dart';
 
 class Transaction {
   int id;
