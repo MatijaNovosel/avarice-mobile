@@ -1,6 +1,6 @@
-<h1 align=center>FinApp mobile</h1>
+<h1 align=center>Avarice mobile</h1>
 <p align=center>
-  <a href="https://github.com/MatijaNovosel/fin-app">FinApp</a> mobile implementation, an app for tracking personal finances.
+  <a href="https://github.com/MatijaNovosel/avarice">Avarice</a> mobile implementation, an app for tracking personal finances.
 </p>
 
 <p align=center>
