@@ -1,6 +1,6 @@
 <h1 align=center>Avarice mobile</h1>
 <p align=center>
-  <a href="https://github.com/MatijaNovosel/avarice">Avarice</a> mobile, an app for tracking personal finances.
+  Avarice mobile, an app for tracking personal finances.
 </p>
 
 <p align="center">
